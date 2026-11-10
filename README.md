@@ -19,9 +19,9 @@ This repository uses the dedicated Firebase project `tcopy-12865` and must remai
 3. The web app configuration for `tcopy-12865` is already connected in `index.html`.
    - The web config/API key is intended for the browser. Do **not** put a service-account JSON or Admin SDK private key in this repository.
 4. In Authentication → Sign-in method, enable **Email/Password**.
-5. In Firestore Database, create a database. Choose a nearby supported region carefully; the database location cannot be changed later.
-6. Publish `firestore.rules` in Firestore → Rules.
-7. Deploy the included `firestore.indexes.json` using the Firebase CLI if required.
+5. In Authentication → Settings → Authorized domains, add **`toxinhub.github.io`**.
+6. In Firestore Database, create a database. Choose a nearby supported region carefully; the database location cannot be changed later.
+7. From a trusted computer with Firebase CLI installed, run `firebase login` followed by `firebase deploy --only firestore:rules,firestore:indexes`. The repository includes `firebase.json` and `.firebaserc` for project `tcopy-12865`.
 
 ## 2. Enable GitHub Pages
 In GitHub → Settings → Pages, choose **Deploy from a branch**, select `main` and `/ (root)`. The app is designed for the `/tcopy/` path.
@@ -37,7 +37,10 @@ After the first account is created, copy that account's Firebase Authentication 
 const { initializeApp, applicationDefault } = require("firebase-admin/app");
 const { getAuth } = require("firebase-admin/auth");
 initializeApp({ credential: applicationDefault() });
-await getAuth().setCustomUserClaims("PASTE_AUTH_UID_HERE", { admin: true });
+async function main() {
+  await getAuth().setCustomUserClaims("PASTE_AUTH_UID_HERE", { admin: true });
+}
+main().catch(console.error);
 ```
 
 Then sign out and sign back in. Admin users can view/manage all clips; regular users can only read and manage their own clips. Keep the admin account secure.
