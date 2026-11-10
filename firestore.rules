@@ -10,6 +10,7 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.resource.data.ownerUid == request.auth.uid
         && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'pinned', 'createdAt'])
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
         && request.resource.data.text.size() <= 20000
@@ -17,10 +18,12 @@ service cloud.firestore {
         && request.resource.data.createdAt == request.time;
       allow update: if (owns(resource.data) || isAdmin())
         && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'pinned', 'createdAt', 'updatedAt'])
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
-        && request.resource.data.text.size() <= 20000;
+        && request.resource.data.text.size() <= 20000
+        && request.resource.data.updatedAt == request.time;
       allow delete: if owns(resource.data) || isAdmin();
     }
   }
