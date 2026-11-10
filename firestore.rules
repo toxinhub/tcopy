@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.admin == true; }
+    function owns(resourceData) { return signedIn() && resourceData.ownerUid == request.auth.uid; }
+
+    match /clips/{clipId} {
+      allow read: if owns(resource.data) || isAdmin();
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 20000
+        && request.resource.data.pinned == false
+        && request.resource.data.createdAt == request.time;
+      allow update: if (owns(resource.data) || isAdmin())
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 20000;
+      allow delete: if owns(resource.data) || isAdmin();
+    }
+  }
+}
