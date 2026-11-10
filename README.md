@@ -11,12 +11,12 @@ A responsive, installable notebook-style web app for quickly saving text and syn
 - Firestore Security Rules
 - PWA app shell (manifest + service worker)
 
-This repository and Firebase project are intended to be completely separate from other projects. Do not reuse another project's Firebase/Supabase configuration, database, auth, or secrets.
+This repository uses the dedicated Firebase project `tcopy-12865` and must remain completely separate from other projects. Do not reuse another project's Firebase/Supabase configuration, database, auth, or secrets.
 
 ## 1. Create the Firebase project
-1. Open https://console.firebase.google.com/ and create a **new project named `tcopy`**.
+1. Open https://console.firebase.google.com/ and use the dedicated Firebase project **`tcopy-12865`** (Project ID). Keep it separate from every other app/project.
 2. In Project settings → General → Your apps, add a **Web app**.
-3. Copy its web app config into the `firebaseConfig` object in `index.html`, replacing each `YOUR_...` placeholder.
+3. The web app configuration for `tcopy-12865` is already connected in `index.html`.
    - The web config/API key is intended for the browser. Do **not** put a service-account JSON or Admin SDK private key in this repository.
 4. In Authentication → Sign-in method, enable **Email/Password**.
 5. In Firestore Database, create a database. Choose a nearby supported region carefully; the database location cannot be changed later.
