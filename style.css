@@ -3364,3 +3364,86 @@ main.list{
   #cmp>#in{min-height:40px!important;max-height:22dvh!important;padding-block:7px!important}
   main.list{padding-bottom:calc(132px + env(safe-area-inset-bottom))!important}
 }
+
+
+/* v52 — mobile ambient glass canvas and a quieter compact header */
+@media(max-width:720px){
+  body{
+    background:
+      radial-gradient(ellipse at 8% 0%,color-mix(in srgb,var(--accent-soft) 54%,transparent),transparent 48%),
+      var(--bg)!important;
+  }
+  header.top.hd{
+    position:relative!important;
+    z-index:20!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:30px 34px!important;
+    gap:5px 8px!important;
+    padding:calc(6px + env(safe-area-inset-top)) max(11px,env(safe-area-inset-right)) 7px max(11px,env(safe-area-inset-left))!important;
+    background:color-mix(in srgb,var(--bg) 48%,transparent)!important;
+    border:0!important;
+    border-bottom:1px solid color-mix(in srgb,var(--line) 58%,transparent)!important;
+    border-radius:0!important;
+    box-shadow:0 5px 20px -18px rgba(0,0,0,.22)!important;
+    -webkit-backdrop-filter:blur(18px) saturate(1.35)!important;
+    backdrop-filter:blur(18px) saturate(1.35)!important;
+  }
+  header.top.hd>.brand{gap:6px!important;font-size:17px!important;line-height:1!important}
+  header.top.hd>.brand .logo-mark{width:27px!important;height:27px!important;border-radius:8px!important}
+  header.top.hd>.actions{gap:4px!important}
+  header.top.hd>.actions .ibtn{
+    width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important;
+    padding:0!important;border-radius:9px!important;background:transparent!important;
+    border-color:transparent!important;box-shadow:none!important;
+  }
+  header.top.hd>.actions .account-btn{gap:0!important}
+  header.top.hd>.actions .account-btn #accountLabel,
+  header.top.hd>.actions .admin-btn span{display:none!important}
+  header.top.hd>.actions .avatar{width:18px!important;height:18px!important}
+  header.top.hd>.actions .sync{margin-right:2px!important}
+  header.top.hd>.search{
+    height:34px!important;min-height:34px!important;padding:0 9px!important;
+    border-radius:10px!important;background:color-mix(in srgb,var(--surface) 58%,transparent)!important;
+    border-color:color-mix(in srgb,var(--line) 70%,transparent)!important;
+    box-shadow:none!important;
+  }
+  header.top.hd>.search>svg{width:15px!important;height:15px!important}
+  header.top.hd>.search .search-input{font-size:16px!important}
+  header.top.hd>.seg{gap:1px!important;padding:1px!important;border:0!important;background:transparent!important;box-shadow:none!important}
+  header.top.hd>.seg button{
+    min-height:29px!important;padding:0 7px!important;border:0!important;
+    border-radius:7px!important;background:transparent!important;box-shadow:none!important;
+    font-size:10px!important;color:var(--muted)!important;
+  }
+  header.top.hd>.seg button[aria-pressed=true]{
+    color:var(--ink)!important;background:color-mix(in srgb,var(--surface) 70%,transparent)!important;
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--line) 65%,transparent)!important;
+  }
+
+  /* Keep the note composer, note cards and their controls opaque; clear only the surrounding canvas. */
+  .main,.scroller,main.list,.notes-heading,#list,.col,.grp{
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  main.list{padding-top:16px!important}
+  .notes-heading{border-color:transparent!important}
+  #list .grp{background:transparent!important}
+}
+@media(max-width:380px){
+  header.top.hd{
+    grid-template-rows:29px 33px!important;
+    gap:4px 6px!important;
+    padding-inline:max(9px,env(safe-area-inset-left))!important;
+  }
+  header.top.hd>.brand{font-size:16px!important}
+  header.top.hd>.brand .logo-mark{width:25px!important;height:25px!important}
+  header.top.hd>.actions{gap:2px!important}
+  header.top.hd>.actions .ibtn{width:30px!important;min-width:30px!important;height:30px!important;min-height:30px!important}
+  header.top.hd>.search{height:33px!important;min-height:33px!important}
+  header.top.hd>.seg button{padding-inline:5px!important;font-size:9.5px!important}
+}
+@media(prefers-reduced-transparency:reduce){
+  @media(max-width:720px){
+    header.top.hd{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--bg)!important}
+  }
+}
