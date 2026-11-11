@@ -1725,3 +1725,167 @@ header.top.hd>.brand .brand-name{
   }
   .visibility-option>.ui-icon{width:12px!important;height:12px!important}
 }
+
+
+/* v35 — faster feed scrolling and a brighter, easier-reading dark theme */
+.scroller{
+  scroll-behavior:auto!important;
+  scrollbar-gutter:stable;
+  overscroll-behavior-y:contain;
+}
+.clip{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 180px;
+}
+@media(hover:none){
+  .clip:hover{box-shadow:var(--shadow)!important;transform:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .clip,.clip.new{animation:none!important;transition:none!important}
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#303630;
+  --surface:#3a433b;
+  --surface-2:#454e46;
+  --ink:#edf0e7;
+  --muted:#c2cbbf;
+  --line:rgba(239,244,234,.17);
+  --line-strong:rgba(239,244,234,.25);
+  --accent:#c5ccff;
+  --accent-ink:#252943;
+  --accent-soft:rgba(197,204,255,.16);
+  --rule:rgba(197,204,255,.13);
+  --success:#9adfb5;
+  --danger:#ffb4a9;
+  --shadow:0 1px 2px rgba(12,16,12,.10),0 10px 26px -18px rgba(12,16,12,.28);
+  --shadow-card:0 6px 18px -16px rgba(12,16,12,.30);
+  --surface-raised:#4a554b;
+  --surface-inset:#343d35;
+}
+:root[data-theme="dark"] body{
+  background:
+    radial-gradient(ellipse at 50% -22%,rgba(197,204,255,.065),transparent 55%),
+    var(--bg);
+}
+:root[data-theme="dark"] .scroller,
+:root[data-theme="dark"] .main,
+:root[data-theme="dark"] .list{
+  background-color:var(--bg);
+}
+:root[data-theme="dark"] .hd{
+  background:#343c35!important;
+  border-bottom-color:var(--line);
+}
+:root[data-theme="dark"] .clip{
+  background:var(--surface);
+  border-color:var(--line);
+  box-shadow:var(--shadow-card);
+}
+:root[data-theme="dark"] .clip.pinned{
+  border-color:color-mix(in srgb,var(--accent) 58%,var(--line));
+}
+:root[data-theme="dark"] .txt{
+  color:var(--ink);
+  text-shadow:none;
+}
+:root[data-theme="dark"] .txt a,
+:root[data-theme="dark"] .link-domain{
+  color:var(--accent);
+}
+:root[data-theme="dark"] .txt.code{
+  color:#e9eee4;
+  background:#343d35;
+  border-color:var(--line-strong);
+}
+:root[data-theme="dark"] .gh{
+  color:var(--ink);
+  background:#303630;
+  border-bottom-color:var(--line);
+}
+:root[data-theme="dark"] .gh small,
+:root[data-theme="dark"] .clip-head,
+:root[data-theme="dark"] .clip-time,
+:root[data-theme="dark"] .visibility-tag{
+  color:var(--muted);
+}
+:root[data-theme="dark"] .cmp{
+  background:var(--surface);
+  border-color:var(--line-strong);
+}
+:root[data-theme="dark"] .cmp textarea,
+:root[data-theme="dark"] .edit,
+:root[data-theme="dark"] .search,
+:root[data-theme="dark"] .authbox input{
+  color:var(--ink);
+  background:var(--surface-inset);
+  border-color:var(--line-strong);
+}
+:root[data-theme="dark"] .cmp textarea::placeholder,
+:root[data-theme="dark"] .search-input::placeholder,
+:root[data-theme="dark"] .authbox input::placeholder{
+  color:#c2cbbf;
+  opacity:1;
+}
+:root[data-theme="dark"] .seg,
+:root[data-theme="dark"] .visibility-switch{
+  background:#414b42;
+  border-color:var(--line);
+}
+:root[data-theme="dark"] .seg button[aria-pressed="true"],
+:root[data-theme="dark"] .visibility-option.is-active{
+  color:#f0f2e9;
+  background:#536052;
+  border-color:rgba(239,244,234,.18);
+}
+:root[data-theme="dark"] .ibtn,
+:root[data-theme="dark"] .cb,
+:root[data-theme="dark"] .mb.copy,
+:root[data-theme="dark"] .reader-tools button{
+  color:var(--ink);
+  background:#414b42;
+  border-color:var(--line);
+}
+:root[data-theme="dark"] .reader{
+  color:var(--ink);
+  background:var(--surface);
+}
+:root[data-theme="dark"] .reader-head{
+  background:var(--surface);
+  border-bottom-color:var(--line);
+}
+:root[data-theme="dark"] .reader-body{
+  color:#edf0e7;
+  background:var(--surface);
+  line-height:1.82;
+}
+:root[data-theme="dark"] .authbox{
+  color:var(--ink);
+  background:var(--surface);
+  border-color:var(--line-strong);
+}
+:root[data-theme="dark"] .authbox p,
+:root[data-theme="dark"] .authbox label{
+  color:var(--muted);
+}
+:root[data-theme="dark"] .toast{
+  color:#202720;
+  background:#e1e8dc;
+}
+:root[data-theme="dark"] .empty,
+:root[data-theme="dark"] .subempty,
+:root[data-theme="dark"] .foot{
+  color:var(--muted);
+}
+:root[data-theme="dark"] :focus-visible{
+  outline-color:#d0d5ff;
+}
+@media(max-width:720px){
+  .scroller{-webkit-overflow-scrolling:touch;touch-action:pan-y}
+  .clip{contain-intrinsic-size:auto 150px}
+  :root[data-theme="dark"] .cmp{
+    background:var(--surface);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+}
