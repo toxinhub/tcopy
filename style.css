@@ -5113,3 +5113,107 @@ dialog.confirm-dialog p{margin:0 0 24px;color:var(--muted);font-size:14px}
   .hd>.search>svg{width:18px!important;height:18px!important}
   .hd>.search .search-input{font-size:14px!important}
 }
+
+
+/* v67 — unified button states and a consistent light/dark color system. */
+:root{
+  --accent:#5227BD;--accent-hover:#6339CC;--accent-pressed:#43209F;
+  --accent-ink:#FFFFFF;--accent-soft:#F1ECFA;
+  --danger:#B42332;--danger-soft:#FFF0F1;
+  --success:#168653;--warning:#A66A12;
+  --control-shadow:0 1px 2px rgba(30,22,45,.05),0 3px 10px rgba(30,22,45,.035);
+  --focus-ring:0 0 0 3px color-mix(in srgb,var(--accent) 17%,transparent);
+}
+:root[data-theme=dark]{
+  --accent:#B69AFB;--accent-hover:#C7B3FF;--accent-pressed:#9D7BEF;
+  --accent-ink:#211735;--accent-soft:#342849;
+  --danger:#FF9B9B;--danger-soft:#42272D;
+  --success:#62D39A;--warning:#E8B765;
+  --control-shadow:0 1px 2px rgba(0,0,0,.22),0 4px 12px rgba(0,0,0,.12);
+}
+button{ -webkit-appearance:none;appearance:none; }
+.ibtn,.cb,.mb,.reader-tools button,.confirm-actions button,.authactions button,.mobile-nav>button,.side-signin,.visibility-option{
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease,transform .16s ease,opacity .16s ease!important;
+}
+.hd>.actions .ibtn{
+  border:1px solid var(--line)!important;background:var(--surface)!important;
+  color:var(--ink)!important;box-shadow:none!important;
+}
+.hd>.actions .ibtn:hover{
+  border-color:var(--line-strong)!important;background:var(--surface-2)!important;
+  color:var(--ink)!important;
+}
+.hd>.actions #theme{width:44px;min-width:44px;padding:0!important}
+.hd>.actions #theme svg{width:18px;height:18px;color:var(--muted)}
+.hd>.actions #account .avatar{background:var(--accent-soft);color:var(--accent)}
+#cmp>#paste{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+  border:1px solid var(--line-strong)!important;background:var(--surface)!important;
+  color:var(--ink)!important;box-shadow:var(--control-shadow)!important;
+}
+#cmp>#paste svg{color:var(--muted)}
+#cmp>#paste:hover{border-color:var(--accent)!important;background:var(--accent-soft)!important;color:var(--accent)!important}
+#cmp>#paste:hover svg{color:var(--accent)}
+#cmp>#save{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;
+  border:1px solid var(--accent)!important;background:var(--accent)!important;
+  color:var(--accent-ink)!important;box-shadow:0 3px 9px color-mix(in srgb,var(--accent) 18%,transparent)!important;
+  font-weight:650!important;
+}
+#cmp>#save:hover:not(:disabled){border-color:var(--accent-hover)!important;background:var(--accent-hover)!important;transform:translateY(-1px)}
+#cmp>#save:active:not(:disabled){border-color:var(--accent-pressed)!important;background:var(--accent-pressed)!important;transform:translateY(0)}
+#cmp>#save:disabled{opacity:.48!important;box-shadow:none!important;cursor:not-allowed!important}
+#cmp .k{color:inherit!important;opacity:.78}
+#list .mb{
+  border:1px solid transparent!important;background:transparent!important;
+  color:var(--muted)!important;box-shadow:none!important;
+}
+#list .mb:hover{border-color:var(--line)!important;background:var(--surface-2)!important;color:var(--ink)!important}
+#list .mb.copy{border-color:var(--line)!important;background:var(--surface)!important;color:var(--accent)!important}
+#list .mb.copy:hover{border-color:var(--accent)!important;background:var(--accent-soft)!important;color:var(--accent)!important}
+#list .mb.del{color:var(--danger)!important}
+#list .mb.del:hover{border-color:color-mix(in srgb,var(--danger) 30%,var(--line))!important;background:var(--danger-soft)!important;color:var(--danger)!important}
+#list .mb:active,.reader-tools button:active,.confirm-actions button:active{transform:scale(.97)}
+.sidebar .seg button:hover{background:var(--surface-2);color:var(--ink)}
+.sidebar .seg button[aria-pressed=true]{background:var(--accent-soft)!important;color:var(--accent)!important}
+.side-signin{background:var(--accent)!important;color:var(--accent-ink)!important;box-shadow:var(--control-shadow)}
+.side-signin:hover{background:var(--accent-hover)!important}
+.visibility-switch{border-color:var(--line)!important;background:var(--surface-2)!important}
+.visibility-option{color:var(--muted)!important}
+.visibility-option.is-active{border-color:var(--line)!important;background:var(--surface)!important;color:var(--accent)!important;box-shadow:var(--control-shadow)!important}
+.visibility-option:disabled{opacity:.38!important}
+.mobile-nav{border-color:var(--line)!important;background:color-mix(in srgb,var(--surface) 96%,transparent)!important;box-shadow:0 8px 26px rgba(20,16,30,.10)!important}
+:root[data-theme=dark] .mobile-nav{box-shadow:0 8px 28px rgba(0,0,0,.34)!important}
+.mobile-nav>button{color:var(--muted)!important}
+.mobile-nav>button:hover{background:var(--surface-2)!important;color:var(--ink)!important}
+.mobile-nav>button[aria-pressed=true]{background:var(--accent-soft)!important;color:var(--accent)!important}
+.mobile-nav .mobile-add{background:var(--accent)!important;color:var(--accent-ink)!important;box-shadow:0 3px 10px color-mix(in srgb,var(--accent) 24%,transparent)!important}
+.mobile-nav .mobile-add:hover{background:var(--accent-hover)!important}
+.reader-tools button,.confirm-actions button,.authactions button{
+  border:1px solid var(--line)!important;background:var(--surface)!important;color:var(--ink)!important;
+}
+.reader-tools button:hover,.confirm-actions button:hover,.authactions #authclose:hover{
+  border-color:var(--line-strong)!important;background:var(--surface-2)!important;color:var(--ink)!important;
+}
+.reader-tools .reader-copy,.authactions .primary{
+  border-color:var(--accent)!important;background:var(--accent)!important;color:var(--accent-ink)!important;
+}
+.reader-tools .reader-copy:hover,.authactions .primary:hover{
+  border-color:var(--accent-hover)!important;background:var(--accent-hover)!important;color:var(--accent-ink)!important;
+}
+.confirm-actions #deleteConfirm{
+  border-color:var(--danger)!important;background:var(--danger)!important;color:#fff!important;
+}
+.confirm-actions #deleteConfirm:hover{filter:brightness(.94)}
+:root[data-theme=dark] .confirm-actions #deleteConfirm{color:#241317!important}
+button:focus-visible,.ibtn:focus-visible,.cb:focus-visible,.mb:focus-visible,.visibility-option:focus-visible{
+  outline:0!important;box-shadow:var(--focus-ring)!important;
+}
+button:disabled{cursor:not-allowed}
+@media(hover:none){
+  .hd>.actions .ibtn:hover,#cmp>#paste:hover,#list .mb:hover,.mobile-nav>button:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .ibtn,.cb,.mb,.reader-tools button,.confirm-actions button,.authactions button,.mobile-nav>button,.side-signin,.visibility-option{transition:none!important}
+}
