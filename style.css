@@ -1687,7 +1687,7 @@ header.top.hd>.brand .logo-mark svg{
 }
 header.top.hd>.brand .brand-name{
   display:inline-block;
-  font:700 inherit var(--f-d);
+  font-family:var(--f-d);font-weight:700;
   letter-spacing:-.065em;
 }
 @media(max-width:720px){
