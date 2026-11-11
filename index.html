@@ -25,7 +25,7 @@
  <div class="scroller" id="scroller"><div class="pull-refresh" id="pullRefresh" aria-hidden="true"><span class="pull-spinner"></span><span id="pullLabel">Pull to refresh</span></div>
   <main class="list">
    <form class="cmp" id="cmp">
-    <div class="composer-head"><span class="composer-title">Quick capture</span><label class="visibility-control"><span class="composer-hint">Save as</span><select id="visibility" aria-label="Note visibility"><option value="public">Public</option><option value="private" disabled>Private · Sign in</option></select></label></div>
+    <div class="composer-head"><span class="composer-title">Quick capture</span><div class="visibility-control"><span class="composer-hint">Save as</span><div class="visibility-switch" id="visibilitySwitch" role="group" aria-label="Note visibility"><button type="button" class="visibility-option is-active" data-visibility="public" aria-pressed="true">Public</button><button type="button" class="visibility-option" data-visibility="private" aria-pressed="false" disabled>Private</button></div><select id="visibility" aria-label="Note visibility" tabindex="-1" aria-hidden="true"><option value="public">Public</option><option value="private">Private</option></select></div></div>
     <textarea id="in" rows="1" maxlength="20000" placeholder="Drop a thought, link, or snippet…" aria-label="New note"></textarea>
     <button type="button" class="cb paste-btn" id="paste" aria-label="Paste from clipboard"><span class="paste-icon" aria-hidden="true">↓</span><span class="paste-label">Paste</span></button>
     <button type="submit" class="cb go" id="save" disabled><span class="save-label">Save</span><span class="k">Ctrl ↵</span></button>
