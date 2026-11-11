@@ -751,3 +751,53 @@ dialog.reader::backdrop{background:rgba(9,10,15,.58);backdrop-filter:blur(7px);-
 @media(prefers-reduced-motion:reduce){
   #theme.theme-btn .ui-icon{transition:none}
 }
+
+
+/* v18 — enforce the real header grid and prevent desktop search from staying narrow */
+@media (min-width:1025px){
+  header.top.hd{
+    display:grid!important;
+    grid-template-columns:minmax(150px,1fr) minmax(480px,min(52vw,720px)) minmax(190px,1fr)!important;
+    grid-template-areas:"brand search actions" "filters filters filters"!important;
+    align-items:center!important;
+    column-gap:clamp(14px,1.8vw,26px)!important;
+    row-gap:0!important;
+  }
+  header.top.hd>.brand{grid-area:brand!important;justify-self:start!important;min-width:0}
+  header.top.hd>.search{grid-area:search!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important}
+  header.top.hd>.actions{grid-area:actions!important;justify-self:end!important;min-width:0}
+  header.top.hd>.seg{grid-area:filters!important;justify-self:center!important}
+}
+
+/* Mobile header: explicitly place the four actual direct children */
+@media (max-width:720px){
+  header.top.hd{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-areas:"brand actions" "search search" "filters filters"!important;
+    grid-auto-flow:row!important;
+    align-items:center!important;
+    justify-items:stretch!important;
+    column-gap:10px!important;
+    row-gap:9px!important;
+    min-height:0!important;
+  }
+  header.top.hd>.brand{grid-area:brand!important;justify-self:start!important}
+  header.top.hd>.actions{grid-area:actions!important;justify-self:end!important}
+  header.top.hd>.search{grid-area:search!important;justify-self:stretch!important;width:100%!important;max-width:none!important;min-width:0!important}
+  header.top.hd>.seg{grid-area:filters!important;justify-self:center!important;margin:0!important}
+  header.top.hd .actions .sync{flex:0 0 28px!important}
+  header.top.hd .actions #theme{flex:0 0 40px!important}
+  header.top.hd .actions #account{flex:0 0 40px!important}
+  #theme.theme-btn{display:grid!important;place-items:center!important}
+  #theme.theme-btn .sun-icon,#theme.theme-btn .moon-icon{width:18px!important;height:18px!important}
+}
+@media (max-width:380px){
+  header.top.hd .actions #theme,header.top.hd .actions #account{flex-basis:37px!important;width:37px!important;min-width:37px!important;height:37px!important;min-height:37px!important}
+}
+
+/* Make theme glyph switching independent of inherited button/icon rules */
+#theme.theme-btn .sun-icon{display:block!important;opacity:1;transform:rotate(0) scale(1)}
+#theme.theme-btn .moon-icon{display:none!important;opacity:0}
+:root[data-theme="dark"] #theme.theme-btn .sun-icon{display:none!important;opacity:0}
+:root[data-theme="dark"] #theme.theme-btn .moon-icon{display:block!important;opacity:1;transform:rotate(0) scale(1)}
