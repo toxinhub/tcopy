@@ -11,7 +11,11 @@
 <meta property="og:image" content="https://toxinhub.github.io/tcopy/icon.svg">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./style.css?v=19">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="./style.css?v=20">
 <title>tcopy — Quick notes</title>
 
 <style id="visibility-switch-critical">
@@ -40,7 +44,7 @@
     <button type="button" class="cb paste-btn" id="paste" aria-label="Paste from clipboard"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M12 10v7m-3-3 3 3 3-3"/></svg><span class="paste-label">Paste</span></button>
     <button type="submit" class="cb go" id="save" disabled><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-7 7 7-7 7 7"/></svg><span class="save-label">Save</span><span class="k">Ctrl ↵</span></button>
    </form>
-   <div class="notes-heading"><b>Your notes</b><span id="count" aria-live="polite"></span></div><div class="col" id="list"><div class="empty">Your notebook is ready.</div></div>
+   <div class="notes-heading"><b>Your notes</b><span id="count" aria-live="polite"></span></div><div class="col" id="list" aria-busy="true"><div class="skeleton" role="status" aria-label="Loading your notes"><i></i><i></i><i></i></div><div class="skeleton" aria-hidden="true"><i></i><i></i></div></div>
   </main>
  </div>
  <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -52,5 +56,5 @@
   <form id="authform"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"><div class="authactions"><button type="button" id="authclose">Not now</button><button class="primary" type="submit" id="authsubmit"><span>Sign in</span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button></div></form><p class="authhint" id="authhint" aria-live="polite"></p>
  </div>
 </div>
-<script type="module" src="./app.js?v=19"></script>
+<script type="module" src="./app.js?v=20"></script>
 </body></html>
