@@ -801,3 +801,63 @@ dialog.reader::backdrop{background:rgba(9,10,15,.58);backdrop-filter:blur(7px);-
 #theme.theme-btn .moon-icon{display:none!important;opacity:0}
 :root[data-theme="dark"] #theme.theme-btn .sun-icon{display:none!important;opacity:0}
 :root[data-theme="dark"] #theme.theme-btn .moon-icon{display:block!important;opacity:1;transform:rotate(0) scale(1)}
+
+
+/* v19 — restrained micro-interactions */
+:root{--motion-fast:160ms;--motion-ui:220ms;--motion-smooth:cubic-bezier(.2,.75,.25,1)}
+
+/* Controls respond with a small lift, never a large bounce */
+.ibtn,.cb,.mb,.reader-tools button,.authactions button,.visibility-option,.seg button{
+  transform-origin:center;
+  transition:
+    transform var(--motion-fast) var(--motion-smooth),
+    background-color var(--motion-ui) ease,
+    border-color var(--motion-ui) ease,
+    color var(--motion-ui) ease,
+    box-shadow var(--motion-ui) ease;
+}
+.ibtn .ui-icon,.mb .ui-icon,.cb .ui-icon,.reader-tools .ui-icon{
+  transition:transform var(--motion-ui) var(--motion-smooth),opacity var(--motion-fast) ease;
+}
+.ibtn:hover .ui-icon,.mb:hover .ui-icon{transform:scale(1.06)}
+.ibtn:active,.cb:active,.mb:active,.reader-tools button:active,.authactions button:active,.visibility-option:active,.seg button:active{
+  transform:scale(.965);
+}
+#theme:hover .sun-icon{transform:rotate(18deg)}
+:root[data-theme="dark"] #theme:hover .moon-icon{transform:rotate(-12deg) scale(1.06)}
+
+/* Card hover is desktop-only; touch devices keep a stable surface */
+@media(hover:hover) and (pointer:fine){
+  .clip{transition:transform 220ms var(--motion-smooth),box-shadow 220ms ease,border-color 220ms ease}
+  .clip:hover{transform:translateY(-2px);box-shadow:0 10px 28px -20px rgba(20,18,10,.34),var(--shadow-card)}
+  .clip .tools{transition:opacity 180ms ease}
+}
+@media(hover:none),(pointer:coarse){
+  .clip:hover{transform:none}
+}
+
+/* Modal entrances: short and quiet, with no continuous motion */
+@keyframes tcopyDialogIn{
+  from{opacity:0;transform:translateY(8px) scale(.99)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes tcopySheetIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+dialog.reader[open]{animation:tcopyDialogIn 190ms var(--motion-smooth) both}
+.authveil.open .authbox{animation:tcopyDialogIn 200ms var(--motion-smooth) both}
+@media(max-width:720px){
+  .authveil.open .authbox{animation:tcopySheetIn 210ms var(--motion-smooth) both}
+}
+.toast{transition:opacity 180ms ease,transform 220ms var(--motion-smooth)}
+.visibility-option.is-active,.seg button[aria-pressed="true"]{transition:background-color 180ms ease,color 180ms ease,box-shadow 200ms ease}
+
+/* Honor the device accessibility setting */
+@media(prefers-reduced-motion:reduce){
+  .ibtn,.cb,.mb,.reader-tools button,.authactions button,.visibility-option,.seg button,
+  .ibtn .ui-icon,.mb .ui-icon,.cb .ui-icon,.reader-tools .ui-icon,.clip,.toast,
+  dialog.reader[open],.authveil.open .authbox{
+    animation:none!important;transition:none!important;transform:none!important
+  }
+}
