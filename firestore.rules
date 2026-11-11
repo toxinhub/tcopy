@@ -11,7 +11,7 @@ service cloud.firestore {
 
     match /clips/{clipId} {
       // Missing visibility on legacy documents is intentionally treated as private.
-      allow read: if (resource.data.visibility == 'public') || owns(resource.data) || isAdmin();
+      allow read: if (('visibility' in resource.data && resource.data.visibility == 'public') || owns(resource.data) || isAdmin());
 
       allow create: if signedIn()
         && request.resource.data.ownerUid == request.auth.uid
