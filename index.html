@@ -55,7 +55,7 @@
 
 
  <dialog class="reader" id="reader" aria-labelledby="readerTitle">
-  <div class="reader-head"><b id="readerTitle">Full note</b><div class="reader-tools"><button type="button" class="reader-size" id="readerSmaller" aria-label="Decrease text size" title="Smaller text">A−</button><button type="button" class="reader-size" id="readerLarger" aria-label="Increase text size" title="Larger text">A+</button><button type="button" class="reader-copy" id="readerCopy">Copy</button><button type="button" class="reader-close" id="readerClose" aria-label="Close reader" title="Close">×</button></div></div>
+  <div class="reader-head"><b id="readerTitle">Full note</b><div class="reader-tools"><button type="button" class="reader-size" id="readerSmaller" aria-label="Decrease text size" title="Smaller text">A−</button><button type="button" class="reader-size" id="readerLarger" aria-label="Increase text size" title="Larger text">A+</button><button type="button" class="reader-pin" id="readerPin" aria-pressed="false" hidden>Pin</button><button type="button" class="reader-edit" id="readerEdit" hidden>Edit</button><button type="button" class="reader-copy" id="readerCopy">Copy</button><button type="button" class="reader-close" id="readerClose" aria-label="Close reader" title="Close">×</button></div></div>
   <div class="reader-body" id="readerBody" tabindex="0"></div>
  </dialog>
  <div class="authveil" id="authveil" role="dialog" aria-modal="true" aria-labelledby="authTitle">
@@ -63,5 +63,5 @@
   <form id="authform"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"><div class="authactions"><button type="button" id="authclose">Not now</button><button class="primary" type="submit" id="authsubmit"><span>Sign in</span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button></div></form><p class="authhint" id="authhint" aria-live="polite"></p>
  </div>
 </div>
-<script type="module" src="./app.js?v=62"></script>
+<script type="module" src="./app.js?v=63"></script>
 </body></html>
