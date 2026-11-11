@@ -215,3 +215,98 @@ dialog.reader{display:none;flex-direction:column;width:min(94vw,860px);height:mi
   .clip{padding:11px}
   .mb{min-width:30px;min-height:30px;padding:0 6px}
 }
+
+
+/* Final visual polish — measured rhythm, balanced grid, softer motion */
+:root{
+  --space-unit:4px;
+  --ease-smooth:cubic-bezier(.22,.72,.18,1);
+  --shadow-card:0 1px 2px rgba(24,22,16,.035),0 8px 24px -16px rgba(24,22,16,.22);
+}
+:root[data-theme=dark]{--shadow-card:0 1px 2px rgba(0,0,0,.22),0 10px 26px -18px rgba(0,0,0,.72)}
+.hd{
+  min-height:68px;
+  grid-template-columns:minmax(180px,1fr) minmax(240px,420px) minmax(180px,1fr);
+  column-gap:clamp(12px,2vw,24px);
+  padding-inline:clamp(18px,3.2vw,48px);
+}
+.brand{gap:10px;letter-spacing:-.035em}
+.actions{gap:8px}
+.hd .search{height:43px;border-radius:13px}
+.hd .seg{margin-top:9px}
+.list{width:min(calc(100% - 64px),920px);max-width:920px;padding-top:clamp(42px,5vw,64px)}
+.hero{margin-bottom:clamp(24px,3vw,34px)}
+.hero h1{font-size:clamp(38px,4.8vw,54px);line-height:1.045;letter-spacing:-.05em}
+.hero>p:last-child{max-width:48ch;line-height:1.7}
+.cmp{gap:13px;padding:18px;border-radius:18px;box-shadow:var(--shadow-card)}
+.cmp:focus-within{box-shadow:var(--shadow-card),0 0 0 4px var(--accent-soft)}
+.cmp textarea{min-height:126px;line-height:29px}
+.notes-heading{margin-bottom:13px}
+.grp{margin-bottom:25px}
+.gh{min-height:38px;margin-bottom:11px}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  columns:unset;
+}
+.clip{
+  min-width:0;
+  margin:0;
+  padding:16px;
+  gap:12px;
+  border-radius:15px;
+  box-shadow:var(--shadow-card);
+  transition:transform .22s var(--ease-smooth),border-color .22s,background .22s,box-shadow .22s;
+}
+.clip:hover{transform:translateY(-2px);box-shadow:0 3px 5px rgba(24,22,16,.045),0 14px 30px -20px rgba(24,22,16,.28)}
+.clip.pinned{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.clip-head{min-height:20px}
+.txt{line-height:1.68}
+.card-foot{padding-top:2px}
+.mb{transition:background .2s var(--ease-smooth),color .2s var(--ease-smooth),transform .2s var(--ease-smooth)}
+.cb,.ibtn,.reader-size,.reader-close{transition:transform .2s var(--ease-smooth),background .2s,border-color .2s,box-shadow .2s}
+.cb:active,.ibtn:active,.mb:active{transform:scale(.965)}
+.empty{padding:38px 20px}
+@media(min-width:721px) and (max-width:1024px){
+  .hd{grid-template-columns:minmax(150px,1fr) minmax(220px,380px) minmax(150px,1fr);padding-inline:20px}
+  .list{width:min(calc(100% - 48px),840px)}
+  .cards{gap:12px}
+}
+@media(max-width:720px){
+  .hd{
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"brand actions" "search filters";
+    column-gap:8px;
+    row-gap:8px;
+    padding:calc(8px + env(safe-area-inset-top)) max(13px,env(safe-area-inset-right)) 9px max(13px,env(safe-area-inset-left));
+  }
+  .brand{font-size:18px}
+  .actions{gap:4px}
+  .hd .search{height:39px;border-radius:11px}
+  .hd .seg{margin:0}
+  .hd .seg button{min-height:32px;padding-inline:8px}
+  .list{width:100%;padding:21px 13px calc(112px + env(safe-area-inset-bottom))}
+  .hero{margin-bottom:20px}
+  .hero h1{font-size:clamp(28px,7.6vw,34px);line-height:1.1}
+  .hero>p:last-child{font-size:13px;line-height:1.55}
+  .cmp{gap:7px;padding:8px max(11px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(11px,env(safe-area-inset-left));border-radius:16px 16px 0 0}
+  .cmp textarea{min-height:41px;max-height:min(25dvh,116px);line-height:22px}
+  .cards{grid-template-columns:minmax(0,1fr);gap:10px}
+  .clip{padding:13px;border-radius:14px;gap:9px}
+  .clip:hover{transform:none;box-shadow:var(--shadow-card)}
+  .txt{font-size:14px;line-height:1.62}
+  .card-foot{padding-top:0}
+  .notes-heading{margin-bottom:9px}
+  .grp{margin-bottom:18px}
+  .gh{min-height:33px;margin-bottom:8px}
+}
+@media(max-width:380px){
+  .hd{column-gap:6px;padding-inline:max(10px,env(safe-area-inset-left))}
+  .hd .seg button{padding-inline:6px;font-size:10px}
+  .list{padding-inline:10px}
+  .clip{padding:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .clip:hover{transform:none}
+}
