@@ -3100,3 +3100,41 @@ main.list{
     max-width:var(--reading-width)!important;
   }
 }
+
+/* v48 — restore comfortable desktop composer and note-card proportions */
+@media(min-width:1025px){
+  #cmp{
+    padding:22px!important;
+    border-radius:20px!important;
+    gap:12px!important;
+    margin-bottom:38px!important;
+  }
+  #cmp>#in{
+    min-height:190px!important;
+    padding:22px 24px!important;
+    border-radius:14px!important;
+    font-size:16px!important;
+    line-height:1.8!important;
+  }
+  #cmp>.composer-head{min-height:34px!important;padding-inline:4px!important}
+  #cmp>#paste,#cmp>#save{
+    min-height:42px!important;
+    padding-inline:16px!important;
+  }
+  .notes-heading{min-height:34px!important;margin-bottom:14px!important}
+  #list .clip{
+    padding:22px 12px 20px!important;
+    border-radius:12px!important;
+  }
+  #list .txt{
+    max-width:84ch!important;
+    font-size:16.5px!important;
+    line-height:1.82!important;
+  }
+  #list .grp{margin-bottom:28px!important}
+  #list .gh{min-height:40px!important;margin-bottom:7px!important}
+}
+@media(min-width:1600px){
+  #cmp>#in{min-height:210px!important}
+  #list .clip{padding:24px 14px 22px!important}
+}
