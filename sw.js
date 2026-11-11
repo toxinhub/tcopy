@@ -1,5 +1,21 @@
-const CACHE = "tcopy-shell-v3";
+const CACHE = "tcopy-shell-v4";
 const SHELL = ["./", "./index.html", "./style.css", "./app.js", "./manifest.webmanifest", "./icon.svg"];
+const SHARE_DB = "tcopy-share";
+function storeIncoming(text) {
+  return new Promise((resolve, reject) => {
+    const open = indexedDB.open(SHARE_DB, 1);
+    open.onupgradeneeded = () => {
+      if (!open.result.objectStoreNames.contains("incoming")) open.result.createObjectStore("incoming", { keyPath: "id", autoIncrement: true });
+    };
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const db = open.result, tx = db.transaction("incoming", "readwrite");
+      tx.objectStore("incoming").add({ text, receivedAt: Date.now() });
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    };
+  });
+}
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
   self.skipWaiting();
@@ -10,6 +26,19 @@ self.addEventListener("activate", event => {
 });
 self.addEventListener("fetch", event => {
   const request = event.request, url = new URL(request.url);
+  if (request.method === "POST" && url.pathname === new URL("share/", self.registration.scope).pathname) {
+    event.respondWith((async () => {
+      try {
+        const form = await request.formData();
+        const content = [form.get("title"), form.get("text"), form.get("url")].filter(value => typeof value === "string" && value.trim()).join("\n");
+        if (content) await storeIncoming(content);
+        return Response.redirect(new URL("?shared=1", self.registration.scope), 303);
+      } catch {
+        return Response.redirect(new URL("?shared=1", self.registration.scope), 303);
+      }
+    })());
+    return;
+  }
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
   const isDocument = request.mode === "navigate" || url.pathname.endsWith("/tcopy/") || url.pathname.endsWith("/tcopy/index.html");
   if (isDocument) {
