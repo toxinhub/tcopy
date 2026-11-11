@@ -4844,7 +4844,6 @@ dialog.reader::backdrop{background:rgba(12,15,12,.62)}
     display: grid !important;
     grid-auto-flow: column !important;
     grid-template-rows: repeat(3, minmax(180px, auto)) !important;
-    grid-auto-columns: minmax(260px, 1fr) !important;
     grid-auto-columns: minmax(260px, 300px) !important;
     align-items: start !important;
     align-content: start !important;
