@@ -1632,3 +1632,11 @@ header.top.hd .search-input{min-width:0;width:100%}
   }
   .visibility-option>.ui-icon{width:13px!important;height:13px!important}
 }
+
+
+/* v31 — keep the visibility selector available in the mobile capture dock */
+@media(max-width:720px){
+  .cmp{grid-template-areas:"visibility visibility visibility" "paste ta save"!important;grid-template-rows:auto minmax(40px,auto)!important;}
+  .cmp>.composer-head{display:flex!important;grid-area:visibility!important;grid-column:1/-1!important;align-items:center!important;justify-content:flex-end!important;min-height:28px!important;margin:0!important;padding:0 2px!important;}
+  .cmp>.composer-head .visibility-control{display:flex!important;align-items:center!important;justify-content:flex-end!important;}
+}
