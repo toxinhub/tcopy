@@ -2901,3 +2901,159 @@ header.top.hd>.brand .brand-name{font-family:var(--type-display)!important;font-
   .subempty{font-size:12.5px!important}
   .cmp>#in{font-size:14px!important;line-height:1.58!important}
 }
+
+
+/* v46 — geometric layout pass: centered desktop canvas, compact phone shell */
+:root{
+  --layout-gutter:clamp(18px,3.2vw,48px);
+  --content-width:820px;
+  --reading-width:760px;
+  --space-unit:4px;
+}
+header.top.hd{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(300px,min(42vw,560px)) minmax(0,1fr)!important;
+  grid-template-rows:42px 30px!important;
+  grid-template-areas:"brand search actions" "filters filters filters"!important;
+  align-items:center!important;
+  column-gap:clamp(12px,2vw,24px)!important;
+  row-gap:7px!important;
+  min-height:0!important;
+  padding:10px var(--layout-gutter) 9px!important;
+}
+header.top.hd>.brand{grid-area:brand!important;justify-self:start!important;min-width:0!important;margin:0!important}
+header.top.hd>.search{grid-area:search!important;justify-self:center!important;width:100%!important;max-width:560px!important;min-width:0!important;margin:0!important}
+header.top.hd>.actions{grid-area:actions!important;justify-self:end!important;min-width:0!important;gap:7px!important}
+header.top.hd>.seg{grid-area:filters!important;justify-self:center!important;align-self:center!important;width:max-content!important;margin:0!important}
+header.top.hd>.seg button{min-width:58px!important;min-height:30px!important;padding:0 12px!important}
+main.list{
+  width:min(calc(100% - 2 * var(--layout-gutter)),var(--content-width))!important;
+  max-width:var(--content-width)!important;
+  margin-inline:auto!important;
+  padding:34px 0 64px!important;
+}
+#cmp{
+  width:min(100%,var(--reading-width))!important;
+  margin:0 auto 28px!important;
+  padding:14px!important;
+  border-radius:16px!important;
+}
+.notes-heading{
+  width:min(100%,var(--reading-width))!important;
+  margin:0 auto 10px!important;
+  min-height:28px;
+}
+#list{
+  width:min(100%,var(--reading-width))!important;
+  max-width:var(--reading-width)!important;
+  margin-inline:auto!important;
+}
+#list>.col{width:100%!important;min-width:0!important}
+#list .grp{margin-bottom:20px!important}
+#list .gh{min-height:34px!important;padding-inline:4px!important}
+#list .clip{padding:15px 4px 14px!important}
+#list .txt{max-width:74ch}
+@media(min-width:1200px){
+  main.list{padding-top:40px!important}
+  #cmp{margin-bottom:32px!important}
+}
+@media(min-width:721px) and (max-width:1024px){
+  header.top.hd{
+    grid-template-columns:minmax(0,1fr) minmax(260px,42vw) minmax(0,1fr)!important;
+    column-gap:14px!important;
+    padding-inline:20px!important;
+  }
+  header.top.hd>.actions{gap:5px!important}
+  header.top.hd>.actions .ibtn{min-width:38px!important;min-height:38px!important;padding-inline:9px!important}
+  main.list{width:min(calc(100% - 40px),800px)!important;padding-top:26px!important}
+}
+@media(max-width:720px){
+  /* Keep the phone experience to two quiet header rows and one thumb-reach dock. */
+  header.top.hd{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:32px 34px!important;
+    grid-template-areas:"brand actions" "search filters"!important;
+    align-items:center!important;
+    column-gap:8px!important;
+    row-gap:6px!important;
+    padding:calc(6px + env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 7px max(10px,env(safe-area-inset-left))!important;
+  }
+  header.top.hd>.brand{gap:7px!important;font-size:17px!important}
+  header.top.hd>.brand .logo-mark{width:27px!important;height:27px!important;border-radius:8px!important}
+  header.top.hd>.actions{gap:4px!important}
+  header.top.hd>.actions .sync{width:7px!important;height:7px!important;min-width:7px!important;margin:0 2px 0 0!important;overflow:hidden!important}
+  header.top.hd>.actions .sync #st{display:none!important}
+  header.top.hd>.actions .ibtn{
+    display:inline-grid!important;place-items:center!important;
+    width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;
+    padding:0!important;border-radius:9px!important;
+  }
+  header.top.hd>.actions .account-btn #accountLabel{display:none!important}
+  header.top.hd>.search{
+    width:100%!important;height:34px!important;min-width:0!important;
+    padding:0 9px!important;gap:7px!important;border-radius:9px!important;
+  }
+  header.top.hd>.search svg{width:15px!important;height:15px!important}
+  header.top.hd>.search .search-input{min-width:0!important;font-size:13px!important}
+  header.top.hd>.seg{
+    justify-self:end!important;align-self:center!important;
+    gap:1px!important;padding:2px!important;border-radius:9px!important;
+  }
+  header.top.hd>.seg button{
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    min-width:0!important;min-height:29px!important;padding:0 6px!important;
+    gap:3px!important;border-radius:7px!important;font-size:10px!important;
+  }
+  header.top.hd>.seg button svg{display:none!important}
+  main.list{
+    width:100%!important;max-width:none!important;
+    padding:14px 11px calc(108px + env(safe-area-inset-bottom))!important;
+  }
+  #cmp{
+    left:8px!important;right:8px!important;
+    bottom:calc(7px + env(safe-area-inset-bottom))!important;
+    width:auto!important;max-width:none!important;
+    grid-template-columns:36px minmax(0,1fr) 38px!important;
+    grid-template-areas:"visibility visibility visibility" "paste ta save"!important;
+    grid-template-rows:auto minmax(38px,auto)!important;
+    gap:6px!important;padding:7px!important;border-radius:15px!important;
+    margin:0!important;
+  }
+  #cmp>.composer-head{grid-area:visibility!important;min-height:24px!important;justify-content:flex-end!important;padding:0 2px!important}
+  #cmp>.composer-head .visibility-control{gap:0!important}
+  #cmp>.composer-head .visibility-switch{gap:2px!important;padding:2px!important;border-radius:9px!important}
+  #cmp>.composer-head .visibility-option{
+    min-width:27px!important;width:27px!important;height:25px!important;min-height:25px!important;
+    padding:0!important;border-radius:7px!important;
+  }
+  #cmp>.composer-head .visibility-option span{display:none!important}
+  #cmp>.composer-head .visibility-option svg{width:13px!important;height:13px!important}
+  #cmp>#in{
+    grid-area:ta!important;min-width:0!important;width:100%!important;
+    min-height:38px!important;max-height:min(24dvh,112px)!important;
+    padding:8px 10px!important;border-radius:10px!important;
+    font-size:14px!important;line-height:1.5!important;
+  }
+  #cmp>#paste{grid-area:paste!important;width:36px!important;min-width:36px!important;height:36px!important;min-height:36px!important;padding:0!important;border-radius:10px!important}
+  #cmp>#paste .paste-label{display:none!important}
+  #cmp>#save{grid-area:save!important;width:38px!important;min-width:38px!important;height:38px!important;min-height:38px!important;padding:0!important;border-radius:11px!important}
+  #cmp>#save .save-label,#cmp>#save .k{display:none!important}
+  .notes-heading{width:100%!important;margin:0 auto 7px!important;min-height:24px!important;font-size:14px!important}
+  #list{width:100%!important;max-width:none!important}
+  #list .grp{margin-bottom:13px!important}
+  #list .gh{min-height:30px!important;margin-bottom:4px!important;padding-inline:2px!important;font-size:11px!important}
+  #list .clip{padding:11px 2px!important;border-radius:0!important;box-shadow:none!important}
+  #list .txt{font-size:15px!important;line-height:1.68!important}
+  #list .meta{font-size:10px!important}
+  #list .mb{min-width:32px!important;min-height:32px!important;padding-inline:7px!important}
+  #list .mb.copy{padding-inline:9px!important}
+  .toast{bottom:calc(102px + env(safe-area-inset-bottom))!important}
+}
+@media(max-width:380px){
+  header.top.hd{column-gap:5px!important;padding-inline:max(8px,env(safe-area-inset-left))!important}
+  header.top.hd>.actions{gap:2px!important}
+  header.top.hd>.actions .ibtn{width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important}
+  header.top.hd>.seg button{padding-inline:5px!important;font-size:9px!important}
+  main.list{padding-inline:9px!important}
+  #cmp{left:7px!important;right:7px!important}
+}
