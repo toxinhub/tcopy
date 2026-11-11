@@ -891,3 +891,48 @@ dialog.reader[open]{animation:tcopyDialogIn 190ms var(--motion-smooth) both}
 @media(prefers-reduced-motion:reduce){
   .skeleton i{animation:none!important}
 }
+
+
+/* v21 FIX — remove the actual circular sync wrapper on mobile */
+@media (max-width:720px){
+  header.top.hd .actions .sync,
+  header.top.hd .actions .sync[aria-live]{
+    display:flex!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:0!important;
+    margin:0 2px 0 0!important;
+    border:0!important;
+    outline:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+  }
+  header.top.hd .actions .sync .dot,
+  header.top.hd .actions .sync #dot{
+    display:block!important;
+    flex:0 0 7px!important;
+    width:7px!important;
+    min-width:7px!important;
+    max-width:7px!important;
+    height:7px!important;
+    min-height:7px!important;
+    max-height:7px!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    outline:0!important;
+    border-radius:50%!important;
+    background:var(--success)!important;
+    box-shadow:none!important;
+    animation:none!important;
+    filter:none!important;
+  }
+  header.top.hd .actions .sync #dot.busy{background:#c58b3a!important}
+  header.top.hd .actions .sync #dot.off{background:var(--danger)!important}
+}
