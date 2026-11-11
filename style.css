@@ -1699,3 +1699,29 @@ header.top.hd>.brand .brand-name{
   header.top.hd>.brand{font-size:22px!important}
   header.top.hd>.brand .logo-mark{width:33px!important;height:33px!important}
 }
+
+
+/* v34 — tighter mobile Public / Private control */
+@media(max-width:720px){
+  .cmp>.composer-head{min-height:24px!important;padding:0 1px!important}
+  .visibility-control{gap:0!important}
+  .visibility-switch{
+    gap:1px!important;
+    padding:1px!important;
+    border-radius:8px!important;
+  }
+  .visibility-option{
+    width:24px!important;min-width:24px!important;max-width:24px!important;
+    height:24px!important;min-height:24px!important;
+    padding:0!important;border-radius:6px!important;
+  }
+  .visibility-option>.ui-icon{width:13px!important;height:13px!important}
+}
+@media(max-width:380px){
+  .visibility-switch{gap:1px!important;padding:1px!important;border-radius:7px!important}
+  .visibility-option{
+    width:22px!important;min-width:22px!important;max-width:22px!important;
+    height:22px!important;min-height:22px!important;border-radius:5px!important;
+  }
+  .visibility-option>.ui-icon{width:12px!important;height:12px!important}
+}
