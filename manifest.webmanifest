@@ -1,14 +1,19 @@
 {
   "id": "/tcopy/",
-  "name": "tcopy — Your quick little notebook",
+  "name": "tcopy — Paste here. Grab it anywhere.",
   "short_name": "tcopy",
-  "description": "A little notebook for the things you want to keep across your devices.",
+  "description": "A clipboard-first notebook for the things you want to keep across devices.",
   "start_url": "/tcopy/",
   "scope": "/tcopy/",
   "display": "standalone",
   "background_color": "#f8f7f3",
   "theme_color": "#f8f7f3",
   "icons": [
-    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }
