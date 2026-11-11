@@ -1227,3 +1227,45 @@ body{
   header.top.hd .actions .sync #dot.off{background:var(--danger)!important}
   header.top.hd .actions .sync #st{display:none!important}
 }
+
+
+/* v25 — gently brighter dark theme, with lifted surfaces */
+:root[data-theme="dark"]{
+  --bg:#242824;
+  --surface:#303730;
+  --surface-2:#394139;
+  --ink:#f2f4ed;
+  --muted:#c0c8bb;
+  --line:rgba(240,246,235,.15);
+  --line-strong:rgba(240,246,235,.23);
+  --accent:#b5bdff;
+  --accent-ink:#1c2040;
+  --accent-soft:rgba(181,189,255,.17);
+  --rule:rgba(181,189,255,.12);
+  --success:#82dba8;
+  --danger:#ffaaa0;
+  --shadow:0 1px 2px rgba(0,0,0,.14),0 14px 34px -18px rgba(0,0,0,.34);
+  --shadow-card:0 8px 24px -18px rgba(0,0,0,.4);
+  --surface-raised:#424a42;
+  --surface-inset:#2a312a;
+}
+:root[data-theme="dark"] .cmp{
+  background:linear-gradient(155deg,#343c34,#303730);
+}
+:root[data-theme="dark"] .seg,
+:root[data-theme="dark"] .visibility-switch{
+  background:#3b443b;
+}
+:root[data-theme="dark"] .seg button[aria-pressed="true"],
+:root[data-theme="dark"] .visibility-option.is-active{
+  background:#465046;
+}
+:root[data-theme="dark"] .ibtn,
+:root[data-theme="dark"] .cb,
+:root[data-theme="dark"] .mb.copy,
+:root[data-theme="dark"] .reader-tools button{
+  background:#343d34;
+}
+:root[data-theme="dark"] .authbox{
+  background:linear-gradient(155deg,#394239,#303730);
+}
