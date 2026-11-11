@@ -1968,3 +1968,158 @@ header.top.hd>.brand .brand-name{
 @media(prefers-reduced-motion:reduce){
   .cmp textarea{transition:none}
 }
+
+
+/* v37 — editorial-style composer with a floating mobile capture dock */
+.cmp{
+  isolation:isolate;
+  overflow:visible;
+  border:1px solid color-mix(in srgb,var(--accent) 13%,var(--line-strong));
+  background:
+    radial-gradient(ellipse at 92% 0%,color-mix(in srgb,var(--accent-soft) 58%,transparent),transparent 42%),
+    var(--surface);
+  box-shadow:0 12px 34px -24px rgba(35,39,80,.24),0 2px 7px rgba(35,39,80,.035);
+}
+.cmp::before{
+  content:"";
+  position:absolute;
+  z-index:1;
+  top:-1px;
+  left:22px;
+  right:22px;
+  height:2px;
+  border-radius:0 0 99px 99px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 68%,transparent),transparent);
+  opacity:.7;
+  pointer-events:none;
+}
+.cmp:focus-within{
+  border-color:color-mix(in srgb,var(--accent) 42%,var(--line-strong));
+  box-shadow:0 14px 38px -23px color-mix(in srgb,var(--accent) 24%,transparent),0 0 0 3px var(--accent-soft);
+}
+.cmp>.composer-head{
+  min-height:28px;
+  padding:0 2px;
+}
+.cmp .visibility-switch{
+  padding:3px;
+  gap:3px;
+  border-radius:12px;
+}
+.cmp .visibility-option{
+  min-height:30px;
+  padding:0 11px;
+  border-radius:9px;
+  font-size:11px;
+  transition:background .18s ease,color .18s ease,transform .18s ease;
+}
+.cmp .visibility-option .ui-icon{width:14px;height:14px}
+.cmp textarea{
+  min-height:154px;
+  padding:17px 18px;
+  border-radius:16px;
+  background:
+    linear-gradient(135deg,color-mix(in srgb,var(--surface-raised) 82%,transparent),var(--surface-inset));
+  box-shadow:inset 0 1px 2px rgba(20,24,18,.025);
+}
+.cmp textarea:focus{
+  background:var(--surface-raised);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 14%,transparent),0 5px 16px -14px var(--accent);
+}
+.cmp .composer-actions{padding:0 1px}
+.cmp .paste-btn{
+  border-color:var(--line);
+  background:var(--surface-2);
+  color:var(--muted);
+}
+.cmp .paste-btn:hover{
+  border-color:var(--accent);
+  background:var(--accent-soft);
+  color:var(--accent);
+}
+.cmp #save{
+  min-width:104px;
+  box-shadow:0 5px 14px -8px color-mix(in srgb,var(--accent) 75%,transparent);
+}
+:root[data-theme="dark"] .cmp{
+  border-color:rgba(197,204,255,.17);
+  background:
+    radial-gradient(ellipse at 92% 0%,rgba(197,204,255,.10),transparent 44%),
+    var(--surface);
+  box-shadow:0 12px 34px -24px rgba(0,0,0,.36),0 2px 7px rgba(0,0,0,.12);
+}
+:root[data-theme="dark"] .cmp::before{
+  background:linear-gradient(90deg,transparent,rgba(197,204,255,.62),transparent);
+}
+:root[data-theme="dark"] .cmp textarea{
+  background:linear-gradient(135deg,#394239,#343d35);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.12);
+}
+:root[data-theme="dark"] .cmp textarea:focus{background:#414a42}
+:root[data-theme="dark"] .cmp .paste-btn{background:#414b42}
+@media(max-width:720px){
+  .cmp{
+    left:12px;
+    right:12px;
+    bottom:calc(10px + env(safe-area-inset-bottom));
+    width:auto;
+    padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    gap:7px;
+    background:color-mix(in srgb,var(--surface) 97%,transparent);
+    box-shadow:0 12px 36px -15px rgba(22,27,20,.22),0 2px 8px rgba(22,27,20,.06);
+  }
+  .cmp::before{left:28px;right:28px;opacity:.55}
+  .cmp>.composer-head{
+    min-height:25px;
+    padding:0 2px;
+    justify-content:flex-end;
+  }
+  .cmp .visibility-switch{padding:2px;gap:2px;border-radius:10px}
+  .cmp .visibility-option{
+    min-width:26px;
+    width:26px;
+    max-width:26px;
+    min-height:26px;
+    height:26px;
+    padding:0;
+    border-radius:8px;
+  }
+  .cmp textarea{
+    min-height:48px;
+    max-height:min(28dvh,156px);
+    padding:11px 13px;
+    border-radius:13px;
+    font-size:15px;
+    line-height:1.55;
+  }
+  .cmp .composer-actions{gap:8px}
+  .cmp .paste-btn{
+    width:40px;
+    min-width:40px;
+    height:40px;
+    min-height:40px;
+    border-radius:12px;
+  }
+  .cmp #save{
+    width:40px;
+    min-width:40px;
+    height:40px;
+    min-height:40px;
+    border-radius:13px;
+  }
+  :root[data-theme="dark"] .cmp{
+    background:rgba(58,67,59,.98);
+    box-shadow:0 12px 36px -15px rgba(0,0,0,.42),0 2px 8px rgba(0,0,0,.18);
+  }
+}
+@media(max-width:380px){
+  @media(max-width:720px){
+    .cmp{left:8px;right:8px;padding-inline:8px}
+    .cmp textarea{font-size:14px;padding-inline:11px}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cmp,.cmp::before,.cmp .visibility-option{transition:none}
+}
