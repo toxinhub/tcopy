@@ -1,5 +1,5 @@
-const CACHE = "tcopy-shell-v21";
-const SHELL = ["./", "./index.html", "./style.css?v=21", "./app.js?v=21", "./manifest.webmanifest", "./icon.svg"];
+const CACHE = "tcopy-shell-v22";
+const SHELL = ["./", "./index.html", "./style.css?v=22", "./app.js?v=22", "./manifest.webmanifest", "./icon.svg"];
 const SHARE_DB = "tcopy-share";
 function storeIncoming(text) {
   return new Promise((resolve, reject) => {
