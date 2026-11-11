@@ -2123,3 +2123,136 @@ header.top.hd>.brand .brand-name{
 @media(prefers-reduced-motion:reduce){
   .cmp,.cmp::before,.cmp .visibility-option{transition:none}
 }
+
+
+/* v38 — hard-target the real composer elements; override legacy layout rules */
+#cmp{
+  position:relative!important;
+  display:grid!important;
+  gap:13px!important;
+  padding:18px!important;
+  border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line-strong))!important;
+  border-radius:22px!important;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--accent-soft) 46%,var(--surface)),var(--surface) 58%)!important;
+  box-shadow:0 12px 32px -24px color-mix(in srgb,var(--accent) 35%,transparent),0 2px 8px rgba(20,24,18,.045)!important;
+}
+#cmp::before{
+  content:"";
+  position:absolute;
+  top:0;left:22px;right:22px;height:2px;
+  border-radius:0 0 8px 8px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:.72;pointer-events:none;
+}
+#cmp>.composer-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  min-height:30px!important;
+  padding:0 2px!important;
+}
+#cmp>.composer-head .visibility-switch{
+  padding:3px!important;
+  border-radius:12px!important;
+  background:var(--surface-2)!important;
+}
+#cmp>.composer-head .visibility-option{
+  min-height:30px!important;
+  border-radius:9px!important;
+}
+#cmp>#in{
+  display:block!important;
+  width:100%!important;
+  min-height:158px!important;
+  max-height:420px!important;
+  padding:17px 18px!important;
+  border:1px solid var(--line-strong)!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,var(--surface-raised),var(--surface-inset))!important;
+  background-image:none!important;
+  color:var(--ink)!important;
+  font:400 15px/1.8 var(--f-b)!important;
+  letter-spacing:0!important;
+  resize:vertical!important;
+  box-shadow:inset 0 1px 2px rgba(20,24,18,.035)!important;
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease!important;
+}
+#cmp>#in::placeholder{color:var(--muted)!important;opacity:.9!important}
+#cmp>#in:focus{
+  border-color:var(--accent)!important;
+  background:var(--surface)!important;
+  box-shadow:0 0 0 3px var(--accent-soft)!important;
+  outline:none!important;
+}
+#cmp>#paste,#cmp>#save{
+  min-height:42px!important;
+  border-radius:12px!important;
+}
+#cmp>#paste{
+  justify-self:start!important;
+  padding-inline:15px!important;
+  background:var(--surface-2)!important;
+}
+#cmp>#save{
+  justify-self:end!important;
+  min-width:104px!important;
+  box-shadow:0 6px 16px -9px var(--accent)!important;
+}
+:root[data-theme="dark"] #cmp{
+  border-color:rgba(197,204,255,.28)!important;
+  background:linear-gradient(145deg,rgba(197,204,255,.12),var(--surface) 58%)!important;
+  box-shadow:0 12px 32px -24px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.18)!important;
+}
+:root[data-theme="dark"] #cmp>#in{
+  background:linear-gradient(145deg,#465047,#3b443c)!important;
+  border-color:rgba(239,244,234,.22)!important;
+  color:#edf0e7!important;
+}
+:root[data-theme="dark"] #cmp>#in:focus{background:#4a554b!important}
+@media(max-width:720px){
+  #cmp{
+    position:fixed!important;
+    left:10px!important;right:10px!important;
+    bottom:calc(9px + env(safe-area-inset-bottom))!important;
+    width:auto!important;
+    grid-template-columns:36px minmax(0,1fr) 40px!important;
+    grid-template-areas:"visibility visibility visibility" "paste ta save"!important;
+    grid-template-rows:auto minmax(42px,auto)!important;
+    gap:7px 7px!important;
+    padding:10px!important;
+    border:1px solid var(--line-strong)!important;
+    border-radius:20px!important;
+    background:color-mix(in srgb,var(--surface) 98%,transparent)!important;
+    box-shadow:0 14px 36px -15px rgba(20,24,18,.24),0 2px 8px rgba(20,24,18,.08)!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  }
+  #cmp>.composer-head{grid-area:visibility!important;grid-column:1/-1!important;min-height:26px!important}
+  #cmp>#in{
+    grid-area:ta!important;
+    min-height:44px!important;max-height:min(28dvh,156px)!important;
+    padding:10px 12px!important;border-radius:13px!important;
+    font-size:14px!important;line-height:1.55!important;
+    resize:none!important;overflow-y:auto!important;
+  }
+  #cmp>#paste{
+    grid-area:paste!important;justify-self:stretch!important;
+    width:36px!important;min-width:36px!important;height:40px!important;
+    padding:0!important;display:inline-flex!important;
+  }
+  #cmp>#save{
+    grid-area:save!important;justify-self:stretch!important;
+    width:40px!important;min-width:40px!important;height:40px!important;
+    padding:0!important;display:inline-flex!important;
+  }
+  #cmp>#save .save-label,#cmp>#save .k{display:none!important}
+  :root[data-theme="dark"] #cmp{
+    background:#3a433b!important;
+    border-color:rgba(197,204,255,.28)!important;
+    box-shadow:0 14px 36px -15px rgba(0,0,0,.48)!important;
+  }
+}
+@media(max-width:380px){
+  #cmp{left:7px!important;right:7px!important;padding:8px!important}
+  #cmp>#paste{width:34px!important;min-width:34px!important}
+  #cmp>#save{width:38px!important;min-width:38px!important}
+}
