@@ -2285,3 +2285,126 @@ header.top.hd>.brand .brand-name{
   #cmp>#paste{grid-area:paste!important;grid-column:1!important;width:36px!important;min-width:36px!important;padding:0!important}
   #cmp>#save{grid-area:save!important;grid-column:3!important;width:40px!important;min-width:40px!important;padding:0!important}
 }
+
+
+/* v40 — unified, accessible button color system */
+:root{
+  --btn-primary:#4654bd;
+  --btn-primary-hover:#3947ad;
+  --btn-primary-ink:#ffffff;
+  --btn-secondary:#eeece5;
+  --btn-secondary-ink:#45483f;
+  --btn-active-bg:#e7e9ff;
+  --btn-active-ink:#3947ad;
+  --btn-danger-bg:#fff0ed;
+  --btn-danger-ink:#a9362e;
+  --btn-success-bg:#e8f5ed;
+  --btn-success-ink:#236c49;
+}
+:root[data-theme="dark"]{
+  --btn-primary:#c5ccff;
+  --btn-primary-hover:#d5daff;
+  --btn-primary-ink:#252943;
+  --btn-secondary:#465047;
+  --btn-secondary-ink:#e7ece4;
+  --btn-active-bg:rgba(197,204,255,.20);
+  --btn-active-ink:#d3d8ff;
+  --btn-danger-bg:rgba(255,180,169,.13);
+  --btn-danger-ink:#ffb4a9;
+  --btn-success-bg:rgba(154,223,181,.14);
+  --btn-success-ink:#9adfb5;
+}
+/* Neutral controls */
+header.top.hd .actions .ibtn,
+#cmp>#paste,
+.seg button,
+.visibility-option,
+.mb:not(.copy):not(.del):not(.pin),
+.reader-tools button:not(.reader-copy):not(.reader-close){
+  color:var(--btn-secondary-ink)!important;
+  background:var(--btn-secondary)!important;
+  border:1px solid var(--line-strong)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.20),0 1px 2px rgba(0,0,0,.035)!important;
+}
+header.top.hd .actions .ibtn:hover,
+#cmp>#paste:hover,
+.seg button:hover,
+.visibility-option:hover:not(:disabled),
+.mb:not(.copy):not(.del):not(.pin):hover{
+  color:var(--btn-active-ink)!important;
+  background:var(--btn-active-bg)!important;
+  border-color:color-mix(in srgb,var(--accent) 42%,var(--line-strong))!important;
+}
+/* Selected states */
+.seg button[aria-pressed="true"],
+.visibility-option.is-active{
+  color:var(--btn-active-ink)!important;
+  background:var(--btn-active-bg)!important;
+  border-color:color-mix(in srgb,var(--accent) 38%,var(--line-strong))!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent),0 1px 3px rgba(0,0,0,.06)!important;
+}
+.visibility-option[data-visibility="private"].is-active{
+  color:var(--btn-success-ink)!important;
+  background:var(--btn-success-bg)!important;
+  border-color:color-mix(in srgb,var(--success) 35%,var(--line-strong))!important;
+}
+.visibility-option:disabled{
+  color:var(--muted)!important;
+  background:var(--surface-2)!important;
+  border-color:var(--line)!important;
+  opacity:.48!important;
+  box-shadow:none!important;
+}
+/* Primary save/action buttons */
+#cmp>#save,
+.cb.go,
+.authactions .primary,
+.reader-tools .reader-copy{
+  color:var(--btn-primary-ink)!important;
+  background:linear-gradient(145deg,var(--btn-primary),var(--btn-primary-hover))!important;
+  border:1px solid transparent!important;
+  box-shadow:0 5px 13px -7px color-mix(in srgb,var(--btn-primary) 65%,transparent),inset 0 1px 0 rgba(255,255,255,.20)!important;
+}
+#cmp>#save:hover:not(:disabled),
+.cb.go:hover:not(:disabled),
+.authactions .primary:hover,
+.reader-tools .reader-copy:hover{
+  color:var(--btn-primary-ink)!important;
+  background:var(--btn-primary-hover)!important;
+  box-shadow:0 7px 16px -7px color-mix(in srgb,var(--btn-primary) 70%,transparent)!important;
+}
+#cmp>#save:disabled,
+.cb.go:disabled{
+  color:var(--muted)!important;
+  background:var(--surface-2)!important;
+  border-color:var(--line)!important;
+  box-shadow:none!important;
+  opacity:.72!important;
+}
+/* Destructive and success feedback */
+.mb.del,.reader-tools .reader-close{
+  color:var(--btn-danger-ink)!important;
+  background:var(--btn-danger-bg)!important;
+  border-color:color-mix(in srgb,var(--danger) 28%,var(--line))!important;
+}
+.mb.pin.on,.mb.copy.is-copied{
+  color:var(--btn-success-ink)!important;
+  background:var(--btn-success-bg)!important;
+  border-color:color-mix(in srgb,var(--success) 38%,var(--line))!important;
+}
+:root[data-theme="dark"] header.top.hd .actions .ibtn,
+:root[data-theme="dark"] #cmp>#paste,
+:root[data-theme="dark"] .seg button,
+:root[data-theme="dark"] .visibility-option,
+:root[data-theme="dark"] .mb:not(.copy):not(.del):not(.pin),
+:root[data-theme="dark"] .reader-tools button:not(.reader-copy):not(.reader-close){
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 1px 2px rgba(0,0,0,.12)!important;
+}
+@media(hover:none){
+  header.top.hd .actions .ibtn:hover,#cmp>#paste:hover,.seg button:hover,
+  .visibility-option:hover:not(:disabled){transform:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  header.top.hd .actions .ibtn,#cmp>#paste,#cmp>#save,.seg button,
+  .visibility-option,.mb,.reader-tools button{transition:none!important}
+}
