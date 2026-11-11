@@ -4834,3 +4834,38 @@ dialog.reader::backdrop{background:rgba(12,15,12,.62)}
   dialog.reader[open]{animation:none!important}
   .reader-tools button{transition:none!important}
 }
+
+
+/* Desktop-only note grid: match m}note's responsive card-grid geometry.
+   Tablet and mobile retain their existing layout and breakpoints unchanged. */
+@media (min-width:1025px) {
+  #list .cards {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    align-items: start !important;
+    gap: 18px !important;
+    columns: unset !important;
+    width: 100%;
+    min-width: 0;
+  }
+  #list .cards > .clip {
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    align-self: start;
+    margin: 0;
+    break-inside: auto;
+  }
+}
+@media (min-width:1025px) and (max-width:1279px) {
+  #list .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+@media (min-width:1600px) {
+  #list .cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+}
