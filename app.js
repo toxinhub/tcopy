@@ -96,7 +96,7 @@ async function consumeSharedText(){if(!new URLSearchParams(location.search).has(
 try{const theme=localStorage.getItem("tcopy-theme");if(theme)document.documentElement.dataset.theme=theme;const draft=localStorage.getItem("tcopy-draft");if(draft)$("in").value=draft}catch{}updateComposer();consumeSharedText();
 document.addEventListener("keydown",e=>{const typing=e.target.matches?.("input,textarea");if(e.key==="/"&&!typing){e.preventDefault();$("q").focus()}if(e.key==="Escape"&&e.target===$("q")){$("q").value="";qText="";e.target.blur();render()}});
 window.addEventListener("online",()=>{if(user)setSync("busy","Reconnecting…")});window.addEventListener("offline",()=>setSync("off","You're offline"));
-if("serviceWorker" in navigator && location.protocol!=="file:")window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+if("serviceWorker" in navigator && location.protocol!=="file:")window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{}));
 
 /* Keep the capture dock inside the visible viewport when the mobile keyboard opens. */
 (function setupVisualViewport(){
