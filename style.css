@@ -2513,3 +2513,67 @@ header.top.hd .actions .ibtn:hover,
 @media(prefers-reduced-motion:reduce){
   #cmp>#in{transition:none!important}
 }
+
+
+/* v42 — restore background depth and give composer actions distinct palettes */
+:root{
+  --composer-panel:#f0eee6;--composer-field:#e7e6dd;--composer-field-focus:#fbfaf5;
+  --composer-field-border:rgba(55,64,49,.22);--composer-field-placeholder:#666b60;
+  --composer-focus-ring:rgba(70,84,189,.17);
+  --paste-bg:#d9eeea;--paste-ink:#155e56;--paste-border:#a9d4cc;--paste-hover:#c8e7e1;
+  --public-bg:#e1e8ff;--public-ink:#3449a5;--public-border:#b9c7fa;
+  --private-bg:#f1e5ff;--private-ink:#7040a0;--private-border:#d7b9f3;
+}
+:root[data-theme="dark"]{
+  --composer-panel:#39443b;--composer-field:#2e3931;--composer-field-focus:#414d43;
+  --composer-field-border:rgba(235,242,230,.25);--composer-field-placeholder:#c2cbbf;
+  --composer-focus-ring:rgba(197,204,255,.22);
+  --paste-bg:#244d46;--paste-ink:#b9eee2;--paste-border:#39776c;--paste-hover:#2c5c52;
+  --public-bg:#303e70;--public-ink:#dce3ff;--public-border:#5366a8;
+  --private-bg:#513b68;--private-ink:#f0dcff;--private-border:#79599a;
+}
+#cmp{
+  background:radial-gradient(ellipse at 92% 0%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 42%),linear-gradient(145deg,color-mix(in srgb,var(--composer-panel) 92%,var(--surface-2)),var(--composer-panel) 72%)!important;
+  border-color:color-mix(in srgb,var(--accent) 26%,var(--line-strong))!important;
+  box-shadow:0 13px 30px -22px rgba(35,43,32,.34),0 3px 9px rgba(35,43,32,.07)!important;
+}
+#cmp>#in{background:var(--composer-field)!important;border-color:var(--composer-field-border)!important}
+#cmp>#in:focus{background:var(--composer-field-focus)!important}
+#cmp>#paste{
+  color:var(--paste-ink)!important;background:var(--paste-bg)!important;
+  border:1px solid var(--paste-border)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 2px 5px rgba(20,50,42,.06)!important;
+}
+#cmp>#paste:hover{color:var(--paste-ink)!important;background:var(--paste-hover)!important;border-color:var(--paste-border)!important}
+#cmp>#save{
+  color:#fff!important;background:linear-gradient(140deg,#5265d5,#3949b5)!important;
+  border:1px solid #3445ad!important;
+  box-shadow:0 5px 13px -7px rgba(55,72,183,.68),inset 0 1px 0 rgba(255,255,255,.22)!important;
+}
+#cmp>#save:hover:not(:disabled){color:#fff!important;background:linear-gradient(140deg,#6274e4,#4658c7)!important}
+#cmp>.composer-head .visibility-option[data-visibility="public"].is-active{
+  color:var(--public-ink)!important;background:var(--public-bg)!important;border-color:var(--public-border)!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--public-border) 35%,transparent),0 1px 3px rgba(20,35,80,.08)!important;
+}
+#cmp>.composer-head .visibility-option[data-visibility="private"].is-active{
+  color:var(--private-ink)!important;background:var(--private-bg)!important;border-color:var(--private-border)!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--private-border) 35%,transparent),0 1px 3px rgba(55,25,80,.08)!important;
+}
+:root[data-theme="dark"] #cmp{
+  background:radial-gradient(ellipse at 92% 0%,rgba(197,204,255,.13),transparent 44%),linear-gradient(145deg,#3e4a40,#374138 76%)!important;
+  border-color:rgba(197,204,255,.28)!important;
+  box-shadow:0 13px 30px -22px rgba(0,0,0,.48),0 3px 9px rgba(0,0,0,.18)!important;
+}
+:root[data-theme="dark"] #cmp>#in{background:var(--composer-field)!important;border-color:var(--composer-field-border)!important;color:#f0f3eb!important}
+:root[data-theme="dark"] #cmp>#in:focus{background:var(--composer-field-focus)!important}
+:root[data-theme="dark"] #cmp>#paste{color:var(--paste-ink)!important;background:var(--paste-bg)!important;border-color:var(--paste-border)!important}
+:root[data-theme="dark"] #cmp>#paste:hover{background:var(--paste-hover)!important}
+:root[data-theme="dark"] #cmp>#save{
+  color:#242943!important;background:linear-gradient(140deg,#d0d6ff,#aebaff)!important;border-color:#aab5ff!important;
+  box-shadow:0 5px 13px -7px rgba(150,164,255,.48),inset 0 1px 0 rgba(255,255,255,.32)!important;
+}
+:root[data-theme="dark"] #cmp>#save:hover:not(:disabled){background:linear-gradient(140deg,#dce0ff,#bdc7ff)!important}
+@media(max-width:720px){
+  #cmp{background:radial-gradient(ellipse at 92% 0%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 48%),var(--composer-panel)!important}
+  :root[data-theme="dark"] #cmp{background:radial-gradient(ellipse at 92% 0%,rgba(197,204,255,.12),transparent 48%),var(--composer-panel)!important}
+}
