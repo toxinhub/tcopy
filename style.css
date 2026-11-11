@@ -2256,3 +2256,32 @@ header.top.hd>.brand .brand-name{
   #cmp>#paste{width:34px!important;min-width:34px!important}
   #cmp>#save{width:38px!important;min-width:38px!important}
 }
+
+
+/* v39 — explicit composer layout: stable desktop footer + compact mobile dock */
+#cmp{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto auto!important;
+  grid-template-areas:"visibility visibility visibility" "ta ta ta" "paste . save"!important;
+  align-items:center!important;
+  gap:12px 10px!important;
+  padding:18px!important;
+}
+#cmp>.composer-head{grid-area:visibility!important;grid-column:1/-1!important}
+#cmp>#in{grid-area:ta!important;grid-column:1/-1!important;width:100%!important}
+#cmp>#paste{grid-area:paste!important;grid-column:1!important;justify-self:start!important;width:auto!important;min-width:88px!important;padding:0 15px!important}
+#cmp>#save{grid-area:save!important;grid-column:3!important;justify-self:end!important;width:auto!important;min-width:112px!important;padding:0 18px!important}
+#cmp>#paste,#cmp>#save{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+@media(max-width:720px){
+  #cmp{
+    grid-template-columns:36px minmax(0,1fr) 40px!important;
+    grid-template-areas:"visibility visibility visibility" "paste ta save"!important;
+    grid-template-rows:auto minmax(42px,auto)!important;
+    gap:7px!important;
+    padding:9px!important;
+  }
+  #cmp>.composer-head{grid-area:visibility!important;grid-column:1/-1!important}
+  #cmp>#in{grid-area:ta!important;grid-column:2!important;min-width:0!important}
+  #cmp>#paste{grid-area:paste!important;grid-column:1!important;width:36px!important;min-width:36px!important;padding:0!important}
+  #cmp>#save{grid-area:save!important;grid-column:3!important;width:40px!important;min-width:40px!important;padding:0!important}
+}
