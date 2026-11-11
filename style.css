@@ -3783,3 +3783,33 @@ main.list{
     -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
   }
 }
+
+
+/* v55 — equalize mobile header action controls with the first grid row */
+@media(max-width:720px){
+  header.top.hd>.actions #theme,
+  header.top.hd>.actions #account,
+  header.top.hd>.actions #admin{
+    display:inline-flex!important;
+    width:31px!important;min-width:31px!important;max-width:31px!important;
+    height:31px!important;min-height:31px!important;max-height:31px!important;
+    flex:0 0 31px!important;
+    padding:0!important;margin:0!important;
+    align-items:center!important;justify-content:center!important;
+    box-sizing:border-box!important;
+  }
+  header.top.hd>.actions{
+    min-height:31px!important;height:31px!important;
+    align-items:center!important;
+  }
+}
+@media(max-width:380px){
+  header.top.hd>.actions #theme,
+  header.top.hd>.actions #account,
+  header.top.hd>.actions #admin{
+    width:29px!important;min-width:29px!important;max-width:29px!important;
+    height:29px!important;min-height:29px!important;max-height:29px!important;
+    flex-basis:29px!important;
+  }
+  header.top.hd>.actions{height:29px!important;min-height:29px!important}
+}
