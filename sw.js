@@ -1,4 +1,4 @@
-const CACHE = "tcopy-shell-v19";
+const CACHE = "tcopy-shell-v20";
 const SHELL = ["./", "./index.html", "./style.css?v=19", "./app.js?v=19", "./manifest.webmanifest", "./icon.svg"];
 const SHARE_DB = "tcopy-share";
 function storeIncoming(text) {
