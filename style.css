@@ -4716,3 +4716,121 @@ main.list{
 .reader-body.code{white-space:pre!important;overflow:auto!important;overflow-wrap:normal!important;word-break:normal!important}
 .reader-tools .reader-size{min-width:38px;min-height:38px;padding:0 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:12px;font-weight:700}
 @media(max-width:720px){dialog.reader{width:100%!important;height:100dvh!important;max-height:100dvh!important;border:0!important;border-radius:0!important}.reader-head{padding-top:calc(10px + env(safe-area-inset-top))!important}.reader-tools .reader-size{min-width:36px;min-height:38px}}
+
+
+/* v62 — premium reader treatment: editorial typography, layered surfaces, refined controls. */
+dialog.reader{
+  width:min(92vw,900px)!important;
+  height:min(88dvh,920px)!important;
+  border:1px solid color-mix(in srgb,var(--line-strong) 72%,transparent)!important;
+  border-radius:24px!important;
+  background:var(--surface)!important;
+  box-shadow:0 34px 100px -28px rgba(0,0,0,.48),0 8px 28px -16px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.48)!important;
+  isolation:isolate;
+}
+dialog.reader[open]{animation:readerEnter .24s cubic-bezier(.2,.8,.2,1) both}
+@keyframes readerEnter{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+dialog.reader::backdrop{background:rgba(12,15,12,.62)}
+.reader-head{
+  position:relative;
+  min-height:76px!important;
+  padding:15px 18px 15px 28px!important;
+  border-bottom:1px solid var(--line)!important;
+  background:linear-gradient(115deg,color-mix(in srgb,var(--accent-soft) 72%,var(--surface)),var(--surface) 58%)!important;
+}
+.reader-head::before{
+  content:"";
+  position:absolute;left:0;top:15px;bottom:15px;width:3px;
+  border-radius:0 4px 4px 0;background:var(--accent);
+}
+.reader-head>b{
+  display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font:700 19px/1.25 var(--type-display,var(--f-d))!important;
+  letter-spacing:-.035em;color:var(--ink);
+}
+.reader-tools{gap:7px!important}
+.reader-tools button{
+  min-width:40px!important;min-height:40px!important;
+  border-radius:12px!important;border-color:var(--line-strong)!important;
+  background:color-mix(in srgb,var(--surface-2) 72%,var(--surface))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 2px 5px rgba(0,0,0,.035);
+  transition:transform .18s cubic-bezier(.2,.75,.25,1),background .18s,border-color .18s,box-shadow .18s!important;
+}
+.reader-tools button:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))!important;box-shadow:0 5px 13px -8px var(--accent),inset 0 1px 0 rgba(255,255,255,.3)}
+.reader-tools .reader-copy{min-width:78px!important;border:1px solid transparent!important;border-radius:12px!important}
+.reader-tools .reader-close{font-size:24px!important}
+.reader-body{
+  padding:34px max(32px,calc((100% - 68ch)/2)) 46px!important;
+  color:var(--ink)!important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--surface-2) 24%,var(--surface)),var(--surface) 150px)!important;
+  font-family:var(--type-body,var(--f-b))!important;
+  font-size:var(--reader-size,18px)!important;
+  line-height:1.88!important;
+  letter-spacing:.002em;
+  scrollbar-width:thin;
+  scrollbar-color:color-mix(in srgb,var(--muted) 38%,transparent) transparent;
+}
+.reader-body::selection{background:var(--accent-soft);color:var(--ink)}
+.reader-body.code{
+  margin:20px!important;padding:22px!important;
+  border:1px solid var(--line)!important;border-radius:16px!important;
+  background:var(--surface-2)!important;
+  font-family:var(--f-m)!important;font-size:calc(var(--reader-size,18px) - 4px)!important;
+  line-height:1.8!important;letter-spacing:0;
+}
+:root[data-theme="dark"] dialog.reader{
+  border-color:rgba(226,236,222,.15)!important;
+  background:linear-gradient(145deg,#292f29,#222722)!important;
+  box-shadow:0 36px 110px -25px rgba(0,0,0,.76),inset 0 1px 0 rgba(255,255,255,.045)!important;
+}
+:root[data-theme="dark"] .reader-head{
+  background:linear-gradient(115deg,rgba(150,177,143,.13),rgba(39,46,39,.98) 62%)!important;
+  border-bottom-color:rgba(226,236,222,.12)!important;
+}
+:root[data-theme="dark"] .reader-body{
+  color:#edf1e9!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 180px)!important;
+}
+:root[data-theme="dark"] .reader-body.code{
+  background:#1c221d!important;border-color:rgba(226,236,222,.13)!important;
+}
+:root[data-theme="dark"] .reader-tools button{
+  background:#303830!important;border-color:rgba(226,236,222,.13)!important;
+  color:#e8eee4!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 2px 6px rgba(0,0,0,.16);
+}
+:root[data-theme="dark"] .reader-tools .reader-copy{
+  background:linear-gradient(145deg,var(--btn-primary),var(--btn-primary-hover))!important;
+  color:var(--btn-primary-ink)!important;
+}
+@media(max-width:720px){
+  dialog.reader{
+    width:100%!important;height:100dvh!important;max-height:100dvh!important;
+    border:0!important;border-radius:0!important;box-shadow:none!important;
+  }
+  dialog.reader[open]{animation:readerMobileEnter .2s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes readerMobileEnter{from{opacity:.7;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+  .reader-head{
+    min-height:calc(66px + env(safe-area-inset-top))!important;
+    padding:calc(10px + env(safe-area-inset-top)) max(13px,env(safe-area-inset-right)) 10px max(17px,env(safe-area-inset-left))!important;
+    gap:8px!important;
+  }
+  .reader-head>b{font-size:17px!important;letter-spacing:-.025em}
+  .reader-tools{gap:5px!important}
+  .reader-tools button{min-width:38px!important;min-height:40px!important;padding-inline:8px!important;border-radius:11px!important}
+  .reader-tools .reader-copy{min-width:64px!important}
+  .reader-body{
+    padding:25px max(19px,env(safe-area-inset-right)) calc(36px + env(safe-area-inset-bottom)) max(19px,env(safe-area-inset-left))!important;
+    font-size:var(--reader-size,17px)!important;line-height:1.82!important;
+  }
+  .reader-body.code{margin:14px!important;padding:16px!important;border-radius:13px!important}
+}
+@media(max-width:380px){
+  .reader-head{gap:4px!important}
+  .reader-tools{gap:3px!important}
+  .reader-tools button{min-width:34px!important;min-height:38px!important;padding-inline:6px!important}
+  .reader-tools .reader-copy{min-width:56px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  dialog.reader[open]{animation:none!important}
+  .reader-tools button{transition:none!important}
+}
