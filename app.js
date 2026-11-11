@@ -108,15 +108,18 @@ if("serviceWorker" in navigator && location.protocol!=="file:")window.addEventLi
     const active=document.activeElement;
     const editing=active&&(/^(TEXTAREA|INPUT)$/.test(active.tagName));
     const keyboardOpen=!!(editing&&vv&&window.innerHeight-vv.height>120);
+    const keyboardInset=keyboardOpen?Math.max(0,window.innerHeight-vv.height-(vv.offsetTop||0)):0;
+    root.style.setProperty("--keyboard-inset",Math.round(keyboardInset)+"px");
     document.body.classList.toggle("keyboard-open",keyboardOpen);
-    if(keyboardOpen&&active&&active.closest(".cmp")){
-      requestAnimationFrame(()=>active.scrollIntoView({block:"nearest",inline:"nearest"}));
-    }
   };
   update();
   vv?.addEventListener("resize",update,{passive:true});
   vv?.addEventListener("scroll",update,{passive:true});
   window.addEventListener("resize",update,{passive:true});
-  document.addEventListener("focusin",update);
+  document.addEventListener("focusin",event=>{
+    update();
+    const target=event.target;
+    if(target&&target.closest?.(".cmp"))requestAnimationFrame(()=>target.scrollIntoView({block:"nearest",inline:"nearest"}));
+  });
   document.addEventListener("focusout",()=>setTimeout(update,80));
 })();
