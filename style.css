@@ -590,3 +590,10 @@ button:disabled{cursor:not-allowed}
 @media(max-width:720px){.ibtn{min-height:40px;border-radius:12px}#theme{width:40px;min-width:40px}.visibility-option{min-width:65px;min-height:29px;padding-inline:9px;gap:5px}.mb{min-width:40px;min-height:40px;padding-inline:9px}.tools{gap:4px}.reader-tools{gap:4px}.reader-tools button{min-height:38px}}
 @media(max-width:380px){.visibility-option{min-width:57px;padding-inline:7px;font-size:10px}.mb{min-width:36px;padding-inline:7px;font-size:10px}.mb .ui-icon{width:13px;height:13px}}
 @media(prefers-reduced-motion:reduce){.ibtn,.cb,.mb,.reader-tools button,.authactions button,.visibility-option,.seg button{transition:none!important}}
+
+.theme-btn .moon-icon{display:none}
+:root[data-theme=dark] .theme-btn .sun-icon{display:none}
+:root[data-theme=dark] .theme-btn .moon-icon{display:block}
+.seg button{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.seg button .ui-icon{width:13px;height:13px;opacity:.72}
+.seg button[aria-pressed=true] .ui-icon{opacity:1}
