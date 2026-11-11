@@ -3447,3 +3447,76 @@ main.list{
     header.top.hd{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--bg)!important}
   }
 }
+
+
+/* v53 — make the mobile glass canvas visibly intentional and trim header height */
+@media(max-width:720px){
+  body{
+    position:relative!important;
+    background:var(--bg)!important;
+  }
+  body::before{
+    content:""!important;
+    position:fixed!important;
+    inset:0!important;
+    z-index:0!important;
+    pointer-events:none!important;
+    background:
+      radial-gradient(ellipse 78% 38% at 4% 4%,color-mix(in srgb,var(--accent-soft) 100%,transparent),transparent 72%),
+      radial-gradient(ellipse 68% 42% at 98% 52%,color-mix(in srgb,var(--surface-2) 76%,transparent),transparent 74%),
+      radial-gradient(ellipse 82% 36% at 44% 100%,color-mix(in srgb,var(--accent-soft) 56%,transparent),transparent 76%)!important;
+  }
+  header.top.hd{
+    position:relative!important;
+    z-index:30!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:28px 32px!important;
+    grid-template-areas:"brand actions" "search filters"!important;
+    gap:3px 7px!important;
+    padding:calc(4px + env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 5px max(10px,env(safe-area-inset-left))!important;
+    background:color-mix(in srgb,var(--surface) 38%,transparent)!important;
+    border-bottom:1px solid color-mix(in srgb,var(--line-strong) 72%,transparent)!important;
+    box-shadow:0 7px 24px -18px rgba(0,0,0,.34)!important;
+    -webkit-backdrop-filter:blur(22px) saturate(1.55)!important;
+    backdrop-filter:blur(22px) saturate(1.55)!important;
+  }
+  header.top.hd>.brand{font-size:16px!important;gap:5px!important}
+  header.top.hd>.brand .logo-mark{width:25px!important;height:25px!important}
+  header.top.hd>.actions{gap:3px!important}
+  header.top.hd>.actions .ibtn{
+    width:29px!important;min-width:29px!important;height:29px!important;min-height:29px!important;
+    border-radius:8px!important;
+  }
+  header.top.hd>.actions .avatar{width:17px!important;height:17px!important}
+  header.top.hd>.search{
+    height:32px!important;min-height:32px!important;
+    background:color-mix(in srgb,var(--surface) 48%,transparent)!important;
+    border-color:color-mix(in srgb,var(--line-strong) 65%,transparent)!important;
+    -webkit-backdrop-filter:blur(14px) saturate(1.35)!important;
+    backdrop-filter:blur(14px) saturate(1.35)!important;
+  }
+  header.top.hd>.seg{gap:1px!important}
+  header.top.hd>.seg button{min-height:27px!important;padding-inline:6px!important;font-size:10px!important}
+  .main{position:relative!important;z-index:1!important;background:transparent!important}
+  .scroller{background:transparent!important}
+  main.list,.notes-heading,#list,.col,.grp{background:transparent!important;box-shadow:none!important}
+}
+@media(max-width:380px){
+  header.top.hd{
+    grid-template-rows:27px 31px!important;
+    gap:2px 5px!important;
+    padding-top:calc(3px + env(safe-area-inset-top))!important;
+    padding-bottom:4px!important;
+  }
+  header.top.hd>.brand{font-size:15px!important}
+  header.top.hd>.brand .logo-mark{width:24px!important;height:24px!important}
+  header.top.hd>.actions .ibtn{width:27px!important;min-width:27px!important;height:27px!important;min-height:27px!important}
+  header.top.hd>.search{height:31px!important;min-height:31px!important}
+  header.top.hd>.seg button{min-height:26px!important;padding-inline:5px!important;font-size:9px!important}
+}
+@media(max-width:720px) and (prefers-reduced-transparency:reduce){
+  header.top.hd,header.top.hd>.search{
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+    background:var(--surface)!important;
+  }
+}
