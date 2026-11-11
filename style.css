@@ -472,12 +472,15 @@ dialog.reader::backdrop{
 
 /* Public / Private note controls */
 .visibility-control{display:flex;align-items:center;gap:8px;min-width:0}
-.visibility-control select{
-  min-height:30px;max-width:150px;padding:4px 26px 4px 10px;
-  border:1px solid var(--line);border-radius:9px;
-  background:var(--surface);color:var(--ink);font:inherit;font-size:12px;
-}
-.visibility-control select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.visibility-switch{display:inline-flex;align-items:center;gap:3px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);box-shadow:inset 0 1px 2px rgba(0,0,0,.035)}
+.visibility-option{min-height:28px;min-width:58px;padding:0 11px;border:1px solid transparent;border-radius:999px;color:var(--muted);font:650 11px/1 var(--f-b);transition:background .18s var(--ease),color .18s var(--ease),box-shadow .18s var(--ease),opacity .18s}
+.visibility-option.is-active{background:var(--surface);border-color:var(--line);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.09)}
+.visibility-option[data-visibility="public"].is-active{color:var(--accent)}
+.visibility-option[data-visibility="private"].is-active{color:var(--success)}
+.visibility-option:disabled{opacity:.38;cursor:not-allowed}
+.visibility-option:not(:disabled):active{transform:scale(.97)}
+.visibility-control select{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.visibility-option:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .visibility-tag{
   display:inline-flex;align-items:center;min-height:18px;padding:1px 7px;
   border:1px solid var(--line);border-radius:999px;
@@ -534,7 +537,7 @@ dialog.reader::backdrop{
   .cmp{grid-template-columns:36px minmax(0,1fr) 38px;grid-template-areas:"head head head" "paste ta save";align-items:center;row-gap:6px}
   .composer-head{grid-area:head;display:flex;min-width:0;padding:0 2px 1px}
   .composer-title{font-size:9px}
-  .visibility-control select{max-width:116px;min-height:26px;font-size:10px}
+  .visibility-switch{gap:2px;padding:2px}.visibility-option{min-width:49px;min-height:25px;padding-inline:8px;font-size:10px}
   .visibility-control .composer-hint{display:inline;font-size:9px}
   .cmp textarea{grid-area:ta;min-height:38px}
   .paste-btn{grid-area:paste}
@@ -556,3 +559,5 @@ dialog.reader::backdrop{
 /* Compact notebook entry: the capture area is the first content, not a marketing hero. */
 @media(max-width:720px){.list{padding-top:12px}}
 .scroller{overscroll-behavior-y:contain}
+
+@media(max-width:380px){.visibility-control{gap:4px}.visibility-option{min-width:44px;padding-inline:6px}}
