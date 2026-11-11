@@ -1,5 +1,5 @@
-const CACHE = "tcopy-shell-v30";
-const SHELL = ["./", "./index.html", "./style.css?v=30", "./app.js?v=30", "./manifest.webmanifest", "./icon.svg"];
+const CACHE = "tcopy-shell-v31";
+const SHELL = ["./", "./index.html", "./style.css?v=31", "./app.js?v=31", "./manifest.webmanifest", "./icon.svg"];
 const SHARE_DB = "tcopy-share";
 const SCOPE_PATH = new URL("./", self.location.href).pathname;
 function storeIncoming(text) {
