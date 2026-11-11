@@ -16,7 +16,8 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.resource.data.ownerUid == request.auth.uid
         && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
-        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.updatedAt == null
         && validVisibility(request.resource.data)
         && (!isGuest() || request.resource.data.visibility == 'public')
         && request.resource.data.text is string
