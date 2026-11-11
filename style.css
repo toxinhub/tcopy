@@ -2711,3 +2711,146 @@ header.top.hd .actions .ibtn:hover,
   #cmp{background:var(--composer-panel)!important}
   :root[data-theme="dark"] #cmp{background:var(--composer-panel)!important}
 }
+
+
+/* v44 — match composer to the app's existing light/dark theme; preserve mobile dock */
+:root{
+  --composer-panel:#fffdf8;
+  --composer-field:#f7f5ef;
+  --composer-field-focus:#fffefa;
+  --composer-field-border:rgba(41,41,35,.18);
+  --composer-field-placeholder:#77736a;
+  --composer-focus-ring:rgba(70,84,189,.15);
+
+  --paste-bg:#eeece5;
+  --paste-ink:#45483f;
+  --paste-border:rgba(41,41,35,.16);
+  --paste-hover:#e5e2d9;
+
+  --save-bg:#4654bd;
+  --save-bg-hover:#3947ad;
+  --save-ink:#ffffff;
+
+  --public-bg:rgba(70,84,189,.10);
+  --public-ink:#3947ad;
+  --public-border:rgba(70,84,189,.28);
+
+  --private-bg:rgba(36,123,85,.10);
+  --private-ink:#236c49;
+  --private-border:rgba(36,123,85,.28);
+}
+:root[data-theme="dark"]{
+  --composer-panel:#3a433b;
+  --composer-field:#343d35;
+  --composer-field-focus:#414a42;
+  --composer-field-border:rgba(239,244,234,.22);
+  --composer-field-placeholder:#c2cbbf;
+  --composer-focus-ring:rgba(197,204,255,.18);
+
+  --paste-bg:#454e46;
+  --paste-ink:#edf0e7;
+  --paste-border:rgba(239,244,234,.19);
+  --paste-hover:#4a554b;
+
+  --save-bg:#c5ccff;
+  --save-bg-hover:#d5daff;
+  --save-ink:#252943;
+
+  --public-bg:rgba(197,204,255,.16);
+  --public-ink:#dce1ff;
+  --public-border:rgba(197,204,255,.34);
+
+  --private-bg:rgba(154,223,181,.14);
+  --private-ink:#b7e9c9;
+  --private-border:rgba(154,223,181,.32);
+}
+#cmp{
+  background:var(--composer-panel)!important;
+  border-color:var(--line-strong)!important;
+  box-shadow:var(--shadow-card)!important;
+}
+#cmp::before{
+  background:linear-gradient(90deg,transparent,var(--accent),transparent)!important;
+  opacity:.32!important;
+}
+#cmp>#in{
+  background:var(--composer-field)!important;
+  color:var(--ink)!important;
+  border-color:var(--composer-field-border)!important;
+}
+#cmp>#in:focus{
+  background:var(--composer-field-focus)!important;
+  border-color:var(--accent)!important;
+  box-shadow:0 0 0 3px var(--composer-focus-ring)!important;
+}
+#cmp>#paste{
+  background:var(--paste-bg)!important;
+  color:var(--paste-ink)!important;
+  border-color:var(--paste-border)!important;
+  box-shadow:none!important;
+}
+#cmp>#paste:hover{background:var(--paste-hover)!important;color:var(--paste-ink)!important}
+#cmp>#save{
+  background:var(--save-bg)!important;
+  color:var(--save-ink)!important;
+  border-color:var(--save-bg)!important;
+  box-shadow:0 4px 12px -8px var(--accent)!important;
+}
+#cmp>#save:hover:not(:disabled){background:var(--save-bg-hover)!important;color:var(--save-ink)!important}
+#cmp>.composer-head .visibility-option[data-visibility="public"].is-active{
+  background:var(--public-bg)!important;color:var(--public-ink)!important;border-color:var(--public-border)!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--public-border) 25%,transparent)!important;
+}
+#cmp>.composer-head .visibility-option[data-visibility="private"].is-active{
+  background:var(--private-bg)!important;color:var(--private-ink)!important;border-color:var(--private-border)!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--private-border) 25%,transparent)!important;
+}
+:root[data-theme="dark"] #cmp{
+  background:var(--surface)!important;
+  border-color:var(--line-strong)!important;
+  box-shadow:var(--shadow-card)!important;
+}
+:root[data-theme="dark"] #cmp>#in{
+  background:var(--surface-inset)!important;
+  color:var(--ink)!important;
+  border-color:var(--composer-field-border)!important;
+}
+:root[data-theme="dark"] #cmp>#in:focus{background:var(--surface-raised)!important}
+:root[data-theme="dark"] #cmp>#paste{
+  background:var(--paste-bg)!important;color:var(--paste-ink)!important;border-color:var(--paste-border)!important;
+}
+:root[data-theme="dark"] #cmp>#save{
+  background:var(--save-bg)!important;color:var(--save-ink)!important;border-color:var(--save-bg)!important;
+}
+@media(max-width:720px){
+  /* Keep the established compact floating capture dock geometry unchanged. */
+  #cmp{
+    position:fixed!important;
+    left:10px!important;right:10px!important;
+    bottom:calc(9px + env(safe-area-inset-bottom))!important;
+    width:auto!important;
+    grid-template-columns:36px minmax(0,1fr) 40px!important;
+    grid-template-areas:"visibility visibility visibility" "paste ta save"!important;
+    grid-template-rows:auto minmax(42px,auto)!important;
+    gap:7px!important;
+    padding:9px!important;
+    border-radius:18px!important;
+    background:var(--composer-panel)!important;
+    box-shadow:0 10px 28px -16px rgba(25,32,24,.24),0 2px 7px rgba(25,32,24,.07)!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  }
+  #cmp>.composer-head{grid-area:visibility!important;grid-column:1/-1!important}
+  #cmp>#in{
+    grid-area:ta!important;grid-column:2!important;min-width:0!important;
+    min-height:44px!important;max-height:min(30dvh,170px)!important;
+    padding:10px 12px!important;border-radius:12px!important;font-size:14px!important;line-height:1.55!important;
+  }
+  #cmp>#paste{grid-area:paste!important;grid-column:1!important;width:36px!important;min-width:36px!important;padding:0!important}
+  #cmp>#save{grid-area:save!important;grid-column:3!important;width:40px!important;min-width:40px!important;padding:0!important}
+  :root[data-theme="dark"] #cmp{background:var(--surface)!important;box-shadow:0 12px 30px -16px rgba(0,0,0,.48)!important}
+}
+@media(max-width:380px){
+  #cmp{left:7px!important;right:7px!important;padding:8px!important}
+  #cmp>#paste{width:34px!important;min-width:34px!important}
+  #cmp>#save{width:38px!important;min-width:38px!important}
+}
