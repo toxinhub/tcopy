@@ -56,3 +56,26 @@ try{const theme=localStorage.getItem("tcopy-theme");if(theme)document.documentEl
 document.addEventListener("keydown",e=>{const typing=e.target.matches?.("input,textarea");if(e.key==="/"&&!typing){e.preventDefault();$("q").focus()}if(e.key==="Escape"&&e.target===$("q")){$("q").value="";qText="";e.target.blur();render()}});
 window.addEventListener("online",()=>{if(user)setSync("busy","Reconnecting…")});window.addEventListener("offline",()=>setSync("off","You're offline"));
 if("serviceWorker" in navigator && location.protocol!=="file:")window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+
+/* Keep the capture dock inside the visible viewport when the mobile keyboard opens. */
+(function setupVisualViewport(){
+  const vv=window.visualViewport;
+  const root=document.documentElement;
+  const update=()=>{
+    const height=vv?.height||window.innerHeight;
+    root.style.setProperty("--app-height",Math.round(height)+"px");
+    const active=document.activeElement;
+    const editing=active&&(/^(TEXTAREA|INPUT)$/.test(active.tagName));
+    const keyboardOpen=!!(editing&&vv&&window.innerHeight-vv.height>120);
+    document.body.classList.toggle("keyboard-open",keyboardOpen);
+    if(keyboardOpen&&active&&active.closest(".cmp")){
+      requestAnimationFrame(()=>active.scrollIntoView({block:"nearest",inline:"nearest"}));
+    }
+  };
+  update();
+  vv?.addEventListener("resize",update,{passive:true});
+  vv?.addEventListener("scroll",update,{passive:true});
+  window.addEventListener("resize",update,{passive:true});
+  document.addEventListener("focusin",update);
+  document.addEventListener("focusout",()=>setTimeout(update,80));
+})();
