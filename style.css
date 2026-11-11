@@ -1366,3 +1366,100 @@ body{
 @media(prefers-reduced-motion:reduce){
   :root{scroll-behavior:auto}
 }
+
+
+/* v27 — tighter note actions and a calmer, more compact mobile header */
+@media(max-width:720px){
+  .clip .tools{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:3px;
+  }
+  .clip .tools .mb{
+    min-width:0;
+    min-height:28px;
+    height:28px;
+    padding:0 6px;
+    gap:4px;
+    border-radius:7px;
+    font-size:10px;
+  }
+  .clip .tools .mb .ui-icon{
+    width:13px;
+    height:13px;
+  }
+  .clip .tools .mb.copy{
+    padding-inline:6px;
+    margin:0;
+  }
+  .hd{
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"brand actions" "search filters";
+    align-items:center;
+    column-gap:6px;
+    row-gap:4px;
+    padding-top:calc(4px + env(safe-area-inset-top));
+    padding-bottom:4px;
+    border-bottom-color:var(--line);
+  }
+  .hd .brand{
+    gap:5px;
+    font-size:15px;
+    line-height:1;
+  }
+  .hd .logo-mark{
+    width:23px;
+    height:23px;
+    border-radius:7px;
+    font-size:13px;
+  }
+  .hd .actions{
+    gap:2px;
+  }
+  .hd .actions .ibtn,
+  .hd .actions .admin-btn:not([hidden]){
+    width:30px;
+    min-width:30px;
+    height:30px;
+    min-height:30px;
+    border-radius:8px;
+  }
+  .hd .actions .avatar{width:18px;height:18px}
+  .hd .actions .ui-icon{width:15px;height:15px}
+  .hd .actions .sync{margin-right:1px}
+  .hd .search{
+    height:31px;
+    min-height:31px;
+    padding-inline:7px;
+    gap:6px;
+    border-radius:8px;
+  }
+  .hd .search svg{width:14px;height:14px}
+  .hd .search-input{font-size:12px}
+  .hd .seg{
+    align-self:center;
+    gap:1px;
+    padding:1px;
+    border-radius:8px;
+  }
+  .hd .seg button{
+    min-width:0;
+    min-height:25px;
+    padding-inline:5px;
+    gap:3px;
+    border-radius:6px;
+    font-size:9px;
+  }
+  .hd .seg button .ui-icon{width:12px;height:12px}
+}
+@media(max-width:380px){
+  .clip .tools{gap:2px}
+  .clip .tools .mb{padding-inline:5px;font-size:9px}
+  .hd{column-gap:5px}
+  .hd .actions .ibtn,
+  .hd .actions .admin-btn:not([hidden]){
+    width:28px;min-width:28px;height:28px;min-height:28px;
+  }
+  .hd .seg button{padding-inline:4px;font-size:8px}
+}
