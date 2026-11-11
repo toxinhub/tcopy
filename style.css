@@ -97,3 +97,6 @@ code{font-family:var(--f-m);font-size:.9em}::-webkit-scrollbar{width:7px}::-webk
 }
 @media(min-width:1200px){.hd{padding-inline:40px}.list{padding-top:68px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Respect native hidden state for optional admin controls. */
+[hidden]{display:none!important}
