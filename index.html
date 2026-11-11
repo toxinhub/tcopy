@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://toxinhub.github.io/tcopy/icon.svg">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./style.css?v=15">
+<link rel="stylesheet" href="./style.css?v=16">
 <title>tcopy — Quick notes</title>
 
 <style id="visibility-switch-critical">
@@ -28,17 +28,17 @@
 <header class="top hd">
  <a class="brand" href="./" aria-label="tcopy home"><span class="logo-mark" aria-hidden="true">t</span><span>tcopy</span></a>
  <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input class="search-input" id="q" type="search" placeholder="Search notes" aria-label="Search notes" autocomplete="off"></label>
- <div class="actions"><span class="sync" aria-live="polite"><span class="dot" id="dot"></span><span id="st">Ready to sync</span></span><button class="ibtn theme-btn" id="theme" aria-label="Toggle light and dark theme" title="Theme">◐</button><button class="ibtn account-btn" id="account" aria-label="Account menu"><span class="avatar" aria-hidden="true">T</span><span id="accountLabel">Sign in</span></button><button class="ibtn admin-btn" id="admin" aria-pressed="false" hidden>Admin</button></div>
+ <div class="actions"><span class="sync" aria-live="polite"><span class="dot" id="dot"></span><span id="st">Ready to sync</span></span><button class="ibtn theme-btn" id="theme" aria-label="Toggle light and dark theme" title="Switch theme"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42m-9.88 9.88-1.42 1.42"/><circle cx="12" cy="12" r="4"/></svg></button><button class="ibtn account-btn" id="account" aria-label="Account menu"><span class="avatar" aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg></span><span id="accountLabel">Sign in</span></button><button class="ibtn admin-btn" id="admin" aria-pressed="false" hidden><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg><span>Admin</span></button></div>
  <nav class="seg" aria-label="Filter notes by time"><button data-v="day" aria-pressed="true">Day</button><button data-v="week" aria-pressed="false">Week</button><button data-v="month" aria-pressed="false">Month</button></nav>
 </header>
 <div class="main">
  <div class="scroller" id="scroller"><div class="pull-refresh" id="pullRefresh" aria-hidden="true"><span class="pull-spinner"></span><span id="pullLabel">Pull to refresh</span></div>
   <main class="list">
    <form class="cmp" id="cmp">
-    <div class="composer-head"><span class="composer-title">Quick capture</span><div class="visibility-control"><span class="composer-hint">Save as</span><div class="visibility-switch" id="visibilitySwitch" role="group" aria-label="Note visibility"><button type="button" class="visibility-option is-active" data-visibility="public" aria-pressed="true">Public</button><button type="button" class="visibility-option" data-visibility="private" aria-pressed="false" disabled>Private</button></div><select id="visibility" aria-label="Note visibility" tabindex="-1" aria-hidden="true"><option value="public">Public</option><option value="private">Private</option></select></div></div>
+    <div class="composer-head"><span class="composer-title">Quick capture</span><div class="visibility-control"><span class="composer-hint">Save as</span><div class="visibility-switch" id="visibilitySwitch" role="group" aria-label="Note visibility"><button type="button" class="visibility-option is-active" data-visibility="public" aria-pressed="true"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg><span>Public</span></button><button type="button" class="visibility-option" data-visibility="private" aria-pressed="false" disabled><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Private</span></button></div><select id="visibility" aria-label="Note visibility" tabindex="-1" aria-hidden="true"><option value="public">Public</option><option value="private">Private</option></select></div></div>
     <textarea id="in" rows="1" maxlength="20000" placeholder="Drop a thought, link, or snippet…" aria-label="New note"></textarea>
-    <button type="button" class="cb paste-btn" id="paste" aria-label="Paste from clipboard"><span class="paste-icon" aria-hidden="true">↓</span><span class="paste-label">Paste</span></button>
-    <button type="submit" class="cb go" id="save" disabled><span class="save-label">Save</span><span class="k">Ctrl ↵</span></button>
+    <button type="button" class="cb paste-btn" id="paste" aria-label="Paste from clipboard"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M12 10v7m-3-3 3 3 3-3"/></svg><span class="paste-label">Paste</span></button>
+    <button type="submit" class="cb go" id="save" disabled><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-7 7 7-7 7 7"/></svg><span class="save-label">Save</span><span class="k">Ctrl ↵</span></button>
    </form>
    <div class="notes-heading"><b>Your notes</b><span id="count" aria-live="polite"></span></div><div class="col" id="list"><div class="empty">Your notebook is ready.</div></div>
   </main>
@@ -46,11 +46,11 @@
  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </div>
 
-<dialog class="reader" id="reader" aria-labelledby="readerTitle"><div class="reader-head"><b id="readerTitle">Note</b><div class="reader-tools"><button class="reader-size" id="readerMinus" aria-label="Smaller text">A−</button><button class="reader-size" id="readerPlus" aria-label="Larger text">A+</button><button class="reader-copy" id="readerCopy">Copy</button><button class="reader-close" id="readerClose" aria-label="Close">×</button></div></div><div class="reader-body" id="readerBody" tabindex="0"></div></dialog>
+<dialog class="reader" id="reader" aria-labelledby="readerTitle"><div class="reader-head"><b id="readerTitle">Note</b><div class="reader-tools"><button class="reader-size" id="readerMinus" aria-label="Smaller text">A−</button><button class="reader-size" id="readerPlus" aria-label="Larger text">A+</button><button class="reader-copy" id="readerCopy"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>Copy</span></button><button class="reader-close" id="readerClose" aria-label="Close"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12M6 6l12 12"/></svg></button></div></div><div class="reader-body" id="readerBody" tabindex="0"></div></dialog>
 <div class="authveil" id="authveil" role="dialog" aria-modal="true" aria-labelledby="authTitle">
  <div class="authbox"><h2 id="authTitle">Welcome to tcopy</h2><p>Sign in to unlock Private notes and sync your personal notebook across devices. Public notes stay available to everyone.</p>
-  <form id="authform"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"><div class="authactions"><button type="button" id="authclose">Not now</button><button class="primary" type="submit" id="authsubmit">Sign in</button></div></form><p class="authhint" id="authhint" aria-live="polite"></p>
+  <form id="authform"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"><div class="authactions"><button type="button" id="authclose">Not now</button><button class="primary" type="submit" id="authsubmit"><span>Sign in</span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button></div></form><p class="authhint" id="authhint" aria-live="polite"></p>
  </div>
 </div>
-<script type="module" src="./app.js?v=15"></script>
+<script type="module" src="./app.js?v=16"></script>
 </body></html>
