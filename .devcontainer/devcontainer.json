@@ -1,0 +1,21 @@
+{
+  "name": "Playwright MCP Browser Lab",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "customizations": {
+    "vscode": {
+      "mcp": {
+        "servers": {
+          "playwright": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+              "-y",
+              "@playwright/mcp@latest",
+              "--headless"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
