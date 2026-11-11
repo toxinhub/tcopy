@@ -1492,3 +1492,116 @@ body{
     padding-bottom:5px!important;
   }
 }
+
+
+/* v29 — unified header geometry across desktop, tablet and mobile */
+header.top.hd{
+  display:grid!important;
+  grid-template-columns:minmax(150px,1fr) minmax(280px, min(42vw,560px)) auto!important;
+  grid-template-rows:minmax(42px,auto) auto!important;
+  grid-template-areas:"brand search actions" "filters filters filters"!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  column-gap:clamp(12px,2vw,24px)!important;
+  row-gap:8px!important;
+  min-height:0!important;
+  padding:10px max(24px,env(safe-area-inset-right)) 9px max(24px,env(safe-area-inset-left))!important;
+}
+header.top.hd>.brand{
+  grid-area:brand!important;justify-self:start!important;align-self:center!important;
+  min-width:0!important;white-space:nowrap;
+}
+header.top.hd>.search{
+  grid-area:search!important;justify-self:stretch!important;align-self:center!important;
+  width:100%!important;min-width:0!important;max-width:none!important;margin:0!important;
+  height:42px!important;min-height:42px!important;
+}
+header.top.hd>.actions{
+  grid-area:actions!important;justify-self:end!important;align-self:center!important;
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  gap:clamp(4px,.7vw,8px)!important;min-width:0!important;white-space:nowrap;
+}
+header.top.hd>.seg{
+  grid-area:filters!important;justify-self:center!important;align-self:center!important;
+  display:flex!important;align-items:center!important;width:max-content!important;
+  max-width:100%!important;margin:0!important;
+}
+header.top.hd>.seg button{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-width:58px;min-height:32px;padding:0 11px;
+}
+header.top.hd .actions .ibtn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:40px;min-height:40px;height:40px;padding:0 10px;
+}
+header.top.hd .actions .sync{display:flex;align-items:center;flex:none;gap:7px;margin:0 3px 0 0}
+header.top.hd .search-input{min-width:0;width:100%}
+
+@media(min-width:721px) and (max-width:1024px){
+  header.top.hd{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:38px 38px!important;
+    grid-template-areas:"brand actions" "search filters"!important;
+    column-gap:12px!important;row-gap:7px!important;
+    padding:9px max(18px,env(safe-area-inset-right)) 8px max(18px,env(safe-area-inset-left))!important;
+  }
+  header.top.hd>.search{height:38px!important;min-height:38px!important}
+  header.top.hd>.seg{justify-self:end!important}
+  header.top.hd>.seg button{min-width:54px;min-height:32px;padding-inline:9px}
+  header.top.hd .actions .ibtn{min-width:36px;min-height:36px;height:36px}
+}
+@media(max-width:720px){
+  header.top.hd{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:minmax(26px,auto) minmax(30px,auto)!important;
+    grid-template-areas:"brand actions" "search filters"!important;
+    column-gap:clamp(6px,2vw,10px)!important;
+    row-gap:6px!important;
+    padding:calc(5px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 7px max(12px,env(safe-area-inset-left))!important;
+  }
+  header.top.hd>.brand{gap:6px!important;font-size:16px!important;line-height:1!important}
+  header.top.hd>.brand .logo-mark{width:25px!important;height:25px!important;border-radius:8px!important;font-size:14px!important}
+  header.top.hd>.actions{gap:4px!important}
+  header.top.hd .actions .sync{
+    width:8px!important;height:8px!important;min-width:8px!important;
+    overflow:hidden!important;margin:0 1px 0 0!important;gap:0!important;
+  }
+  header.top.hd .actions .sync #st{display:none!important}
+  header.top.hd .actions .ibtn,
+  header.top.hd .actions .admin-btn:not([hidden]){
+    width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important;
+    padding:0!important;border-radius:9px!important;
+  }
+  header.top.hd .actions .avatar{width:19px!important;height:19px!important}
+  header.top.hd .actions .ui-icon{width:15px!important;height:15px!important}
+  header.top.hd>.search{
+    height:34px!important;min-height:34px!important;padding:0 9px!important;
+    gap:6px!important;border-radius:9px!important;
+  }
+  header.top.hd>.search>svg{width:14px!important;height:14px!important}
+  header.top.hd .search-input{font-size:13px!important}
+  header.top.hd>.seg{
+    justify-self:end!important;gap:2px!important;padding:2px!important;
+    border-radius:9px!important;
+  }
+  header.top.hd>.seg button{
+    min-width:0!important;min-height:28px!important;height:28px!important;
+    padding:0 6px!important;gap:3px!important;border-radius:7px!important;
+    font-size:10px!important;white-space:nowrap;
+  }
+  header.top.hd>.seg button .ui-icon{width:12px!important;height:12px!important}
+}
+@media(max-width:360px){
+  header.top.hd{
+    column-gap:5px!important;row-gap:5px!important;
+    padding-left:max(9px,env(safe-area-inset-left))!important;
+    padding-right:max(9px,env(safe-area-inset-right))!important;
+  }
+  header.top.hd>.brand{font-size:15px!important;gap:5px!important}
+  header.top.hd .actions{gap:3px!important}
+  header.top.hd .actions .ibtn,
+  header.top.hd .actions .admin-btn:not([hidden]){
+    width:29px!important;min-width:29px!important;height:29px!important;min-height:29px!important;
+  }
+  header.top.hd>.seg button{padding-inline:4px!important;font-size:9px!important}
+}
