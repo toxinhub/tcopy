@@ -597,7 +597,6 @@ button:disabled{cursor:not-allowed}
 .seg button .ui-icon{width:13px;height:13px;opacity:.72}
 .seg button[aria-pressed=true] .ui-icon{opacity:1}
 
-
 /* v17 — balanced mobile header, wider desktop search, refined modal surfaces */
 
 /* Desktop: give search the space it needs without crowding the actions */
@@ -1197,8 +1196,7 @@ body{
 }
 :root[data-theme="dark"] .toast{
   background:#e9ede5;
-  color:#20251f;
-  border-color:rgba(0,0,0,.12);
+  color:#20251f;  border-color:rgba(0,0,0,.12);
 }
 
 
@@ -1797,8 +1795,7 @@ header.top.hd>.brand .brand-name{
   color:#e9eee4;
   background:#343d35;
   border-color:var(--line-strong);
-}
-:root[data-theme="dark"] .gh{
+}:root[data-theme="dark"] .gh{
   color:var(--ink);
   background:#303630;
   border-bottom-color:var(--line);
@@ -2397,8 +2394,7 @@ header.top.hd .actions .ibtn:hover,
 :root[data-theme="dark"] .seg button,
 :root[data-theme="dark"] .visibility-option,
 :root[data-theme="dark"] .mb:not(.copy):not(.del):not(.pin),
-:root[data-theme="dark"] .reader-tools button:not(.reader-copy):not(.reader-close){
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 1px 2px rgba(0,0,0,.12)!important;
+:root[data-theme="dark"] .reader-tools button:not(.reader-copy):not(.reader-close){  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 1px 2px rgba(0,0,0,.12)!important;
 }
 @media(hover:none){
   header.top.hd .actions .ibtn:hover,#cmp>#paste:hover,.seg button:hover,
@@ -2997,8 +2993,7 @@ main.list{
   header.top.hd>.search .search-input{min-width:0!important;font-size:13px!important}
   header.top.hd>.seg{
     justify-self:end!important;align-self:center!important;
-    gap:1px!important;padding:2px!important;border-radius:9px!important;
-  }
+    gap:1px!important;padding:2px!important;border-radius:9px!important;  }
   header.top.hd>.seg button{
     display:inline-flex!important;align-items:center!important;justify-content:center!important;
     min-width:0!important;min-height:29px!important;padding:0 6px!important;
@@ -3056,4 +3051,52 @@ main.list{
   header.top.hd>.seg button{padding-inline:5px!important;font-size:9px!important}
   main.list{padding-inline:9px!important}
   #cmp{left:7px!important;right:7px!important}
+}
+
+/* v47 — wider desktop canvas with proportionally refined reading and capture surfaces */
+:root{
+  --content-width:1040px;
+  --reading-width:960px;
+}
+@media(min-width:1200px){
+  main.list{
+    width:min(calc(100% - 2 * var(--layout-gutter)),var(--content-width))!important;
+    max-width:var(--content-width)!important;
+    padding-top:46px!important;
+  }
+  #cmp{
+    width:min(100%,var(--reading-width))!important;
+    margin-bottom:34px!important;
+    padding:18px!important;
+    border-radius:18px!important;
+  }
+  #cmp>#in{
+    min-height:154px!important;
+    padding:18px 20px!important;
+    font-size:16px!important;
+    line-height:1.76!important;
+  }
+  .notes-heading,#list{
+    width:min(100%,var(--reading-width))!important;
+    max-width:var(--reading-width)!important;
+  }
+  #list .clip{padding:17px 6px 16px!important}
+  #list .txt{max-width:82ch;font-size:16.5px!important;line-height:1.78!important}
+  #list .grp{margin-bottom:24px!important}
+  #list .gh{min-height:38px!important}
+}
+@media(min-width:1600px){
+  :root{--content-width:1120px;--reading-width:1020px}
+  #list .txt{max-width:86ch}
+}
+@media(min-width:721px) and (max-width:1199px){
+  :root{--content-width:900px;--reading-width:840px}
+  main.list{
+    width:min(calc(100% - 2 * var(--layout-gutter)),var(--content-width))!important;
+    max-width:var(--content-width)!important;
+  }
+  #cmp,#list,.notes-heading{
+    width:min(100%,var(--reading-width))!important;
+    max-width:var(--reading-width)!important;
+  }
 }
