@@ -28,10 +28,8 @@
    <form class="cmp" id="cmp">
     <div class="composer-head"><span class="composer-title">Quick capture</span><span class="composer-hint">Saved to your notebook · synced across devices</span></div>
     <textarea id="in" rows="1" maxlength="20000" placeholder="Drop a thought, link, or snippet…" aria-label="New note"></textarea>
-    <div class="composer-actions">
-     <button type="button" class="cb" id="paste" aria-label="Paste from clipboard"><span class="paste-icon" aria-hidden="true">↓</span><span>Paste</span></button>
-     <button type="submit" class="cb go" id="save" disabled>Save <span class="k">Ctrl ↵</span></button>
-    </div>
+    <button type="button" class="cb paste-btn" id="paste" aria-label="Paste from clipboard"><span class="paste-icon" aria-hidden="true">↓</span><span class="paste-label">Paste</span></button>
+    <button type="submit" class="cb go" id="save" disabled><span class="save-label">Save</span><span class="k">Ctrl ↵</span></button>
    </form>
    <div class="notes-heading"><b>Your notes</b><span id="count" aria-live="polite"></span></div><div class="col" id="list"><div class="empty">Your notebook is ready.</div></div>
   </main>
