@@ -127,3 +127,5 @@ dialog.reader{display:none;flex-direction:column;width:min(94vw,860px);height:mi
  .admin-btn{display:inline-flex!important;min-width:40px!important;width:40px;padding:0!important;font-size:0!important}
  .admin-btn::before{content:"⚙";font-size:17px;line-height:1}
 }
+
+.admin-btn[hidden]{display:none!important}
