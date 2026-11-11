@@ -3256,3 +3256,111 @@ main.list{
   #cmp>#save{width:40px!important;min-width:40px!important;height:40px!important;min-height:40px!important}
   #list .clip{padding-inline:6px!important}
 }
+
+
+/* v51 — mobile responsive defect pass: two-row header, readable inputs, touch-safe controls */
+@media(max-width:720px){
+  header.top.hd{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:auto 40px!important;
+    grid-template-areas:"brand actions" "search filters"!important;
+    align-items:center!important;
+    gap:7px 9px!important;
+    padding:calc(8px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 9px max(12px,env(safe-area-inset-left))!important;
+  }
+  header.top.hd>.brand{min-width:0!important}
+  header.top.hd>.actions{gap:5px!important;min-width:0!important}
+  header.top.hd>.actions .ibtn{
+    width:40px!important;min-width:40px!important;height:40px!important;min-height:40px!important;
+    padding:0!important;border-radius:11px!important;
+  }
+  header.top.hd>.actions .sync{width:7px!important;height:7px!important;min-width:7px!important}
+  header.top.hd>.search{
+    grid-area:search!important;display:flex!important;width:100%!important;min-width:0!important;
+    height:40px!important;padding:0 10px!important;border-radius:11px!important;
+  }
+  header.top.hd>.search .search-input{min-width:0!important;font-size:16px!important}
+  header.top.hd>.seg{
+    grid-area:filters!important;justify-self:end!important;align-self:center!important;
+    width:max-content!important;max-width:100%!important;margin:0!important;
+    gap:2px!important;padding:2px!important;
+  }
+  header.top.hd>.seg button{
+    min-width:0!important;min-height:36px!important;padding:0 8px!important;
+    border-radius:8px!important;font-size:11px!important;
+  }
+  header.top.hd>.seg button svg{display:none!important}
+
+  main.list{
+    width:100%!important;max-width:none!important;min-width:0!important;
+    padding:20px 14px calc(156px + env(safe-area-inset-bottom))!important;
+  }
+  #list,.notes-heading,.grp,.cards,.clip,.clip-head,.card-foot,.tools{
+    min-width:0!important;max-width:100%!important;
+  }
+  #cmp{
+    left:10px!important;right:10px!important;
+    bottom:calc(8px + env(safe-area-inset-bottom) + var(--keyboard-inset,0px))!important;
+    width:auto!important;max-width:none!important;
+    grid-template-columns:44px minmax(0,1fr) 44px!important;
+    grid-template-areas:"visibility visibility visibility" "paste ta save"!important;
+    grid-template-rows:auto minmax(46px,auto)!important;
+    gap:8px!important;padding:10px!important;border-radius:18px!important;
+  }
+  #cmp>.composer-head{grid-area:visibility!important;min-height:34px!important;padding:0 3px!important}
+  #cmp>.composer-head .visibility-switch{gap:3px!important;padding:3px!important}
+  #cmp>.composer-head .visibility-option{
+    width:36px!important;min-width:36px!important;height:36px!important;min-height:36px!important;
+    padding:0!important;border-radius:9px!important;
+  }
+  #cmp>.composer-head .visibility-option svg{width:15px!important;height:15px!important}
+  #cmp>#in{
+    grid-area:ta!important;width:100%!important;min-width:0!important;
+    min-height:46px!important;max-height:min(28dvh,150px)!important;
+    padding:11px 12px!important;border-radius:12px!important;
+    font-size:16px!important;line-height:1.55!important;
+  }
+  #cmp>#paste{
+    grid-area:paste!important;width:44px!important;min-width:44px!important;
+    height:44px!important;min-height:44px!important;padding:0!important;border-radius:12px!important;
+  }
+  #cmp>#save{
+    grid-area:save!important;width:44px!important;min-width:44px!important;
+    height:44px!important;min-height:44px!important;padding:0!important;border-radius:12px!important;
+  }
+  .notes-heading{min-height:30px!important;margin-bottom:10px!important;font-size:14px!important}
+  #list .grp{margin-bottom:18px!important}
+  #list .gh{min-height:36px!important;margin-bottom:6px!important;padding-inline:3px!important;font-size:12px!important}
+  #list .clip{padding:16px 10px 15px!important;border-radius:12px!important;box-shadow:none!important}
+  #list .txt{max-width:none!important;font-size:16px!important;line-height:1.72!important;overflow-wrap:anywhere!important}
+  #list .txt.link-text{font-size:16px!important;line-height:1.68!important}
+  #list .txt.code{padding:12px!important;font-size:13px!important;line-height:1.7!important}
+  #list .clip-head{gap:6px!important;flex-wrap:wrap!important;font-size:11px!important}
+  #list .meta{font-size:11px!important}
+  #list .tools{display:flex!important;flex-wrap:wrap!important;gap:5px!important}
+  #list .mb{min-width:40px!important;min-height:40px!important;padding-inline:9px!important;font-size:11px!important}
+  #list .mb.copy{min-height:40px!important;padding-inline:11px!important}
+  .reader-tools button{min-width:44px!important;min-height:44px!important}
+  .reader-tools .reader-copy{min-width:76px!important}
+  .authbox input{min-height:46px!important;font-size:16px!important}
+  .toast{bottom:calc(126px + env(safe-area-inset-bottom) + var(--keyboard-inset,0px))!important}
+}
+@media(max-width:380px){
+  header.top.hd{column-gap:6px!important;padding-inline:max(9px,env(safe-area-inset-left))!important}
+  header.top.hd>.brand{font-size:18px!important}
+  header.top.hd>.actions{gap:3px!important}
+  header.top.hd>.actions .ibtn{width:38px!important;min-width:38px!important;height:38px!important;min-height:38px!important}
+  header.top.hd>.seg button{min-height:34px!important;padding-inline:6px!important;font-size:10px!important}
+  main.list{padding-inline:11px!important}
+  #cmp{left:8px!important;right:8px!important;padding:9px!important;grid-template-columns:42px minmax(0,1fr) 44px!important}
+  #cmp>#paste{width:42px!important;min-width:42px!important;height:44px!important}
+  #cmp>#in{padding-inline:10px!important}
+  #list .clip{padding-inline:8px!important}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:900px){
+  #cmp{gap:6px!important;padding:7px!important}
+  #cmp>.composer-head{min-height:28px!important}
+  #cmp>.composer-head .visibility-option{height:30px!important;min-height:30px!important}
+  #cmp>#in{min-height:40px!important;max-height:22dvh!important;padding-block:7px!important}
+  main.list{padding-bottom:calc(132px + env(safe-area-inset-bottom))!important}
+}
