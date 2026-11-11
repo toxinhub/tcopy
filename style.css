@@ -406,3 +406,68 @@ dialog.reader::backdrop{
     padding-bottom:calc(24px + env(safe-area-inset-bottom));
   }
 }
+
+/* Compact, low-cost header and smoother page rendering */
+.hd{
+  min-height:0;
+  padding:6px clamp(14px,2.2vw,28px);
+  row-gap:0;
+  column-gap:clamp(10px,1.4vw,18px);
+  background:color-mix(in srgb,var(--bg) 97%,transparent);
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+.brand{gap:8px;font-size:19px}
+.logo-mark{width:28px;height:28px;border-radius:8px;font-size:16px}
+.hd .search{height:36px;border-radius:10px;padding-inline:11px}
+.search-input{font-size:14px}
+.actions{gap:5px}
+.actions .sync{font-size:11px;gap:6px}
+.actions .ibtn{min-width:36px;min-height:36px;height:36px;padding-inline:9px;border-radius:10px}
+.actions .avatar{width:21px;height:21px}
+.hd .seg{margin-top:5px;padding:2px;gap:2px;border-radius:9px}
+.hd .seg button{min-width:49px;min-height:28px;padding-inline:9px;border-radius:7px;font-size:11px}
+
+/* Reduce repeated paint work while keeping a restrained new-note cue */
+.clip{animation:none;transition:transform .16s ease,border-color .16s ease}
+.clip.new{animation:arrive .22s ease-out}
+.clip:hover{box-shadow:var(--shadow-card)}
+@media(hover:hover) and (min-width:721px){
+  .clip:hover{transform:translateY(-1px)}
+}
+@media(max-width:720px){
+  .hd{
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"brand actions" "search filters";
+    gap:5px 7px;
+    padding:calc(5px + env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 5px max(10px,env(safe-area-inset-left));
+  }
+  .brand{gap:6px;font-size:16px}
+  .logo-mark{width:25px;height:25px;border-radius:7px;font-size:14px}
+  .actions{gap:3px}
+  .actions .sync{margin:0 2px 0 0}
+  .actions .ibtn,.admin-btn:not([hidden]){
+    width:34px;min-width:34px;height:34px;min-height:34px;
+    padding:0;border-radius:9px;
+  }
+  .actions .avatar{width:20px;height:20px}
+  .hd .search{height:34px;padding-inline:8px;border-radius:9px}
+  .search-input{font-size:13px}
+  .hd .seg{margin:0;padding:2px;gap:1px}
+  .hd .seg button{min-width:0;min-height:27px;padding-inline:6px;border-radius:7px;font-size:10px}
+  .cmp{
+    background:color-mix(in srgb,var(--surface) 98%,transparent);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+    box-shadow:0 -4px 14px -10px rgba(20,18,10,.2);
+  }
+}
+@media(max-width:380px){
+  .hd{column-gap:5px;padding-inline:max(8px,env(safe-area-inset-left))}
+  .actions{gap:2px}
+  .actions .ibtn,.admin-btn:not([hidden]){width:32px;min-width:32px;height:32px;min-height:32px}
+  .hd .seg button{padding-inline:5px;font-size:9px}
+}
+@media(min-width:721px){
+  .hd{grid-template-columns:minmax(0,1fr) minmax(220px,400px) minmax(0,1fr)}
+}
