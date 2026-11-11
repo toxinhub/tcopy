@@ -382,3 +382,27 @@ dialog.reader{display:none;flex-direction:column;width:min(94vw,860px);height:mi
   .clip{padding:10px}
   .mb{min-width:28px;min-height:28px;padding-inline:5px}
 }
+
+/* Reader scroll performance — keep long plain-text notes on a light paint path */
+dialog.reader::backdrop{
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  background:rgba(10,10,8,.54);
+}
+.reader-body{
+  contain:layout paint;
+  overflow-anchor:none;
+  overscroll-behavior:contain;
+  touch-action:pan-y;
+  overflow-wrap:break-word;
+  -webkit-overflow-scrolling:touch;
+}
+.reader-body.code{
+  overflow-wrap:anywhere;
+}
+@media(max-width:720px){
+  .reader-body{
+    padding-top:16px;
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  }
+}
