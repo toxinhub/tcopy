@@ -52,7 +52,7 @@ body {
   width: 100%;
   min-width: 0;
   height: var(--app-height, 100dvh);
-  min-height: 100dvh;
+  min-height: var(--app-height, 100dvh);
   overflow: hidden;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -185,4 +185,14 @@ pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
 }
 @media (prefers-reduced-motion: no-preference) {
   body, .hd, .cmp { transition: height .18s ease, padding .18s ease; }
+}
+
+/* Tablet header: reserve a dedicated column for the optional Admin control. */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .search { grid-column: 2; }
+  #admin { grid-column: 3; grid-row: 2; }
+}
+/* The visual viewport shrinks when the on-screen keyboard is open. */
+body {
+  min-height: var(--app-height, 100dvh);
 }
