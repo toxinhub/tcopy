@@ -3138,3 +3138,72 @@ main.list{
   #cmp>#in{min-height:210px!important}
   #list .clip{padding:24px 14px 22px!important}
 }
+
+
+/* v49 — larger desktop canvas and a more comfortably scaled desktop reading experience */
+@media(min-width:1200px){
+  :root{
+    --content-width:1240px;
+    --reading-width:1160px;
+  }
+  main.list{
+    width:min(calc(100% - 2 * var(--layout-gutter)),var(--content-width))!important;
+    max-width:var(--content-width)!important;
+  }
+  #cmp,.notes-heading,#list{
+    width:min(100%,var(--reading-width))!important;
+    max-width:var(--reading-width)!important;
+  }
+  #cmp{
+    padding:26px!important;
+    gap:14px!important;
+    border-radius:22px!important;
+    margin-bottom:42px!important;
+  }
+  #cmp>#in{
+    min-height:218px!important;
+    padding:25px 28px!important;
+    font-size:17px!important;
+    line-height:1.82!important;
+    border-radius:16px!important;
+  }
+  #cmp>.composer-head{min-height:38px!important}
+  #cmp>#paste,#cmp>#save{
+    min-height:46px!important;
+    font-size:14px!important;
+  }
+  .notes-heading{
+    min-height:38px!important;
+    margin-bottom:17px!important;
+    font-size:15px!important;
+  }
+  #list .clip{
+    padding:26px 18px 24px!important;
+    border-radius:14px!important;
+  }
+  #list .txt{
+    max-width:88ch!important;
+    font-size:17.5px!important;
+    line-height:1.86!important;
+  }
+  #list .grp{margin-bottom:32px!important}
+  #list .gh{min-height:44px!important;margin-bottom:9px!important}
+}
+@media(min-width:1600px){
+  :root{
+    --content-width:1400px;
+    --reading-width:1300px;
+  }
+  main.list{
+    width:min(calc(100% - 2 * var(--layout-gutter)),var(--content-width))!important;
+    max-width:var(--content-width)!important;
+  }
+  #cmp,.notes-heading,#list{
+    width:min(100%,var(--reading-width))!important;
+    max-width:var(--reading-width)!important;
+  }
+  #cmp{padding:30px!important}
+  #cmp>#in{min-height:236px!important;padding:28px 32px!important;font-size:18px!important}
+  #list .clip{padding:29px 22px 27px!important}
+  #list .txt{max-width:92ch!important;font-size:18px!important;line-height:1.88!important}
+}
