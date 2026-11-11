@@ -129,3 +129,89 @@ dialog.reader{display:none;flex-direction:column;width:min(94vw,860px);height:mi
 }
 
 .admin-btn[hidden]{display:none!important}
+
+
+/* Mobile refinement — compact header, calmer spacing, balanced capture dock */
+@media (max-width:720px){
+  .hd{
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"brand actions" "search filters";
+    align-items:center;
+    column-gap:9px;
+    row-gap:8px;
+    padding:calc(7px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) 9px max(12px,env(safe-area-inset-left));
+  }
+  .brand{font-size:18px;gap:8px}
+  .logo-mark{width:29px;height:29px;border-radius:9px;font-size:16px}
+  .actions{gap:4px}
+  .actions .sync{width:8px;height:8px;overflow:hidden;margin:0 2px 0 0}
+  .actions .sync .dot{display:block;width:7px;height:7px;flex:none}
+  .actions .sync #st{display:none}
+  .actions .ibtn{width:36px;min-width:36px;height:36px;min-height:36px;padding:0;border-radius:10px}
+  .account-btn .avatar{width:21px;height:21px;font-size:11px}
+  .account-btn #accountLabel{display:none}
+  .admin-btn:not([hidden]){display:inline-grid!important;width:36px;min-width:36px;height:36px;min-height:36px;padding:0!important;font-size:0!important}
+  .admin-btn:not([hidden])::before{content:"⚙";font-size:16px;line-height:1}
+  .hd .search{height:38px;min-width:0;padding:0 10px;gap:7px;border-radius:11px}
+  .hd .search svg{width:16px;height:16px}
+  .search-input{font-size:14px}
+  .hd .seg{width:max-content;max-width:100%;margin:0;gap:2px;padding:2px;border-radius:10px}
+  .hd .seg button{min-width:0;min-height:32px;padding:0 8px;font-size:11px;border-radius:7px}
+  .list{padding:20px 12px calc(112px + env(safe-area-inset-bottom))}
+  .hero{margin-bottom:19px}
+  .hero .eyebrow{margin-bottom:5px;font-size:10px;letter-spacing:.09em}
+  .hero h1{font-size:clamp(27px,7.7vw,31px);line-height:1.08;letter-spacing:-.04em;margin-bottom:7px}
+  .hero h1 br{display:none}
+  .hero>p:last-child{max-width:35ch;font-size:13px;line-height:1.5}
+  .cmp{
+    grid-template-columns:38px minmax(0,1fr) 42px;
+    grid-template-areas:"paste ta save";
+    gap:7px;
+    padding:8px max(10px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));
+    border-radius:16px 16px 0 0;
+  }
+  .cmp textarea{
+    min-height:40px;
+    max-height:min(26dvh,112px);
+    padding:8px 10px;
+    border-radius:11px;
+    font-size:14px;
+    line-height:22px;
+  }
+  .paste-btn{width:38px;height:40px;min-width:38px;min-height:40px;border-radius:11px}
+  .paste-icon{font-size:16px}
+  .cmp #save{width:42px;height:42px;min-width:42px;min-height:42px}
+  .notes-heading{margin:0 0 10px;font-size:14px}
+  .notes-heading span{font-size:11px}
+  .grp{margin-bottom:17px}
+  .gh{min-height:32px;margin-bottom:9px;font-size:11px}
+  .gh .n{font-size:10px}
+  .cards{columns:1;column-gap:0}
+  .clip{gap:9px;margin-bottom:10px;padding:12px;border-radius:14px}
+  .clip-head{gap:6px;font-size:11px}
+  .clip-time{font-size:10px}
+  .txt{font-size:14px;line-height:1.6}
+  .txt.code{padding:10px;font-size:11.5px}
+  .link-preview{gap:6px;font-size:10px}
+  .link-mark{width:18px;height:18px}
+  .card-foot{gap:6px}
+  .tools{gap:1px}
+  .mb{min-width:32px;min-height:32px;padding:0 7px;border-radius:8px;font-size:11px}
+  .mb.copy{padding:0 10px}
+  .reader-head{gap:5px}
+  .reader-head>b{font-size:16px}
+  .reader-tools{gap:3px}
+  .reader-size,.reader-close{min-width:34px;min-height:36px}
+  .reader-copy{height:34px;padding:0 10px}
+}
+@media(max-width:360px){
+  .hd{column-gap:6px}
+  .hd .seg button{padding:0 6px;font-size:10px}
+  .actions{gap:2px}
+  .actions .ibtn{width:34px;min-width:34px;height:34px;min-height:34px}
+  .admin-btn:not([hidden]){width:34px;min-width:34px;height:34px;min-height:34px}
+  .list{padding-inline:10px}
+  .hero h1{font-size:27px}
+  .clip{padding:11px}
+  .mb{min-width:30px;min-height:30px;padding:0 6px}
+}
