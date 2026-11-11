@@ -494,3 +494,64 @@ dialog.reader::backdrop{
   .visibility-control select{min-height:28px;max-width:132px;padding-inline:8px;font-size:11px}
   .visibility-tag{font-size:8px;padding-inline:6px}
 }
+
+
+/* Refined interaction layer + accessible mobile pull-to-refresh */
+.scroller{position:absolute;isolation:isolate;touch-action:pan-y}
+.pull-refresh{
+  position:absolute;top:0;left:50%;z-index:8;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  min-height:38px;padding:0 14px;border:1px solid var(--line);
+  border-radius:999px;background:var(--surface);color:var(--muted);
+  box-shadow:var(--shadow-card);font-size:11px;font-weight:650;
+  opacity:0;pointer-events:none;transform:translate(-50%,-125%);
+  transition:opacity .16s ease,transform .18s var(--ease-smooth);
+}
+.pull-refresh.pulling,.pull-refresh.refreshing{opacity:1;transform:translate(-50%,10px)}
+.pull-refresh.ready{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.pull-spinner{width:14px;height:14px;flex:none;border:2px solid var(--line-strong);border-top-color:var(--accent);border-radius:50%;transform:rotate(calc(var(--pull-progress,0)*270deg))}
+.pull-refresh.refreshing .pull-spinner{animation:tcopy-spin .7s linear infinite}
+@keyframes tcopy-spin{to{transform:rotate(360deg)}}
+
+/* Consistent controls, cleaner surfaces and clearer focus states */
+.brand,.composer-title,.notes-heading,.clip-kind{letter-spacing:-.015em}
+.hd .search{box-shadow:0 1px 2px rgba(20,18,10,.025);transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}
+.hd .search:focus-within{box-shadow:0 0 0 3px var(--accent-soft)}
+.ibtn,.cb,.visibility-control select,.reader-size,.reader-copy,.authactions button{transition:transform .16s var(--ease-smooth),border-color .16s ease,background .16s ease,color .16s ease,box-shadow .16s ease}
+.ibtn:focus-visible,.cb:focus-visible,.mb:focus-visible,.reader-size:focus-visible,.reader-copy:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.clip{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow-card)}
+.clip-head{flex-wrap:wrap}
+.visibility-tag{flex:none}
+.mb.copy{font-weight:700}
+.mb.del:hover{background:color-mix(in srgb,var(--danger) 10%,transparent)}
+.txt a{font-weight:550;text-decoration-thickness:1px}
+.edit{font:400 14px/1.65 var(--f-b);background:var(--bg)}
+.empty{color:var(--ink)}
+.subempty{margin:8px auto 0;text-align:center}
+.toast{max-width:min(440px,calc(100% - 28px));line-height:1.45}
+.authbox{border-color:var(--line-strong)}
+.authbox input{transition:border-color .16s ease,box-shadow .16s ease}
+.reader{overscroll-behavior:contain}
+@media(max-width:720px){
+  /* Keep visibility controls available in the compact capture dock. */
+  .cmp{grid-template-columns:36px minmax(0,1fr) 38px;grid-template-areas:"head head head" "paste ta save";align-items:center;row-gap:6px}
+  .composer-head{grid-area:head;display:flex;min-width:0;padding:0 2px 1px}
+  .composer-title{font-size:9px}
+  .visibility-control select{max-width:116px;min-height:26px;font-size:10px}
+  .visibility-control .composer-hint{display:inline;font-size:9px}
+  .cmp textarea{grid-area:ta;min-height:38px}
+  .paste-btn{grid-area:paste}
+  .cmp #save{grid-area:save}
+  .list{padding-bottom:calc(126px + env(safe-area-inset-bottom))}
+  .clip{box-shadow:0 1px 2px rgba(20,18,10,.025),0 5px 16px -13px rgba(20,18,10,.2)}
+  .pull-refresh{top:2px}
+}
+@media(max-width:380px){
+  .cmp{grid-template-columns:34px minmax(0,1fr) 36px;column-gap:5px}
+  .paste-btn{width:34px;min-width:34px;height:36px;min-height:36px}
+  .cmp #save{width:36px;min-width:36px;height:36px;min-height:36px}
+  .visibility-control select{max-width:105px}
+}
+@media(prefers-reduced-motion:reduce){
+  .pull-refresh,.pull-spinner{animation:none!important;transition:none!important}
+}
