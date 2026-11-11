@@ -4,13 +4,21 @@ service cloud.firestore {
     function signedIn() { return request.auth != null; }
     function isAdmin() { return signedIn() && request.auth.token.admin == true; }
     function owns(resourceData) { return signedIn() && resourceData.ownerUid == request.auth.uid; }
+    function isGuest() { return signedIn() && request.auth.token.firebase.sign_in_provider == 'anonymous'; }
+    function validVisibility(data) {
+      return data.visibility in ['public', 'private'];
+    }
 
     match /clips/{clipId} {
-      allow read: if owns(resource.data) || isAdmin();
+      // Missing visibility on legacy documents is intentionally treated as private.
+      allow read: if (resource.data.visibility == 'public') || owns(resource.data) || isAdmin();
+
       allow create: if signedIn()
         && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'pinned', 'createdAt', 'updatedAt'])
-        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'pinned', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt'])
+        && validVisibility(request.resource.data)
+        && (!isGuest() || request.resource.data.visibility == 'public')
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
         && request.resource.data.text.size() <= 20000
@@ -18,16 +26,21 @@ service cloud.firestore {
         && request.resource.data.pinned == false
         && request.resource.data.createdAt is timestamp
         && request.resource.data.createdAt == request.time;
+
       allow update: if (owns(resource.data) || isAdmin())
         && request.resource.data.ownerUid == resource.data.ownerUid
         && request.resource.data.createdAt == resource.data.createdAt
-        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
+        && validVisibility(request.resource.data)
+        && (!isGuest() || request.resource.data.visibility == 'public')
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
         && request.resource.data.text.size() <= 20000
         && request.resource.data.pinned is bool
         && request.resource.data.updatedAt is timestamp
         && request.resource.data.updatedAt == request.time;
+
       allow delete: if owns(resource.data) || isAdmin();
     }
   }
