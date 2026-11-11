@@ -4836,21 +4836,26 @@ dialog.reader::backdrop{background:rgba(12,15,12,.62)}
 }
 
 
-/* Desktop-only three-row card grid.
-   Cards flow top-to-bottom in three balanced rows; additional columns
-   remain horizontally scrollable. Tablet and mobile styles are untouched. */
+/* Desktop grid: three rows, adaptive columns, no forced narrow card rail.
+   Each date group lays cards top-to-bottom; columns share available width.
+   A horizontal rail appears only when a group exceeds three full columns.
+   Tablet and mobile layouts remain unchanged. */
 @media (min-width:1025px) {
+  #list .grp {
+    min-width: 0;
+  }
   #list .cards {
     display: grid !important;
     grid-auto-flow: column !important;
-    grid-template-rows: repeat(3, minmax(180px, auto)) !important;
-    grid-auto-columns: minmax(260px, 300px) !important;
-    align-items: start !important;
+    grid-template-rows: repeat(3, minmax(0, auto)) !important;
+    grid-auto-columns: minmax(220px, 1fr) !important;
+    align-items: stretch !important;
     align-content: start !important;
-    gap: 18px !important;
+    gap: 16px !important;
     columns: unset !important;
     width: 100%;
     min-width: 0;
+    max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 2px 2px 12px;
@@ -4858,18 +4863,17 @@ dialog.reader::backdrop{background:rgba(12,15,12,.62)}
     overscroll-behavior-x: contain;
   }
   #list .cards > .clip {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
     width: 100%;
-    height: auto;
-    min-height: 0;
-    align-self: start;
+    max-width: none;
+    min-height: 168px;
     margin: 0;
+    align-self: stretch;
     break-inside: auto;
   }
-}
-@media (min-width:1600px) {
-  #list .cards {
-    grid-auto-columns: minmax(280px, 320px) !important;
-    gap: 20px !important;
+  #list .cards > .clip .card-foot {
+    margin-top: auto;
   }
 }
