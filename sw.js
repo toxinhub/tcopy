@@ -1,6 +1,7 @@
 const CACHE = "tcopy-shell-v30";
 const SHELL = ["./", "./index.html", "./style.css?v=30", "./app.js?v=30", "./manifest.webmanifest", "./icon.svg"];
 const SHARE_DB = "tcopy-share";
+const SCOPE_PATH = new URL("./", self.location.href).pathname;
 function storeIncoming(text) {
   return new Promise((resolve, reject) => {
     const open = indexedDB.open(SHARE_DB, 1);
@@ -21,7 +22,7 @@ self.addEventListener("install", event => {
   self.skipWaiting();
 });
 self.addEventListener("activate", event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))));
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("tcopy-shell-") && key !== CACHE).map(key => caches.delete(key)))));
   self.clients.claim();
 });
 self.addEventListener("fetch", event => {
@@ -39,7 +40,7 @@ self.addEventListener("fetch", event => {
     })());
     return;
   }
-  if (request.method !== "GET" || url.origin !== self.location.origin) return;
+  if (request.method !== "GET" || url.origin !== self.location.origin || !url.pathname.startsWith(SCOPE_PATH)) return;
   const isDocument = request.mode === "navigate" || url.pathname.endsWith("/tcopy/") || url.pathname.endsWith("/tcopy/index.html");
   if (isDocument) {
     event.respondWith(fetch(request).then(response => {
