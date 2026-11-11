@@ -1463,3 +1463,32 @@ body{
   }
   .hd .seg button{padding-inline:4px;font-size:8px}
 }
+
+
+/* v28 — enforce a clean two-row mobile header */
+@media(max-width:720px){
+  header.top.hd{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-rows:30px 32px!important;
+    grid-template-areas:"brand actions" "search filters"!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:5px 8px!important;
+    min-height:0!important;
+    padding:calc(5px + env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 6px max(10px,env(safe-area-inset-left))!important;
+  }
+  header.top.hd>.brand{grid-area:brand!important;align-self:center!important;min-width:0}
+  header.top.hd>.actions{grid-area:actions!important;align-self:center!important;justify-self:end!important;min-width:0}
+  header.top.hd>.search{grid-area:search!important;align-self:center!important;width:100%!important;min-width:0!important;margin:0!important}
+  header.top.hd>.seg{grid-area:filters!important;align-self:center!important;justify-self:end!important;width:max-content!important;max-width:100%!important;margin:0!important}
+}
+@media(max-width:380px){
+  header.top.hd{
+    grid-template-rows:28px 30px!important;
+    column-gap:5px!important;
+    row-gap:4px!important;
+    padding-top:calc(4px + env(safe-area-inset-top))!important;
+    padding-bottom:5px!important;
+  }
+}
