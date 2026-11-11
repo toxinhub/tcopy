@@ -3207,3 +3207,52 @@ main.list{
   #list .clip{padding:29px 22px 27px!important}
   #list .txt{max-width:92ch!important;font-size:18px!important;line-height:1.88!important}
 }
+
+
+/* v50 — restore balanced mobile composer and readable note-card proportions */
+@media(max-width:720px){
+  main.list{
+    padding:17px 14px calc(116px + env(safe-area-inset-bottom))!important;
+  }
+  #cmp{
+    left:10px!important;right:10px!important;padding:9px!important;gap:8px!important;
+    border-radius:17px!important;
+    grid-template-columns:38px minmax(0,1fr) 42px!important;
+    grid-template-rows:auto minmax(44px,auto)!important;
+  }
+  #cmp>.composer-head{min-height:28px!important;padding:0 3px!important}
+  #cmp>.composer-head .visibility-switch{gap:3px!important;padding:3px!important;border-radius:10px!important}
+  #cmp>.composer-head .visibility-option{
+    width:30px!important;min-width:30px!important;height:28px!important;min-height:28px!important;border-radius:8px!important;
+  }
+  #cmp>.composer-head .visibility-option svg{width:14px!important;height:14px!important}
+  #cmp>#in{
+    min-height:44px!important;max-height:min(28dvh,140px)!important;padding:10px 12px!important;
+    border-radius:11px!important;font-size:15px!important;line-height:1.58!important;
+  }
+  #cmp>#paste{
+    width:38px!important;min-width:38px!important;height:40px!important;min-height:40px!important;border-radius:11px!important;
+  }
+  #cmp>#save{
+    width:42px!important;min-width:42px!important;height:42px!important;min-height:42px!important;border-radius:12px!important;
+  }
+  .notes-heading{min-height:28px!important;margin-bottom:9px!important;font-size:14px!important}
+  #list .grp{margin-bottom:17px!important}
+  #list .gh{min-height:32px!important;margin-bottom:6px!important;padding-inline:3px!important;font-size:11.5px!important}
+  #list .clip{padding:14px 8px 13px!important;border-radius:10px!important;box-shadow:none!important}
+  #list .txt{max-width:none!important;font-size:15.5px!important;line-height:1.74!important}
+  #list .meta{font-size:10.5px!important}
+  #list .mb{min-width:34px!important;min-height:34px!important;padding-inline:8px!important}
+  #list .mb.copy{padding-inline:10px!important}
+  .toast{bottom:calc(112px + env(safe-area-inset-bottom))!important}
+}
+@media(max-width:380px){
+  main.list{padding-inline:11px!important}
+  #cmp{
+    left:9px!important;right:9px!important;padding:8px!important;gap:7px!important;
+    grid-template-columns:36px minmax(0,1fr) 40px!important;
+  }
+  #cmp>#in{padding-inline:10px!important;font-size:14.5px!important}
+  #cmp>#save{width:40px!important;min-width:40px!important;height:40px!important;min-height:40px!important}
+  #list .clip{padding-inline:6px!important}
+}
