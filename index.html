@@ -58,10 +58,11 @@
   <div class="reader-head"><b id="readerTitle">Full note</b><div class="reader-tools"><button type="button" class="reader-size" id="readerSmaller" aria-label="Decrease text size" title="Smaller text">A−</button><button type="button" class="reader-size" id="readerLarger" aria-label="Increase text size" title="Larger text">A+</button><button type="button" class="reader-pin" id="readerPin" aria-pressed="false" hidden>Pin</button><button type="button" class="reader-edit" id="readerEdit" hidden>Edit</button><button type="button" class="reader-copy" id="readerCopy">Copy</button><button type="button" class="reader-close" id="readerClose" aria-label="Close reader" title="Close">×</button></div></div>
   <div class="reader-body" id="readerBody" tabindex="0"></div>
  </dialog>
+ <dialog class="confirm-dialog" id="deleteDialog" aria-labelledby="deleteTitle"><h2 id="deleteTitle">Delete this note?</h2><p>This note will be removed from your notebook. This can’t be undone.</p><div class="confirm-actions"><button type="button" id="deleteCancel">Cancel</button><button type="button" id="deleteConfirm">Delete note</button></div></dialog>
  <div class="authveil" id="authveil" role="dialog" aria-modal="true" aria-labelledby="authTitle">
  <div class="authbox"><h2 id="authTitle">Welcome to tcopy</h2><p>Sign in to unlock Private notes and sync your personal notebook across devices. Public notes stay available to everyone.</p>
   <form id="authform"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"><div class="authactions"><button type="button" id="authclose">Not now</button><button class="primary" type="submit" id="authsubmit"><span>Sign in</span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button></div></form><p class="authhint" id="authhint" aria-live="polite"></p>
  </div>
 </div>
-<script type="module" src="./app.js?v=63"></script>
+<script type="module" src="./app.js?v=64"></script>
 </body></html>
