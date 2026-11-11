@@ -471,3 +471,26 @@ dialog.reader::backdrop{
 @media(min-width:721px){
   .hd{grid-template-columns:minmax(0,1fr) minmax(220px,400px) minmax(0,1fr)}
 }
+
+
+/* Public / Private note controls */
+.visibility-control{display:flex;align-items:center;gap:8px;min-width:0}
+.visibility-control select{
+  min-height:30px;max-width:150px;padding:4px 26px 4px 10px;
+  border:1px solid var(--line);border-radius:9px;
+  background:var(--surface);color:var(--ink);font:inherit;font-size:12px;
+}
+.visibility-control select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.visibility-tag{
+  display:inline-flex;align-items:center;min-height:18px;padding:1px 7px;
+  border:1px solid var(--line);border-radius:999px;
+  font-size:9px;font-weight:650;letter-spacing:.025em;white-space:nowrap;
+}
+.visibility-tag.is-public{color:var(--accent);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 22%,var(--line))}
+.visibility-tag.is-private{color:var(--muted);background:var(--surface-2,var(--surface))}
+@media(max-width:720px){
+  .composer-head{gap:7px;align-items:center}
+  .visibility-control{gap:5px}
+  .visibility-control select{min-height:28px;max-width:132px;padding-inline:8px;font-size:11px}
+  .visibility-tag{font-size:8px;padding-inline:6px}
+}
