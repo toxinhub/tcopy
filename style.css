@@ -2854,3 +2854,50 @@ header.top.hd .actions .ibtn:hover,
   #cmp>#paste{width:34px!important;min-width:34px!important}
   #cmp>#save{width:38px!important;min-width:38px!important}
 }
+
+
+/* v45 — typography and color refinement aligned with tcopy's established visual system */
+:root{
+  --type-body:var(--f-b);--type-display:var(--f-d);
+  --type-reading-size:16px;--type-reading-leading:1.78;--type-meta-size:11px;
+}
+:root[data-theme="dark"]{
+  --ink:#edf0e7;--muted:#c2cbbf;
+  --line:rgba(239,244,234,.17);--line-strong:rgba(239,244,234,.25);
+  --accent:#c5ccff;--accent-ink:#252943;
+  --accent-soft:rgba(197,204,255,.16);--rule:rgba(197,204,255,.13);
+}
+body{font-family:var(--type-body)!important;font-size:15.5px!important;line-height:1.65!important;letter-spacing:0!important;font-optical-sizing:auto;font-kerning:normal;text-rendering:optimizeLegibility}
+header.top.hd>.brand .brand-name{font-family:var(--type-display)!important;font-size:1.04em!important;font-weight:700!important;letter-spacing:-.045em!important}
+.search,.search-input{font-family:var(--type-body)!important;font-size:14px!important;font-weight:450!important;letter-spacing:0!important}
+.notes-heading{display:flex;align-items:baseline;gap:9px;color:var(--ink);font-family:var(--type-display);font-size:16px!important;font-weight:700!important;letter-spacing:-.025em!important}
+.notes-heading #count{color:var(--muted);font:500 11px/1.4 var(--type-body)!important;font-variant-numeric:tabular-nums}
+.gh{font-family:var(--type-body)!important;font-size:12px!important;font-weight:600!important;letter-spacing:.005em!important}
+.gh small{font-size:11px!important;font-weight:450!important}
+.txt{font-family:var(--type-body)!important;font-size:var(--type-reading-size)!important;font-weight:400!important;line-height:var(--type-reading-leading)!important;letter-spacing:.002em!important;color:var(--ink)!important;font-feature-settings:"kern" 1,"liga" 1}
+.txt.link-text{font-size:14.5px!important;line-height:1.72!important}
+.txt.code{font-family:var(--f-m)!important;font-size:12px!important;line-height:1.8!important;letter-spacing:0!important}
+.txt a{color:var(--accent)!important;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:550}
+.meta{color:var(--muted)!important;font-family:var(--type-body)!important;font-size:var(--type-meta-size)!important;line-height:1.5!important;letter-spacing:.005em!important}
+.meta .tag,.link-domain{font-weight:650!important}
+.link-preview{font-size:11.5px!important;line-height:1.45!important}
+.empty{font-family:var(--type-display)!important;font-size:26px!important;line-height:1.22!important;font-weight:700!important;letter-spacing:-.035em!important}
+.subempty,.foot{font-family:var(--type-body)!important;font-size:13px!important;line-height:1.72!important}
+.cmp>#in,.edit{font-family:var(--type-body)!important;font-size:15.5px!important;line-height:1.72!important;letter-spacing:0!important;font-weight:400!important}
+.cmp>#in::placeholder,.search-input::placeholder{color:var(--muted)!important;opacity:.88!important;font-weight:400!important}
+.ibtn,.cb,.mb,.seg button,.visibility-option,.reader-tools button,.authactions button{font-family:var(--type-body)!important;font-weight:600!important;letter-spacing:0!important}
+:root[data-theme="dark"] .clip{background:var(--surface)!important}
+:root[data-theme="dark"] .txt{color:var(--ink)!important}
+:root[data-theme="dark"] .meta,:root[data-theme="dark"] .gh small,:root[data-theme="dark"] .subempty,:root[data-theme="dark"] .foot{color:var(--muted)!important}
+:root[data-theme="dark"] .txt a,:root[data-theme="dark"] .link-domain{color:var(--accent)!important}
+:root[data-theme="dark"] ::selection{background:rgba(197,204,255,.28);color:#fff}
+:root[data-theme="light"] ::selection,:root:not([data-theme="dark"]) ::selection{background:rgba(70,84,189,.18);color:#292923}
+@media(max-width:720px){
+  /* Preserve the existing mobile layout and dock geometry; only tune legibility. */
+  body{font-size:15px!important;line-height:1.62!important}
+  .txt{font-size:15.5px!important;line-height:1.74!important}
+  .meta{font-size:10.5px!important;line-height:1.45!important}
+  .empty{font-size:23px!important}
+  .subempty{font-size:12.5px!important}
+  .cmp>#in{font-size:14px!important;line-height:1.58!important}
+}
