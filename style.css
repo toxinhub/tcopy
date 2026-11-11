@@ -1605,3 +1605,30 @@ header.top.hd .search-input{min-width:0;width:100%}
   }
   header.top.hd>.seg button{padding-inline:4px!important;font-size:9px!important}
 }
+
+
+/* v30 — icon-only compact visibility switch on mobile */
+@media(max-width:720px){
+  .visibility-control{gap:0!important}
+  .visibility-control .composer-hint{display:none!important}
+  .visibility-switch{
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    gap:2px!important;padding:2px!important;border-radius:10px!important;
+  }
+  .visibility-option{
+    display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    width:29px!important;min-width:29px!important;max-width:29px!important;
+    height:27px!important;min-height:27px!important;padding:0!important;
+    gap:0!important;border-radius:7px!important;font-size:0!important;line-height:0!important;
+  }
+  .visibility-option>span{display:none!important}
+  .visibility-option>.ui-icon{display:block!important;width:14px!important;height:14px!important;margin:0!important}
+}
+@media(max-width:380px){
+  .visibility-switch{gap:1px!important;padding:2px!important}
+  .visibility-option{
+    width:26px!important;min-width:26px!important;max-width:26px!important;
+    height:25px!important;min-height:25px!important;border-radius:6px!important;
+  }
+  .visibility-option>.ui-icon{width:13px!important;height:13px!important}
+}
