@@ -1640,3 +1640,62 @@ header.top.hd .search-input{min-width:0;width:100%}
   .cmp>.composer-head{display:flex!important;grid-area:visibility!important;grid-column:1/-1!important;align-items:center!important;justify-content:flex-end!important;min-height:28px!important;margin:0!important;padding:0 2px!important;}
   .cmp>.composer-head .visibility-control{display:flex!important;align-items:center!important;justify-content:flex-end!important;}
 }
+
+
+/* v33 — centered desktop search and refined tcopy wordmark */
+@media(min-width:1025px){
+  header.top.hd{
+    grid-template-columns:minmax(0,1fr) minmax(320px,min(44vw,620px)) minmax(0,1fr)!important;
+    grid-template-areas:"brand search actions" "filters filters filters"!important;
+  }
+  header.top.hd>.search{
+    justify-self:center!important;
+    width:100%!important;
+    max-width:620px!important;
+  }
+}
+header.top.hd>.brand{
+  gap:10px!important;
+  font-family:var(--f-d)!important;
+  font-size:clamp(22px,1.8vw,26px)!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:-.065em!important;
+  color:var(--ink)!important;
+  transition:opacity .18s ease,transform .18s ease;
+}
+header.top.hd>.brand:hover{opacity:.88;transform:translateY(-1px)}
+header.top.hd>.brand .logo-mark{
+  display:grid!important;
+  place-items:center!important;
+  width:36px!important;
+  height:36px!important;
+  border-radius:11px!important;
+  background:var(--accent)!important;
+  color:var(--accent-ink)!important;
+  box-shadow:0 3px 9px color-mix(in srgb,var(--accent) 20%,transparent)!important;
+}
+header.top.hd>.brand .logo-mark svg{
+  display:block!important;
+  width:20px!important;
+  height:20px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+header.top.hd>.brand .brand-name{
+  display:inline-block;
+  font:700 inherit var(--f-d);
+  letter-spacing:-.065em;
+}
+@media(max-width:720px){
+  header.top.hd>.brand{font-size:18px!important;gap:7px!important}
+  header.top.hd>.brand .logo-mark{width:27px!important;height:27px!important;border-radius:8px!important}
+  header.top.hd>.brand .logo-mark svg{width:16px!important;height:16px!important}
+}
+@media(min-width:721px) and (max-width:1024px){
+  header.top.hd>.brand{font-size:22px!important}
+  header.top.hd>.brand .logo-mark{width:33px!important;height:33px!important}
+}
