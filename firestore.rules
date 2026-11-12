@@ -19,7 +19,7 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.resource.data.ownerUid == request.auth.uid
         && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
-        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
         && request.resource.data.updatedAt == null
         && validVisibility(request.resource.data)
         && validTags(request.resource.data)
@@ -36,7 +36,7 @@ service cloud.firestore {
         && request.resource.data.ownerUid == resource.data.ownerUid
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
-        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
         && validVisibility(request.resource.data)
         && validTags(request.resource.data)
         && (!isGuest() || request.resource.data.visibility == 'public')
