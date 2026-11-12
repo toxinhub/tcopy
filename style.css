@@ -5894,3 +5894,101 @@ dialog.reader,dialog.confirm-dialog,.authbox{border-radius:14px;box-shadow:0 14p
 @media(prefers-reduced-motion:reduce){
  #list .cards>.clip{transition:none!important}
 }
+
+
+/* v83 — balanced light and dark themes */
+:root{
+  color-scheme:light;
+  --bg:#F7F7F5;
+  --surface:#FFFFFF;
+  --surface-2:#F1F1EF;
+  --ink:#242329;
+  --muted:#74727B;
+  --line:rgba(35,33,42,.085);
+  --line-strong:rgba(35,33,42,.15);
+  --edge-soft:rgba(35,33,42,.045);
+  --accent:#65549A;
+  --accent-hover:#574788;
+  --accent-pressed:#493B76;
+  --accent-soft:#F0EDF7;
+  --accent-ink:#FFFFFF;
+  --danger:#C65353;
+  --danger-soft:#FBEDED;
+  --card-shadow:0 1px 2px rgba(28,25,38,.035);
+  accent-color:var(--accent);
+}
+:root[data-theme=dark]{
+  color-scheme:dark;
+  --bg:#151519;
+  --surface:#1E1E24;
+  --surface-2:#282830;
+  --ink:#F0EFF4;
+  --muted:#A5A3AE;
+  --line:rgba(238,236,246,.095);
+  --line-strong:rgba(238,236,246,.17);
+  --edge-soft:rgba(238,236,246,.05);
+  --accent:#B7A6E4;
+  --accent-hover:#C8BAEC;
+  --accent-pressed:#A895D8;
+  --accent-soft:#332D42;
+  --accent-ink:#211B2D;
+  --danger:#F08B8B;
+  --danger-soft:#422A30;
+  --card-shadow:0 2px 8px rgba(0,0,0,.18);
+  accent-color:var(--accent);
+}
+/* Keep every surface and control on the active theme palette. */
+html,body{background:var(--bg);color:var(--ink);color-scheme:inherit}
+::selection{background:var(--accent-soft);color:var(--ink)}
+:focus-visible{outline:2px solid color-mix(in srgb,var(--accent) 78%,transparent);outline-offset:2px}
+.hd,.sidebar{background:var(--bg);color:var(--ink)}
+.hd{border-bottom:1px solid var(--line)}
+.sidebar{border-right:1px solid var(--line)}
+.hd>.search,.search,.side-search,
+input,textarea,select,
+#cmp>#in,#cmp>.tag-input{
+  background:var(--surface-2);color:var(--ink);border-color:var(--line)
+}
+input::placeholder,textarea::placeholder,#cmp>#in::placeholder{color:var(--muted);opacity:.78}
+#cmp{background:var(--surface);border-color:var(--line-strong)}
+#cmp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+#cmp>#paste{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+#cmp>#save{background:var(--accent);color:var(--accent-ink)}
+#cmp>#save:hover:not(:disabled){background:var(--accent-hover)}
+#list .cards>.clip{background:var(--surface);color:var(--ink);border-color:var(--line)}
+#list .clip-head,#list .clip-time,.side-label{color:var(--muted)}
+#list .visibility-tag{background:var(--surface-2);color:var(--muted);border-color:var(--line)}
+#list .clip>.txt.code{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+#list .clip-tag,.mobile-tag{color:var(--muted)}
+#list .clip-tag:hover,.mobile-tag:hover,.mobile-tag.is-active,
+.side-tag.is-active,.scope-nav button[aria-pressed=true]{
+  background:var(--accent-soft);color:var(--accent)
+}
+#list .mb{color:var(--muted)}
+#list .mb:hover{background:var(--surface-2);color:var(--ink)}
+#list .mb.copy{background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+#list .mb.pin.on{background:var(--accent-soft);color:var(--accent)}
+dialog.reader,dialog.confirm-dialog,.authbox{
+  background:var(--surface);color:var(--ink);border-color:var(--line-strong)
+}
+.reader-head,.reader-tools{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.reader-body{color:var(--ink)}
+.reader-tools button,.confirm-actions button,.authactions button{
+  background:var(--surface-2);color:var(--ink);border-color:var(--line)
+}
+.reader-tools .reader-copy,.authactions .primary{background:var(--accent);color:var(--accent-ink)}
+.authbox input{background:var(--surface-2);color:var(--ink);border-color:var(--line-strong)}
+.authveil{background:rgba(12,12,16,.48)}
+.toast{background:var(--surface);color:var(--ink);border:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.12)}
+.mobile-scope{background:var(--surface-2);border-color:var(--line)}
+.mobile-scope button[aria-pressed=true]{background:var(--surface);color:var(--accent)}
+::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--muted) 32%,transparent);border:3px solid transparent;background-clip:padding-box}
+:root[data-theme=dark] .hd>.actions .ibtn,
+:root[data-theme=dark] .hd>.search{box-shadow:none}
+:root[data-theme=dark] #list .cards>.clip{box-shadow:var(--card-shadow)!important}
+:root[data-theme=dark] #list .cards>.clip.pinned{background:color-mix(in srgb,var(--accent-soft) 34%,var(--surface))!important}
+:root[data-theme=dark] .authveil{background:rgba(0,0,0,.66)}
+@media(prefers-contrast:more){
+  :root{--line:rgba(20,19,24,.2);--line-strong:rgba(20,19,24,.3)}
+  :root[data-theme=dark]{--line:rgba(255,255,255,.22);--line-strong:rgba(255,255,255,.34)}
+}
