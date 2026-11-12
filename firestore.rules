@@ -8,6 +8,9 @@ service cloud.firestore {
     function validVisibility(data) {
       return data.visibility in ['public', 'private'];
     }
+    function validTags(data) {
+      return !('tags' in data) || (data.tags is list && data.tags.size() <= 8);
+    }
 
     match /clips/{clipId} {
       // Missing visibility on legacy documents is intentionally treated as private.
@@ -15,10 +18,11 @@ service cloud.firestore {
 
       allow create: if signedIn()
         && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
-        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
         && request.resource.data.updatedAt == null
         && validVisibility(request.resource.data)
+        && validTags(request.resource.data)
         && (!isGuest() || request.resource.data.visibility == 'public')
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
@@ -31,9 +35,10 @@ service cloud.firestore {
       allow update: if (owns(resource.data) || isAdmin())
         && request.resource.data.ownerUid == resource.data.ownerUid
         && request.resource.data.createdAt == resource.data.createdAt
-        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
-        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
+        && request.resource.data.keys().hasAll(['ownerUid', 'text', 'visibility', 'pinned', 'createdAt', 'updatedAt', 'tags'])
         && validVisibility(request.resource.data)
+        && validTags(request.resource.data)
         && (!isGuest() || request.resource.data.visibility == 'public')
         && request.resource.data.text is string
         && request.resource.data.text.size() > 0
