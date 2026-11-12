@@ -6033,6 +6033,8 @@ dialog.confirm-dialog,
   --accent-soft:rgba(91,70,214,.11);
   --danger:#c83d52;
   --success:#238b62;
+  --neutral-0:#ffffff;--neutral-50:#f7f8fc;--neutral-100:#f0f2f8;--neutral-200:#e1e5ef;--neutral-500:#62697d;--neutral-900:#202338;
+  --brand-50:#f3f0ff;--brand-100:#e7e2ff;--brand-500:#5b46d6;--brand-600:#4b38c2;--brand-700:#3c2f9e;
   --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;
   --radius-sm:10px;--radius-md:16px;--radius-lg:20px;
   --shadow-1:0 1px 3px rgba(24,29,51,.05),0 4px 12px rgba(24,29,51,.035);
@@ -6040,6 +6042,8 @@ dialog.confirm-dialog,
   --f-b:Inter,'Hind Siliguri','Noto Sans Bengali',system-ui,sans-serif;
 }
 :root[data-theme=dark]{
+  --neutral-0:#0f1117;--neutral-50:#171b26;--neutral-100:#202637;--neutral-200:#30384b;--neutral-500:#a6afc2;--neutral-900:#edf0f8;
+  --brand-50:#27213e;--brand-100:#342b52;--brand-500:#aa9aff;--brand-600:#b9acff;--brand-700:#c7bcff;
   --bg:#0f1117;--surface:#171b26;--surface-2:#202637;
   --ink:#edf0f8;--muted:#a6afc2;
   --line:rgba(225,232,255,.10);--line-strong:rgba(225,232,255,.17);
