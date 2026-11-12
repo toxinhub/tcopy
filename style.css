@@ -5641,3 +5641,49 @@ dialog.confirm-dialog,
   #list .clip .tools>.mb span{font-size:8px!important}
   #list .clip .tools>.mb svg{width:13px!important;height:13px!important}
 }
+
+
+/* v73 — fix mobile header grid: search gets a dedicated full-width row. */
+@media(max-width:820px){
+  header.top.hd{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-areas:"brand actions" "search search" "filters filters"!important;
+    grid-auto-flow:row!important;
+    align-items:center!important;
+    justify-items:stretch!important;
+    row-gap:8px!important;
+    column-gap:8px!important;
+  }
+  header.top.hd>.brand{grid-area:brand!important}
+  header.top.hd>.actions{grid-area:actions!important;justify-self:end!important}
+  header.top.hd>label.search{
+    grid-area:search!important;
+    display:flex!important;
+    width:100%!important;max-width:none!important;min-width:0!important;
+    height:42px!important;min-height:42px!important;
+    margin:0!important;padding:0 12px!important;gap:9px!important;
+    border:1px solid var(--edge-mid,var(--line))!important;
+    border-radius:11px!important;background:var(--surface)!important;
+    box-shadow:none!important;
+  }
+  header.top.hd>label.search>svg{
+    display:block!important;flex:0 0 16px!important;
+    width:16px!important;height:16px!important;
+  }
+  header.top.hd>label.search>input#q{
+    display:block!important;flex:1 1 auto!important;
+    width:0!important;min-width:0!important;max-width:none!important;
+    height:100%!important;margin:0!important;padding:0!important;
+    border:0!important;outline:0!important;box-shadow:none!important;
+    background:transparent!important;font-size:14px!important;
+  }
+  header.top.hd>label.search:focus-within{
+    border-color:var(--accent)!important;
+    box-shadow:0 0 0 2px var(--accent-soft)!important;
+  }
+  header.top.hd>.seg{
+    grid-area:filters!important;justify-self:center!important;
+    margin:0!important;
+  }
+}
