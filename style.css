@@ -5387,3 +5387,140 @@ button:active{ -webkit-tap-highlight-color:transparent; }
   #cmp>#paste:active{transform:translateY(0) scale(.98)!important}
   #cmp>#save{justify-self:end!important}
 }
+
+
+/* v70 — refined border hierarchy, edge contrast and corner continuity. */
+/* Shared edge tokens: quiet at rest, clearer only where interaction matters. */
+:root{
+  --edge:rgba(37,35,43,.075);
+  --edge-soft:rgba(37,35,43,.055);
+  --edge-mid:rgba(37,35,43,.13);
+  --edge-active:color-mix(in srgb,var(--accent) 52%,transparent);
+  --edge-inset:inset 0 1px 0 rgba(255,255,255,.72);
+}
+:root[data-theme=dark]{
+  --edge:rgba(242,239,248,.075);
+  --edge-soft:rgba(242,239,248,.045);
+  --edge-mid:rgba(242,239,248,.13);
+  --edge-active:color-mix(in srgb,var(--accent) 58%,transparent);
+  --edge-inset:inset 0 1px 0 rgba(255,255,255,.035);
+}
+/* Normalize the edge language without changing component dimensions. */
+.hd,
+.sidebar,
+.mobile-nav,
+#cmp,
+#list .cards>.clip,
+#list .clip,
+#list .card-foot,
+.grp .gh,
+dialog.reader,
+dialog.confirm-dialog,
+.authbox,
+.authbox input,
+#cmp>#in,
+#cmp .visibility-switch,
+#cmp .visibility-option,
+.hd>.search,
+.hd>.actions .ibtn,
+#cmp>#paste,
+#cmp>#save,
+#list .mb,
+.reader-tools button,
+.confirm-actions button,
+.authactions button{
+  border-color:var(--edge)!important;
+}
+.hd{border-bottom-color:var(--edge-mid)!important}
+#list .cards>.clip{
+  border-width:1px!important;
+  border-style:solid!important;
+  border-color:var(--edge)!important;
+}
+#list .cards>.clip:hover{
+  border-color:var(--edge-mid)!important;
+}
+#cmp{
+  border-color:var(--edge-mid)!important;
+}
+#cmp:focus-within{
+  border-color:var(--edge-active)!important;
+}
+.hd>.search,
+#cmp>#in,
+.authbox input{
+  border-color:var(--edge-mid)!important;
+}
+.hd>.search:focus-within,
+.authbox input:focus{
+  border-color:var(--edge-active)!important;
+}
+#cmp>#in:focus{
+  border-color:var(--edge-active)!important;
+}
+#cmp>#paste,
+.reader-tools button,
+.confirm-actions button,
+.authactions button,
+.hd>.actions .ibtn{
+  border-color:var(--edge-mid)!important;
+}
+#cmp>#paste:hover,
+.reader-tools button:hover,
+.confirm-actions button:hover,
+.hd>.actions .ibtn:hover{
+  border-color:var(--edge-active)!important;
+}
+#cmp>#save,
+.reader-tools .reader-copy,
+.authactions .primary{
+  border-color:transparent!important;
+}
+#list .mb{border-color:transparent!important}
+#list .mb:hover,
+#list .mb.copy{
+  border-color:var(--edge-mid)!important;
+}
+#list .mb.copy:hover{
+  border-color:var(--edge-active)!important;
+}
+#cmp .visibility-switch{
+  border-color:var(--edge)!important;
+}
+#cmp .visibility-option{
+  border-color:transparent!important;
+}
+#cmp .visibility-option.is-active{
+  border-color:var(--edge-mid)!important;
+}
+.mobile-nav{
+  border:1px solid var(--edge-mid)!important;
+}
+.mobile-nav>button{border:1px solid transparent!important}
+.mobile-nav>button[aria-pressed=true]{
+  border-color:var(--edge)!important;
+}
+.mobile-nav .mobile-add{border-color:transparent!important}
+dialog.reader,
+dialog.confirm-dialog,
+.authbox{
+  border:1px solid var(--edge-mid)!important;
+}
+.reader-head{border-bottom:1px solid var(--edge)!important}
+.authbox input{border-width:1px!important}
+.grp .gh{border-bottom-color:var(--edge-mid)!important}
+#list .card-foot{border-top-color:var(--edge)!important}
+/* Smooth, consistent corners on nested surfaces and compact controls. */
+#list .txt.code{border-color:var(--edge)!important;border-radius:14px!important}
+.link-mark{border-color:var(--edge-mid)!important;border-radius:7px!important}
+#cmp>#in{border-radius:14px!important}
+#cmp>#paste,#cmp>#save,
+.reader-tools button,.confirm-actions button,.authactions button{
+  border-radius:13px!important;
+}
+@media(max-width:820px){
+  #cmp{border-color:var(--edge-mid)!important}
+  #cmp>#in{border-color:var(--edge-mid)!important}
+  .mobile-nav{border-radius:20px!important}
+  #list .cards>.clip{border-radius:19px!important}
+}
