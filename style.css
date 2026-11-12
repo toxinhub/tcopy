@@ -6217,3 +6217,32 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* v81 — touch-target accessibility and a smoother collapsed composer */
+#cmp{max-height:420px;transition:max-height .26s cubic-bezier(.2,.75,.25,1),border-color .18s ease,box-shadow .18s ease!important}
+#cmp:not(.is-expanded){max-height:60px!important;overflow:hidden!important}
+#cmp.is-expanded{max-height:420px!important;overflow:visible!important}
+#cmp.is-expanded>.composer-head,#cmp.is-expanded>.tag-input,#cmp.is-expanded>#paste{animation:tcopy-composer-in .18s ease both}
+@keyframes tcopy-composer-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.clip.new{animation:tcopy-card-in .22s ease both}
+@keyframes tcopy-card-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.clip.is-removing{opacity:0!important;transform:translateY(5px) scale(.985)!important;transition:opacity .16s ease,transform .16s ease!important}
+.clip:active{transform:scale(.995)}
+.empty::before{content:"✦";display:block;margin:0 auto 8px;color:var(--accent);font-size:22px;font-weight:400}
+@media(max-width:820px){
+  .hd .actions .ibtn,.hd #theme.theme-btn{width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important}
+  .hd .search{height:44px!important;min-height:44px!important}
+  .hd .seg button{min-height:44px!important;min-width:68px!important}
+  #cmp .visibility-option{min-height:44px!important}
+  #cmp.is-expanded>#paste,#cmp.is-expanded>#save{height:44px!important;min-height:44px!important}
+  .mb,.mb.read-more,.mb.copy,.overflow-trigger{min-height:44px!important}
+  .clip-menu button{min-height:44px!important}
+}
+@media(max-width:380px){
+  .hd .actions .ibtn,.hd #theme.theme-btn{width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important}
+  .hd .seg button{min-height:44px!important;min-width:64px!important;padding-inline:6px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #cmp,.clip.new,.clip.is-removing,.clip:active{animation:none!important;transition:none!important;transform:none!important}
+}
