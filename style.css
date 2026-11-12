@@ -5832,3 +5832,48 @@ dialog.confirm-dialog,
     height:38px!important;min-height:38px!important;
   }
 }
+
+
+/* v77 — keep only a floating add button at the bottom-right. */
+@media(max-width:820px){
+  .mobile-nav{
+    position:fixed!important;
+    left:auto!important;right:18px!important;
+    bottom:calc(18px + env(safe-area-inset-bottom))!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    width:54px!important;min-width:54px!important;max-width:54px!important;
+    height:54px!important;min-height:54px!important;
+    padding:0!important;gap:0!important;
+    border:0!important;border-radius:0!important;
+    background:transparent!important;box-shadow:none!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  }
+  .mobile-nav>button[data-v]{display:none!important}
+  .mobile-nav>.mobile-add{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    flex:0 0 50px!important;width:50px!important;min-width:50px!important;max-width:50px!important;
+    height:50px!important;min-height:50px!important;padding:0!important;
+    border:1px solid rgba(255,255,255,.48)!important;border-radius:16px!important;
+    background:rgba(255,255,255,.20)!important;
+    color:var(--accent)!important;font-size:29px!important;font-weight:400!important;
+    line-height:1!important;
+    box-shadow:0 5px 18px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.45)!important;
+    backdrop-filter:blur(20px) saturate(170%)!important;
+    -webkit-backdrop-filter:blur(20px) saturate(170%)!important;
+  }
+  :root[data-theme=dark] .mobile-nav>.mobile-add{
+    border-color:rgba(255,255,255,.24)!important;
+    background:rgba(28,30,36,.30)!important;
+    color:var(--accent)!important;
+    box-shadow:0 5px 18px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.13)!important;
+  }
+  .mobile-nav>.mobile-add:active{transform:scale(.96)!important}
+  .toast{bottom:calc(84px + env(safe-area-inset-bottom))!important}
+}
+@media(max-width:380px){
+  .mobile-nav{right:14px!important;bottom:calc(14px + env(safe-area-inset-bottom))!important}
+  .mobile-nav>.mobile-add{
+    flex-basis:48px!important;width:48px!important;min-width:48px!important;max-width:48px!important;
+    height:48px!important;min-height:48px!important;border-radius:15px!important;
+  }
+}
