@@ -5217,3 +5217,149 @@ button:disabled{cursor:not-allowed}
 @media(prefers-reduced-motion:reduce){
   .ibtn,.cb,.mb,.reader-tools button,.confirm-actions button,.authactions button,.mobile-nav>button,.side-signin,.visibility-option{transition:none!important}
 }
+
+
+/* v68 — cohesive surface system, calmer cards and more deliberate controls. */
+:root{
+  --bg:#F7F6F2;--surface:#FFFEFC;--surface-2:#F1F0EB;
+  --ink:#25232B;--muted:#77747F;
+  --line:rgba(37,35,43,.10);--line-strong:rgba(37,35,43,.17);
+  --accent:#5227BD;--accent-hover:#6339CC;--accent-pressed:#43209F;
+  --accent-soft:#F1ECFA;--accent-ink:#FFFFFF;
+  --danger:#B42332;--danger-soft:#FFF0F1;
+  --shadow:0 1px 2px rgba(24,20,32,.035),0 12px 30px -20px rgba(24,20,32,.22);
+  --card-shadow:0 1px 2px rgba(24,20,32,.025),0 8px 24px -18px rgba(24,20,32,.20);
+}
+:root[data-theme=dark]{
+  --bg:#141319;--surface:#1D1B24;--surface-2:#26232F;
+  --ink:#F2EFF8;--muted:#A49EAE;
+  --line:rgba(242,239,248,.09);--line-strong:rgba(242,239,248,.16);
+  --accent:#B69AFB;--accent-hover:#C7B3FF;--accent-pressed:#9D7BEF;
+  --accent-soft:#342849;--accent-ink:#211735;
+  --danger:#FF9B9B;--danger-soft:#42272D;
+  --shadow:0 1px 2px rgba(0,0,0,.24),0 16px 36px -22px rgba(0,0,0,.65);
+  --card-shadow:0 1px 2px rgba(0,0,0,.18),0 10px 26px -20px rgba(0,0,0,.62);
+}
+/* Header controls */
+.hd{border-bottom-color:var(--line)!important}
+.hd>.brand{gap:11px!important}
+.hd>.brand .logo-mark,.side-brand .logo-mark{
+  border-radius:11px!important;box-shadow:0 3px 9px color-mix(in srgb,var(--accent) 18%,transparent);
+}
+.hd>.actions .ibtn{
+  min-width:44px!important;min-height:44px!important;border-radius:13px!important;
+  box-shadow:var(--control-shadow)!important;
+}
+.hd>.actions #account{padding-inline:13px!important}
+.hd>.actions .ibtn:active{transform:scale(.96)!important}
+/* Composer as a clear, quiet working surface */
+#cmp{
+  border:1px solid var(--line)!important;
+  background:var(--surface)!important;
+  box-shadow:var(--shadow)!important;
+}
+#cmp:focus-within{
+  border-color:color-mix(in srgb,var(--accent) 48%,var(--line))!important;
+  box-shadow:var(--shadow),0 0 0 3px var(--accent-soft)!important;
+}
+#cmp>#in{
+  color:var(--ink)!important;caret-color:var(--accent)!important;
+}
+#cmp>#in::placeholder{color:var(--muted)!important;opacity:.78}
+#cmp>#paste,#cmp>#save{min-height:46px!important;border-radius:13px!important}
+#cmp>#paste{box-shadow:var(--control-shadow)!important}
+#cmp>#save{letter-spacing:.005em!important}
+/* Note cards */
+#list .cards{gap:16px!important}
+#list .cards>.clip{
+  border:1px solid var(--line)!important;border-radius:20px!important;
+  background:var(--surface)!important;box-shadow:var(--card-shadow)!important;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease!important;
+}
+#list .cards>.clip:hover{
+  border-color:var(--line-strong)!important;
+  box-shadow:var(--shadow)!important;transform:translateY(-1px);
+}
+#list .clip-head{color:var(--muted)!important}
+#list .txt{color:var(--ink)!important}
+#list .card-foot{border-top-color:var(--line)!important}
+#list .tools{gap:6px!important}
+#list .mb{border-radius:11px!important;font-weight:650!important}
+#list .mb.copy{min-width:68px!important}
+/* Refined segmented visibility control */
+#cmp .visibility-switch{
+  padding:3px!important;border-radius:12px!important;
+  background:var(--surface-2)!important;border-color:var(--line)!important;
+}
+#cmp .visibility-option{
+  min-height:32px!important;border-radius:9px!important;
+  font-size:11px!important;font-weight:700!important;
+}
+#cmp .visibility-option.is-active{
+  background:var(--surface)!important;border-color:var(--line)!important;
+  color:var(--accent)!important;box-shadow:0 1px 3px rgba(20,16,30,.08)!important;
+}
+/* Mobile navigation: balanced segmented dock */
+.mobile-nav{
+  padding:6px!important;gap:4px!important;border-radius:19px!important;
+  background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
+  border-color:var(--line-strong)!important;
+  box-shadow:0 10px 30px rgba(25,20,35,.13)!important;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+:root[data-theme=dark] .mobile-nav{
+  background:color-mix(in srgb,var(--surface) 94%,transparent)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.42)!important;
+}
+.mobile-nav>button{
+  min-height:46px!important;border-radius:13px!important;
+  font-size:11px!important;font-weight:700!important;letter-spacing:.01em;
+}
+.mobile-nav>button[aria-pressed=true]{
+  background:var(--accent-soft)!important;color:var(--accent)!important;
+}
+.mobile-nav .mobile-add{
+  width:48px!important;height:48px!important;min-height:48px!important;
+  border-radius:15px!important;font-size:27px!important;font-weight:400!important;
+  box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 25%,transparent)!important;
+}
+.mobile-nav .mobile-add:active{transform:scale(.94)!important}
+/* Reader, confirmation and sign-in surfaces */
+dialog.reader,dialog.confirm-dialog,.authbox{
+  border-color:var(--line-strong)!important;background:var(--surface)!important;
+  color:var(--ink)!important;box-shadow:0 24px 76px rgba(12,10,18,.22)!important;
+}
+.reader-head{background:var(--surface)!important;border-bottom-color:var(--line)!important}
+.reader-tools button,.confirm-actions button,.authactions button{
+  min-height:42px!important;padding-inline:13px!important;border-radius:12px!important;
+  font-weight:650!important;box-shadow:var(--control-shadow)!important;
+}
+.reader-tools .reader-copy,.authactions .primary{
+  box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 20%,transparent)!important;
+}
+.reader-tools .reader-close{min-width:42px!important;font-size:22px!important}
+.authbox input{
+  border-color:var(--line-strong)!important;border-radius:12px!important;
+  background:var(--bg)!important;color:var(--ink)!important;
+}
+.authbox input:focus{border-color:var(--accent)!important}
+.confirm-actions #deleteConfirm{
+  box-shadow:0 4px 12px color-mix(in srgb,var(--danger) 18%,transparent)!important;
+}
+/* Consistent keyboard focus and touch feedback */
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:0!important;box-shadow:var(--focus-ring)!important;
+}
+button:active{ -webkit-tap-highlight-color:transparent; }
+@media(hover:hover) and (min-width:821px){
+  #list .cards>.clip:hover{transform:translateY(-2px)}
+}
+@media(max-width:820px){
+  #list .cards>.clip{border-radius:18px!important;box-shadow:var(--card-shadow)!important}
+  #list .cards>.clip:hover{transform:none}
+  .mobile-nav{left:14px!important;right:14px!important;bottom:calc(12px + env(safe-area-inset-bottom))!important}
+  #cmp{border-radius:20px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #list .cards>.clip{transition:none!important}
+}
