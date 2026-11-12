@@ -5769,3 +5769,70 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,10,14
 @media(prefers-reduced-motion:reduce){
   .ibtn,.cb,.mb,.reader-tools button,.confirm-actions button,.authactions button,.visibility-option,.seg button,.scope-nav button,.side-tag,#list .cards>.clip{transition:none!important;animation:none!important}
 }
+
+
+/* v81 — simpler, quieter visual language */
+:root{
+  --bg:#FAFAF9;--surface:#FFFFFF;--surface-2:#F5F5F4;
+  --ink:#29282D;--muted:#77757D;--line:rgba(35,34,40,.09);
+  --line-strong:rgba(35,34,40,.13);--edge-soft:rgba(35,34,40,.05);
+  --accent:#5B4A8A;--accent-hover:#4E3E7B;--accent-pressed:#43356A;
+  --accent-soft:#F1EFF6;--accent-ink:#FFFFFF;
+  --card-shadow:none;
+}
+:root[data-theme=dark]{
+  --bg:#171619;--surface:#201F23;--surface-2:#28272C;
+  --ink:#EEEDEF;--muted:#A5A2AA;--line:rgba(238,237,239,.09);
+  --line-strong:rgba(238,237,239,.13);--edge-soft:rgba(238,237,239,.045);
+  --accent:#B7A8D8;--accent-hover:#C8BCE2;--accent-pressed:#A391CA;
+  --accent-soft:#302B39;--accent-ink:#211D29;--card-shadow:none;
+}
+/* Reduce decoration; let spacing and typography create hierarchy. */
+.hd{border-bottom-color:var(--line);box-shadow:none}
+.hd>.brand .logo-mark,.side-brand .logo-mark{border-radius:8px}
+.hd>.actions .ibtn,.hd>.search{border-radius:9px;box-shadow:none}
+.sidebar{gap:12px;border-right-color:var(--line)}
+.side-label{letter-spacing:.055em}
+.scope-nav button,.side-tag{border-radius:7px}
+.scope-nav button[aria-pressed=true],.side-tag.is-active{background:var(--accent-soft)}
+.list{max-width:760px}
+#cmp{border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:none;gap:9px}
+#cmp:focus-within{border-color:var(--line-strong);box-shadow:0 0 0 2px var(--accent-soft)}
+#cmp>#in{border:0;border-radius:8px;background:transparent;box-shadow:none}
+#cmp>#in:focus{border-color:transparent;box-shadow:none}
+#cmp>.tag-input{border:0;border-top:1px solid var(--line);border-radius:0;background:transparent}
+#cmp .visibility-switch{border:0;background:transparent}
+#cmp .visibility-option{border-radius:7px}
+#cmp .visibility-option.is-active{border-color:transparent;background:var(--accent-soft);box-shadow:none}
+#cmp>#paste,#cmp>#save{min-height:40px;border-radius:8px;box-shadow:none}
+#cmp>#paste{border-color:var(--line);background:transparent}
+#cmp>#paste:hover{background:var(--surface-2);border-color:var(--line-strong)}
+#cmp>#save{background:var(--ink);color:var(--bg)}
+#cmp>#save:hover:not(:disabled){background:var(--muted)}
+#list .cards{gap:10px;column-gap:12px}
+#list .cards>.clip{padding:15px 15px 11px;border:1px solid var(--line);border-radius:11px;background:var(--surface);box-shadow:none}
+#list .cards>.clip.pinned{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--surface)}
+#list .txt{font-size:14px;line-height:1.68}
+#list .card-foot{border-top-color:var(--line)}
+#list .mb{border-radius:7px}
+#list .mb.copy{border-color:var(--line);background:transparent;color:var(--ink)}
+#list .clip-tag,.mobile-tag{border-radius:6px;background:transparent;color:var(--muted)}
+#list .clip-tag:hover,.mobile-tag:hover,.mobile-tag.is-active{background:var(--accent-soft);color:var(--accent)}
+dialog.reader,dialog.confirm-dialog,.authbox{border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.14)}
+.reader-head{box-shadow:none}
+.reader-tools button,.confirm-actions button,.authactions button{border-radius:8px;box-shadow:none}
+.authveil{backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+@media(max-width:820px){
+  .hd>.actions .ibtn{border-radius:8px}
+  .list{padding-top:12px}
+  #cmp{border-radius:12px 12px 0 0!important}
+  #cmp>#in{background:transparent!important}
+  #list .cards{gap:9px}
+  #list .cards>.clip{padding:13px 13px 10px;border-radius:10px}
+  .mobile-scope{border-radius:9px}
+  .mobile-scope button{border-radius:7px}
+  dialog.reader{border-radius:14px!important}
+}
+@media(hover:hover) and (min-width:821px){
+  #list .cards>.clip:hover{transform:none;box-shadow:none;border-color:var(--line-strong)}
+}
