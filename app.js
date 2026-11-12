@@ -98,6 +98,8 @@ const viewNavHandler=e=>{const b=e.target.closest("button[data-v]");if(!b||!e.cu
 document.querySelectorAll(".seg,.mobile-nav").forEach(nav=>nav.addEventListener("click",viewNavHandler));
 function scopeClick(e){const b=e.target.closest("[data-scope]");if(!b)return;if(b.dataset.scope==="private"&&user?.isAnonymous){openAuth();toast("Sign in to view your Private notes.");return}filterVisibility=b.dataset.scope;selectedTag="";document.querySelectorAll("[data-scope]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.scope===filterVisibility)));render()}
 document.querySelectorAll(".scope-nav,.mobile-scope").forEach(nav=>nav.addEventListener("click",scopeClick));
+function tagFilterClick(e){const b=e.target.closest("[data-tag]");if(!b)return;selectedTag=selectedTag===b.dataset.tag?"":b.dataset.tag;render()}
+$("tagList")?.addEventListener("click",tagFilterClick);$("mobileTagList")?.addEventListener("click",tagFilterClick);
 $("mobileAdd")?.addEventListener("click",()=>{$("in").focus({preventScroll:true});$("cmp").scrollIntoView({behavior:"smooth",block:"center"})});
 document.querySelectorAll("[data-mobile-account]").forEach(button=>button.addEventListener("click",()=> $("account").click()));
 let searchTimer;$("q").oninput=e=>{clearTimeout(searchTimer);const v=e.target.value;searchTimer=setTimeout(()=>{qText=v;render()},100)};
