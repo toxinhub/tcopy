@@ -6574,3 +6574,48 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
   border-color:var(--line)!important;
   color:var(--text)!important;
 }
+
+
+/* v88 — purge remaining soft-green accents from dark UI */
+:root[data-theme="dark"]{
+  --success:#9AB7D4;
+  --btn-success-bg:#2A323C;
+  --btn-success-ink:#DCE6F0;
+}
+/* Legacy composer focus/paste selectors had fixed sage-green colors. */
+:root[data-theme="dark"] .cmp textarea:focus,
+:root[data-theme="dark"] #cmp>#in:focus{
+  background:#202A34!important;
+}
+:root[data-theme="dark"] .cmp .paste-btn{
+  background:#2A323C!important;
+  color:#E8EDF3!important;
+  border-color:var(--line-strong)!important;
+}
+:root[data-theme="dark"] #cmp .visibility-option[data-visibility="private"].is-active{
+  color:#DCCAF4!important;
+  background:#382D46!important;
+  border-color:rgba(185,157,218,.30)!important;
+}
+/* Replace old green-tinted secondary controls and modal surfaces. */
+:root[data-theme="dark"] .seg,
+:root[data-theme="dark"] .visibility-switch{
+  background:#252E38!important;
+}
+:root[data-theme="dark"] .seg button[aria-pressed="true"],
+:root[data-theme="dark"] .visibility-option.is-active{
+  background:#303B47!important;
+  color:var(--ink)!important;
+  box-shadow:inset 0 0 0 1px var(--line)!important;
+}
+:root[data-theme="dark"] .ibtn,
+:root[data-theme="dark"] .cb,
+:root[data-theme="dark"] .mb.copy,
+:root[data-theme="dark"] .reader-tools button:not(.reader-copy):not(.reader-close){
+  background:#2A323C!important;
+  color:var(--text)!important;
+  border-color:var(--line)!important;
+}
+:root[data-theme="dark"] .authbox{
+  background:#1C232B!important;
+}
