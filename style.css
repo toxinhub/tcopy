@@ -6769,3 +6769,77 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
   color:var(--muted)!important;
 }
 /* Keep the green sync dot as a semantic connection-status indicator only. */
+
+
+/* v90 — dark hover surfaces: rounded, restrained and theme-aligned */
+:root[data-theme="dark"] .sidebar .seg button,
+:root[data-theme="dark"] .scope-nav button,
+:root[data-theme="dark"] .side-tag,
+:root[data-theme="dark"] .mobile-nav>button,
+:root[data-theme="dark"] .mobile-scope button,
+:root[data-theme="dark"] .mobile-tag,
+:root[data-theme="dark"] #list .mb,
+:root[data-theme="dark"] .hd>.actions .ibtn,
+:root[data-theme="dark"] #cmp>#paste,
+:root[data-theme="dark"] .reader-tools button,
+:root[data-theme="dark"] .confirm-actions button,
+:root[data-theme="dark"] .authactions button,
+:root[data-theme="dark"] .visibility-option {
+  background-clip: padding-box!important;
+  -webkit-tap-highlight-color: transparent;
+}
+:root[data-theme="dark"] .sidebar .seg button:hover,
+:root[data-theme="dark"] .scope-nav button:hover,
+:root[data-theme="dark"] .side-tag:hover,
+:root[data-theme="dark"] .side-tag.is-active,
+:root[data-theme="dark"] .mobile-nav>button:hover,
+:root[data-theme="dark"] .mobile-scope button:hover,
+:root[data-theme="dark"] .mobile-tag:hover,
+:root[data-theme="dark"] .mobile-tag.is-active {
+  border-radius:12px!important;
+  background:#29333E!important;
+  border-color:rgba(180,198,216,.10)!important;
+  color:#F1F4F7!important;
+  box-shadow:none!important;
+}
+:root[data-theme="dark"] #list .mb:hover,
+:root[data-theme="dark"] .hd>.actions .ibtn:hover,
+:root[data-theme="dark"] #cmp>#paste:hover,
+:root[data-theme="dark"] .reader-tools button:hover,
+:root[data-theme="dark"] .confirm-actions button:hover,
+:root[data-theme="dark"] .authactions #authclose:hover,
+:root[data-theme="dark"] .visibility-option:hover:not(:disabled) {
+  border-radius:12px!important;
+  background:#29333E!important;
+  border-color:rgba(180,198,216,.12)!important;
+  color:#F1F4F7!important;
+  box-shadow:none!important;
+  transform:none;
+}
+:root[data-theme="dark"] #list .mb.copy:hover,
+:root[data-theme="dark"] .reader-tools .reader-copy:hover,
+:root[data-theme="dark"] .authactions .primary:hover {
+  border-radius:12px!important;
+  background:var(--accent)!important;
+  border-color:var(--accent)!important;
+  color:var(--accent-ink)!important;
+  box-shadow:none!important;
+}
+:root[data-theme="dark"] #list .mb.del:hover,
+:root[data-theme="dark"] .reader-tools .reader-close:hover {
+  border-radius:12px!important;
+  background:var(--danger-soft)!important;
+  border-color:rgba(241,141,127,.18)!important;
+  color:var(--danger)!important;
+  box-shadow:none!important;
+}
+:root[data-theme="dark"] #list .cards>.clip:hover {
+  border-radius:16px!important;
+  background:var(--surface)!important;
+  border-color:var(--line-strong)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.16)!important;
+}
+:root[data-theme="dark"] .clip-tag:hover,
+:root[data-theme="dark"] .mobile-tag:hover {
+  border-radius:999px!important;
+}
