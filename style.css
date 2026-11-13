@@ -7224,3 +7224,61 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
   .authbox p{font-size:14px!important;line-height:1.75!important}
   .authbox label{font-size:12.5px!important}
 }
+
+
+/* Mobile notes header + visibility filters: compact, quiet and space-efficient. */
+@media (max-width:720px){
+  .notes-heading{
+    margin:0 0 5px!important;
+    min-height:0!important;
+    font-size:13px!important;
+    line-height:1.3!important;
+    letter-spacing:-.015em!important;
+  }
+  .notes-heading b{font-size:13px!important;font-weight:650!important}
+  .notes-heading #count{font-size:10px!important;line-height:1.3!important}
+  .mobile-filters{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    gap:5px!important;
+    margin:0 0 10px!important;
+  }
+  .mobile-scope{
+    display:inline-flex!important;
+    width:max-content!important;
+    max-width:100%!important;
+    gap:2px!important;
+    padding:2px!important;
+    border-width:1px!important;
+    border-radius:9px!important;
+    background:var(--surface-2)!important;
+  }
+  .mobile-scope button{
+    min-width:0!important;
+    min-height:28px!important;
+    padding:0 11px!important;
+    border-radius:7px!important;
+    font-size:10.5px!important;
+    line-height:1!important;
+    font-weight:600!important;
+    letter-spacing:0!important;
+    box-shadow:none!important;
+  }
+  .mobile-scope button[aria-pressed="true"]{
+    background:var(--surface)!important;
+    color:var(--ink)!important;
+    box-shadow:0 1px 2px rgba(0,0,0,.07)!important;
+  }
+  :root[data-theme="dark"] .mobile-scope button[aria-pressed="true"]{
+    background:#303B47!important;
+    color:#FFA58F!important;
+    box-shadow:none!important;
+  }
+  .mobile-tags{gap:5px!important}
+  .mobile-tag{
+    min-height:25px!important;
+    padding:3px 9px!important;
+    font-size:10px!important;
+  }
+}
