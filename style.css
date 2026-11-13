@@ -6619,3 +6619,153 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
 :root[data-theme="dark"] .authbox{
   background:#1C232B!important;
 }
+
+
+/* v89 — remove legacy green hues from every dark-mode surface and control */
+:root[data-theme="dark"]{
+  --bg:#14191F!important;
+  --surface:#1C232B!important;
+  --surface-2:#252E38!important;
+  --surface-raised:#2A323C!important;
+  --surface-inset:#171D24!important;
+  --ink:#F4F6F8!important;
+  --text:#DCE3EA!important;
+  --muted:#AAB6C2!important;
+  --line:rgba(220,230,240,.11)!important;
+  --line-strong:rgba(220,230,240,.18)!important;
+  --success:#9AB7D4!important;
+  --btn-success-bg:#2A323C!important;
+  --btn-success-ink:#DCE6F0!important;
+  --composer-panel:#1C232B!important;
+  --composer-field:#171D24!important;
+  --composer-field-focus:#202A34!important;
+  --composer-field-border:rgba(220,230,240,.18)!important;
+  --composer-field-placeholder:#AAB6C2!important;
+  --composer-focus-ring:rgba(151,183,215,.20)!important;
+  --paste-bg:#2A323C!important;
+  --paste-ink:#E8EDF3!important;
+  --paste-border:rgba(220,230,240,.16)!important;
+  --paste-hover:#35414D!important;
+  --save-bg:#D9755E!important;
+  --save-bg-hover:#F08A72!important;
+  --save-ink:#17191D!important;
+  --public-bg:#26384B!important;
+  --public-ink:#D7E7F8!important;
+  --public-border:rgba(151,183,215,.30)!important;
+  --private-bg:#382D46!important;
+  --private-ink:#E8DDF5!important;
+  --private-border:rgba(185,157,218,.30)!important;
+  --private-soft:#382D46!important;
+  --private-accent:#DCCAF4!important;
+}
+/* Remove old sage/olive gradients and hard-coded dark surfaces. */
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .scroller,
+:root[data-theme="dark"] .main,
+:root[data-theme="dark"] .list{
+  background-color:var(--bg)!important;
+}
+:root[data-theme="dark"] .hd,
+:root[data-theme="dark"] .gh,
+:root[data-theme="dark"] .clip,
+:root[data-theme="dark"] .reader,
+:root[data-theme="dark"] .reader-head,
+:root[data-theme="dark"] .authbox,
+:root[data-theme="dark"] .cmp,
+:root[data-theme="dark"] #cmp{
+  background:var(--surface)!important;
+  border-color:var(--line-strong)!important;
+}
+:root[data-theme="dark"] .cmp::before,
+:root[data-theme="dark"] #cmp::before{
+  background:linear-gradient(90deg,transparent,rgba(240,146,121,.48),transparent)!important;
+}
+:root[data-theme="dark"] .cmp textarea,
+:root[data-theme="dark"] #cmp>#in,
+:root[data-theme="dark"] .edit,
+:root[data-theme="dark"] .search,
+:root[data-theme="dark"] .authbox input,
+:root[data-theme="dark"] .txt.code,
+:root[data-theme="dark"] #list .txt.code,
+:root[data-theme="dark"] .reader-body.code{
+  background:var(--surface-inset)!important;
+  color:var(--ink)!important;
+  border-color:var(--line)!important;
+}
+:root[data-theme="dark"] .cmp textarea:focus,
+:root[data-theme="dark"] #cmp>#in:focus{
+  background:var(--composer-field-focus)!important;
+  border-color:rgba(151,183,215,.42)!important;
+  box-shadow:0 0 0 3px var(--composer-focus-ring)!important;
+}
+:root[data-theme="dark"] .cmp .paste-btn,
+:root[data-theme="dark"] #cmp>#paste{
+  background:var(--paste-bg)!important;
+  color:var(--paste-ink)!important;
+  border-color:var(--paste-border)!important;
+  box-shadow:none!important;
+}
+:root[data-theme="dark"] .cmp .paste-btn:hover,
+:root[data-theme="dark"] #cmp>#paste:hover{
+  background:var(--paste-hover)!important;
+}
+:root[data-theme="dark"] #cmp>#save{
+  background:var(--save-bg)!important;
+  color:var(--save-ink)!important;
+  border-color:var(--save-bg)!important;
+}
+:root[data-theme="dark"] #cmp>#save:hover:not(:disabled){
+  background:var(--save-bg-hover)!important;
+}
+:root[data-theme="dark"] .seg,
+:root[data-theme="dark"] .visibility-switch{
+  background:#202832!important;
+  border-color:var(--line)!important;
+}
+:root[data-theme="dark"] .seg button[aria-pressed="true"],
+:root[data-theme="dark"] .visibility-option.is-active{
+  background:#303B47!important;
+  color:var(--ink)!important;
+  border-color:var(--line-strong)!important;
+  box-shadow:inset 0 0 0 1px var(--line)!important;
+}
+:root[data-theme="dark"] #cmp .visibility-option[data-visibility="public"].is-active{
+  background:var(--public-bg)!important;color:var(--public-ink)!important;border-color:var(--public-border)!important;
+}
+:root[data-theme="dark"] #cmp .visibility-option[data-visibility="private"],
+:root[data-theme="dark"] #cmp .visibility-option[data-visibility="private"].is-active,
+:root[data-theme="dark"] .visibility-option[data-visibility="private"].is-active,
+:root[data-theme="dark"] .visibility-tag[data-visibility="private"]{
+  background:var(--private-bg)!important;color:var(--private-ink)!important;border-color:var(--private-border)!important;
+}
+:root[data-theme="dark"] .ibtn,
+:root[data-theme="dark"] .cb,
+:root[data-theme="dark"] .mb.copy,
+:root[data-theme="dark"] .reader-tools button:not(.reader-copy):not(.reader-close),
+:root[data-theme="dark"] .mobile-nav>button{
+  background:#2A323C!important;color:var(--text)!important;border-color:var(--line)!important;
+}
+:root[data-theme="dark"] .ibtn:hover,
+:root[data-theme="dark"] .cb:hover,
+:root[data-theme="dark"] .mb:hover,
+:root[data-theme="dark"] .reader-tools button:hover{
+  background:#35414D!important;color:var(--ink)!important;
+}
+:root[data-theme="dark"] .reader-body{
+  background:var(--surface)!important;color:var(--text)!important;
+}
+:root[data-theme="dark"] dialog.reader{
+  background:var(--surface)!important;border-color:var(--line-strong)!important;
+}
+:root[data-theme="dark"] .toast{
+  background:#252E38!important;color:#F1F4F7!important;border-color:var(--line-strong)!important;
+}
+:root[data-theme="dark"] .clip .meta,
+:root[data-theme="dark"] .clip .meta .tm,
+:root[data-theme="dark"] .cmp textarea::placeholder,
+:root[data-theme="dark"] .search input::placeholder,
+:root[data-theme="dark"] .search-input::placeholder,
+:root[data-theme="dark"] .authbox input::placeholder{
+  color:var(--muted)!important;
+}
+/* Keep the green sync dot as a semantic connection-status indicator only. */
