@@ -44,8 +44,14 @@ service cloud.firestore {
         && request.resource.data.text.size() > 0
         && request.resource.data.text.size() <= 20000
         && request.resource.data.pinned is bool
-        && request.resource.data.updatedAt is timestamp
-        && request.resource.data.updatedAt == request.time;
+        && (
+          (request.resource.data.updatedAt is timestamp
+            && request.resource.data.updatedAt == request.time)
+          || (
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['tags'])
+            && request.resource.data.updatedAt == resource.data.updatedAt
+          )
+        );
 
       allow delete: if owns(resource.data) || isAdmin();
     }
