@@ -56,3 +56,17 @@ Then sign out and sign back in. Admin users can view/manage all clips; regular u
 This first version includes sign-in, account creation, realtime sync, search, day/week/month grouping (weeks start Saturday), pinning, copy, editing/deleting, light/dark theme, and responsive PWA layout.
 
 Public share links, attachments, and offline writes are not included yet. They can be added later without making private notes public by default.
+
+
+## Automatic note tagging
+
+tcopy can generate up to four topic tags after a note is saved. Existing manually entered tags are preserved, AI tags are merged without duplicates, and the note is saved even if AI tagging is unavailable.
+
+### One-time Firebase setup
+1. In Firebase Console for project `tcopy-12865`, open **AI Services → AI Logic** and complete **Get started** with the Gemini Developer API provider.
+2. In **App Check**, register the tcopy web app with **reCAPTCHA Enterprise**. Add `toxinhub.github.io` as an allowed domain in the reCAPTCHA key configuration.
+3. Copy the reCAPTCHA Enterprise **site key** (not a secret key) into `AUTO_TAG_RECAPTCHA_SITE_KEY` near the top of `app.js`.
+4. Enable/verify App Check enforcement for Firebase AI Logic, then publish the updated app.
+5. Never add a Gemini API key or reCAPTCHA secret key to this repository.
+
+**Privacy:** automatic tagging sends note text to Google through Firebase AI Logic for analysis, including text from Private notes. Avoid storing highly sensitive information in notes if you do not want it processed by the AI service. Only generated tags are written back to Firestore.
