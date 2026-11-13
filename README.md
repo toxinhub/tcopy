@@ -60,13 +60,12 @@ Public share links, attachments, and offline writes are not included yet. They c
 
 ## Automatic note tagging
 
-tcopy can generate up to four topic tags after a note is saved. Existing manually entered tags are preserved, AI tags are merged without duplicates, and the note is saved even if AI tagging is unavailable.
+tcopy generates up to four topic tags after a new note is saved. Existing manually entered tags are preserved, AI tags are merged without duplicates, and saving the note is not blocked if AI tagging fails.
 
 ### One-time Firebase setup
 1. In Firebase Console for project `tcopy-12865`, open **AI Services → AI Logic** and complete **Get started** with the Gemini Developer API provider.
-2. In **App Check**, register the tcopy web app with **reCAPTCHA Enterprise**. Add `toxinhub.github.io` as an allowed domain in the reCAPTCHA key configuration.
-3. Copy the reCAPTCHA Enterprise **site key** (not a secret key) into `AUTO_TAG_RECAPTCHA_SITE_KEY` near the top of `app.js`.
-4. Enable/verify App Check enforcement for Firebase AI Logic, then publish the updated app.
-5. Never add a Gemini API key or reCAPTCHA secret key to this repository.
+2. Firebase AI Logic is initialized directly in the app; no reCAPTCHA Enterprise site key is configured in the client.
+3. In **App Check**, keep Firebase AI Logic in **Monitoring** (not **Enforced**) if you want AI requests to work without registering an App Check provider. Direct client-side AI access without App Check has weaker abuse protection, so monitor usage and quotas.
+4. Never add a Gemini API key or reCAPTCHA secret key to this repository.
 
 **Privacy:** automatic tagging sends note text to Google through Firebase AI Logic for analysis, including text from Private notes. Avoid storing highly sensitive information in notes if you do not want it processed by the AI service. Only generated tags are written back to Firestore.
