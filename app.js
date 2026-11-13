@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 const configured = Object.values(firebaseConfig).every(v => v && !v.startsWith("YOUR_"));
 // Public reCAPTCHA Enterprise site key for Firebase App Check. Never put a secret key here.
-const AUTO_TAG_RECAPTCHA_SITE_KEY = "";
+const AUTO_TAG_RECAPTCHA_SITE_KEY = "6LcKMx4uAAAAAPZrVslclVUXHIdM_YS8zV3RlSMb";
 const $ = id => document.getElementById(id);
 const L = "en-BD", DAY = 86400000;
 let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0, autoTagModelPromise = null, autoTagSetupNotified = false;
