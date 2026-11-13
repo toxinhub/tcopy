@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, getIdTokenResult, signInAnonymously, EmailAuthProvider, linkWithCredential } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 // Add the public web app configuration from your NEW tcopy Firebase project.
 const firebaseConfig = {
@@ -12,9 +12,11 @@ const firebaseConfig = {
   appId: "1:372989345291:web:e5802b8ff3a65ba54b910e"
 };
 const configured = Object.values(firebaseConfig).every(v => v && !v.startsWith("YOUR_"));
+// Public reCAPTCHA Enterprise site key for Firebase App Check. Never put a secret key here.
+const AUTO_TAG_RECAPTCHA_SITE_KEY = "";
 const $ = id => document.getElementById(id);
 const L = "en-BD", DAY = 86400000;
-let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0;
+let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0, autoTagModelPromise = null, autoTagSetupNotified = false;
 const fmtDay = new Intl.DateTimeFormat(L,{weekday:"long"}), fmtShort = new Intl.DateTimeFormat(L,{weekday:"short"}), fmtTime = new Intl.DateTimeFormat(L,{hour:"numeric",minute:"2-digit"}), fmtDM = new Intl.DateTimeFormat(L,{day:"numeric",month:"long"}), fmtDMY = new Intl.DateTimeFormat(L,{day:"numeric",month:"long",year:"numeric"}), fmtMY = new Intl.DateTimeFormat(L,{month:"long",year:"numeric"});
 const safe = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function setSync(state,message){const label=message||({ok:"All caught up",busy:"Syncing…",off:"You’re offline"}[state]||"Connecting…");$("dot").className="dot"+(state==="ok"?"": " "+state);$("st").textContent=label;const sideDot=$("sideDot"),sideStatus=$("sideStatus");if(sideDot)sideDot.className=$("dot").className;if(sideStatus)sideStatus.textContent=label}
@@ -49,7 +51,67 @@ function setReaderSize(delta){readerFontSize=Math.max(14,Math.min(26,readerFontS
 function grow(el,max){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,max||Infinity)+"px"}
 function render(){$("list").setAttribute("aria-busy","false");requestAnimationFrame(draw)}
 function requireReady(visibility="public"){if(!configured){toast("Firebase setup is not finished yet.");return false}if(!user){toast("Connecting your guest session…");return false}if(visibility==="private"&&user.isAnonymous){toast("Sign in to save a Private note.");openAuth();return false}return true}
-async function addNote(text){text=text.trim();const visibility=$("visibility")?.value||"public",tags=normalizeTags($("tagInput")?.value||"");if(!text||!requireReady(visibility))return;try{setSync("busy","Saving…");const ref=await addDoc(collection(db,"clips"),{ownerUid:user.uid,text,visibility,tags,pinned:false,createdAt:serverTimestamp(),updatedAt:null});fresh=ref.id;$("in").value="";if($("tagInput"))$("tagInput").value="";saveDraft("");if($("visibility"))$("visibility").value="public";updateComposer();$("scroller").scrollTo({top:0,behavior:"smooth"});toast(visibility==="private"?"Private note saved and synced":"Public note saved");if(navigator.vibrate)navigator.vibrate(10)}catch(e){setSync("off","Could not save");toast(errorMessage(e))}}
+async function getAutoTagModel(){
+  if(!AUTO_TAG_RECAPTCHA_SITE_KEY)return null;
+  if(!autoTagModelPromise){
+    autoTagModelPromise=(async()=>{
+      const [appCheckSdk,aiSdk]=await Promise.all([
+        import("https://www.gstatic.com/firebasejs/11.10.0/firebase-app-check.js"),
+        import("https://www.gstatic.com/firebasejs/11.10.0/firebase-ai.js")
+      ]);
+      appCheckSdk.initializeAppCheck(app,{
+        provider:new appCheckSdk.ReCaptchaEnterpriseProvider(AUTO_TAG_RECAPTCHA_SITE_KEY),
+        isTokenAutoRefreshEnabled:true
+      });
+      const ai=aiSdk.getAI(app,{backend:new aiSdk.GoogleAIBackend()});
+      return aiSdk.getGenerativeModel(ai,{
+        model:"gemini-3.8-flash",
+        generationConfig:{temperature:0.2,maxOutputTokens:128,responseMimeType:"application/json"}
+      });
+    })();
+  }
+  return autoTagModelPromise;
+}
+async function autoTagSavedNote(noteId,noteText,ownerUid){
+  try{
+    const model=await getAutoTagModel();
+    if(!model){
+      if(!autoTagSetupNotified){autoTagSetupNotified=true;setTimeout(()=>toast("Auto-tagging setup is pending in Firebase."),1100)}
+      return;
+    }
+    const prompt=[
+      "You are a precise note-tagging assistant for a personal notebook.",
+      "Return only a JSON array of 1 to 4 short topic tags. No markdown and no explanation.",
+      "Use the same language as the note for tags where natural.",
+      "Prefer specific, reusable topic labels over generic labels.",
+      "Use lowercase for English tags. Do not add hashtags.",
+      "Do not infer sensitive personal traits or invent context.",
+      "Avoid tags such as note, text, general, miscellaneous, or personal unless clearly essential.",
+      "Each tag must be at most 24 characters.",
+      "Note content:",
+      noteText.slice(0,6000)
+    ].join("\n");
+    const result=await model.generateContent(prompt);
+    const raw=result.response.text().trim().replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,"");
+    const parsed=JSON.parse(raw);
+    const suggested=normalizeTags(Array.isArray(parsed)?parsed:parsed?.tags||[]).slice(0,4);
+    if(!suggested.length)return;
+    const noteRef=doc(db,"clips",noteId);
+    await runTransaction(db,async transaction=>{
+      const snapshot=await transaction.get(noteRef);
+      if(!snapshot.exists())return;
+      const current=snapshot.data();
+      if(current.ownerUid!==ownerUid||current.text!==noteText)return;
+      const existing=normalizeTags(current.tags||[]);
+      const merged=normalizeTags([...existing,...suggested]).slice(0,8);
+      if(merged.length===existing.length&&merged.every((tag,index)=>tag===existing[index]))return;
+      transaction.update(noteRef,{tags:merged});
+    });
+  }catch(error){
+    console.warn("tcopy auto-tagging failed:",error);
+  }
+}
+async function addNote(text){text=text.trim();const visibility=$("visibility")?.value||"public",tags=normalizeTags($("tagInput")?.value||"");if(!text||!requireReady(visibility))return;try{setSync("busy","Saving…");const ownerUid=user.uid;const ref=await addDoc(collection(db,"clips"),{ownerUid,text,visibility,tags,pinned:false,createdAt:serverTimestamp(),updatedAt:null});void autoTagSavedNote(ref.id,text,ownerUid);fresh=ref.id;$("in").value="";if($("tagInput"))$("tagInput").value="";saveDraft("");if($("visibility"))$("visibility").value="public";updateComposer();$("scroller").scrollTo({top:0,behavior:"smooth"});toast(visibility==="private"?"Private note saved and synced":"Public note saved");if(navigator.vibrate)navigator.vibrate(10)}catch(e){setSync("off","Could not save");toast(errorMessage(e))}}
 async function commitEdit(c){const ta=document.querySelector("[data-edit]"),text=ta?.value.trim(),tags=normalizeTags(document.querySelector("[data-edit-tags]")?.value||"");if(!text){toast("A note can’t be empty.");return}try{await updateDoc(doc(db,"clips",c.id),{text,tags,visibility:c.visibility||"private",updatedAt:serverTimestamp()});editing=null;render();toast("Your changes are saved")}catch(e){toast(errorMessage(e))}}
 function errorMessage(e){const code=e?.code||"";return code.includes("permission-denied")?"You don't have permission to do that.":code.includes("network")?"Connection issue. Try again when you're online.":code.includes("email-already-in-use")?"That email is already registered. Try signing in.":code.includes("invalid-credential")?"Email or password doesn't look right.":(e?.message||"Something went wrong. Please try again.").replace("Firebase: ","").slice(0,150)}
 function openAuth(){ $("authhint").textContent="";$("authveil").classList.add("open");$("email").focus()}
