@@ -7070,3 +7070,157 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
 @media(prefers-reduced-motion:reduce){
   .sidebar .seg button,.scope-nav button,.side-tag,.side-brand{transition:none!important}
 }
+
+
+/* v92 — desktop typography scale and reading comfort */
+@media (min-width:821px){
+  html,body{
+    font-family:'Poppins','Hind Siliguri',sans-serif!important;
+    font-size:15px!important;
+    line-height:1.65!important;
+    letter-spacing:-.012em!important;
+    text-rendering:optimizeLegibility;
+  }
+  .hd>.brand{
+    font-size:23px!important;
+    letter-spacing:-.045em!important;
+  }
+  .hd>.search .search-input{
+    font-size:14px!important;
+    line-height:1.5!important;
+  }
+  .hd>.actions .ibtn{
+    font-size:12.5px!important;
+    font-weight:600!important;
+  }
+  .hd>.actions .sync{font-size:11.5px!important}
+  .sidebar .side-brand{
+    font-size:21px!important;
+    letter-spacing:-.035em!important;
+  }
+  .sidebar .side-label{
+    font-size:10.5px!important;
+    letter-spacing:.095em!important;
+  }
+  .sidebar .seg button{
+    font-size:13.5px!important;
+    font-weight:550!important;
+  }
+  .scope-nav button,.side-tag{
+    font-size:13px!important;
+    line-height:1.45!important;
+  }
+  .hero h1{
+    font-family:'Unbounded','Poppins',sans-serif!important;
+    font-size:clamp(34px,2.65vw,42px)!important;
+    line-height:1.22!important;
+    letter-spacing:-.055em!important;
+    font-weight:600!important;
+  }
+  .hero>p{
+    max-width:62ch!important;
+    font-size:14px!important;
+    line-height:1.8!important;
+    letter-spacing:0!important;
+  }
+  #cmp .composer-title{
+    font-size:12.5px!important;
+    font-weight:650!important;
+    letter-spacing:.005em!important;
+  }
+  #cmp .composer-hint{font-size:11.5px!important}
+  #cmp>#in{
+    font-family:'Poppins','Hind Siliguri',sans-serif!important;
+    font-size:16px!important;
+    line-height:1.85!important;
+    letter-spacing:0!important;
+  }
+  #cmp>.tag-input{
+    font-size:13px!important;
+    line-height:1.6!important;
+  }
+  #cmp>#paste,#cmp>#save{
+    font-size:12.5px!important;
+    font-weight:650!important;
+  }
+  .notes-heading{
+    font-size:16px!important;
+    line-height:1.45!important;
+    font-weight:650!important;
+    letter-spacing:-.025em!important;
+  }
+  .notes-heading span{
+    font-size:12px!important;
+    line-height:1.5!important;
+  }
+  #list .clip-head{
+    font-size:11.5px!important;
+    line-height:1.5!important;
+    letter-spacing:0!important;
+  }
+  #list .clip-kind{
+    font-size:12px!important;
+    font-weight:650!important;
+  }
+  #list .clip-time{font-size:11px!important}
+  #list .visibility-tag{
+    font-size:10px!important;
+    line-height:1.4!important;
+  }
+  #list .clip>.txt,
+  #list .clip .txt:not(.code){
+    font-family:'Poppins','Hind Siliguri',sans-serif!important;
+    font-size:14px!important;
+    font-weight:400!important;
+    line-height:1.78!important;
+    letter-spacing:-.006em!important;
+  }
+  #list .clip>.txt.link-text{
+    font-size:14px!important;
+    line-height:1.75!important;
+  }
+  #list .clip>.txt.code,
+  #list .clip .txt.code{
+    font-family:'JetBrains Mono',monospace!important;
+    font-size:12.5px!important;
+    line-height:1.8!important;
+    letter-spacing:0!important;
+  }
+  #list .clip-tags{gap:6px!important}
+  #list .clip-tag{
+    font-size:10.5px!important;
+    line-height:1.5!important;
+    padding:4px 8px!important;
+  }
+  #list .clip .meta{
+    font-size:11px!important;
+    line-height:1.55!important;
+  }
+  #list .tools>.mb{
+    font-size:11px!important;
+    font-weight:600!important;
+  }
+  .grp{margin-bottom:28px!important}
+  .gh{
+    font-size:12.5px!important;
+    line-height:1.5!important;
+  }
+  .gh small{font-size:11.5px!important}
+  #list .empty{
+    font-size:27px!important;
+    line-height:1.3!important;
+  }
+  #list .subempty{
+    font-size:14px!important;
+    line-height:1.8!important;
+  }
+  .reader-head>b{font-size:16px!important}
+  .reader-body{
+    font-size:16px!important;
+    line-height:1.85!important;
+    letter-spacing:0!important;
+  }
+  .authbox h2{font-size:24px!important}
+  .authbox p{font-size:14px!important;line-height:1.75!important}
+  .authbox label{font-size:12.5px!important}
+}
