@@ -6337,3 +6337,186 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
 :root[data-theme="dark"] .clip-tag,:root[data-theme="dark"] .side-tag{color:var(--muted)!important}
 :root[data-theme="dark"] .reader-body code,:root[data-theme="dark"] #list .txt.code{background:#252D36!important;color:#E7EDF4!important;border-color:var(--line)!important}
 @media(prefers-reduced-motion:reduce){body{transition:none!important}}
+
+
+/* v86 — dark theme contrast and surface consistency */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#14191F;
+  --surface:#1C232B;
+  --surface-2:#252E38;
+  --ink:#F4F6F8;
+  --text:#DCE3EA;
+  --muted:#AAB6C2;
+  --line:rgba(220,230,240,.12);
+  --line-strong:rgba(220,230,240,.22);
+  --edge-soft:rgba(220,230,240,.07);
+  --accent:#FF967D;
+  --accent-hover:#FFAB96;
+  --accent-pressed:#E77D64;
+  --accent-soft:#3B2928;
+  --accent-ink:#241613;
+  --danger:#FF9696;
+  --danger-soft:#45282E;
+  --card-shadow:0 2px 5px rgba(0,0,0,.22),0 12px 30px rgba(0,0,0,.16);
+  --focus-ring:0 0 0 3px rgba(255,150,125,.25);
+  accent-color:var(--accent);
+}
+/* Make every major region use the same dark palette */
+:root[data-theme="dark"] html,
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .main,
+:root[data-theme="dark"] .scroller,
+:root[data-theme="dark"] .list{
+  background:var(--bg)!important;
+  color:var(--ink)!important;
+}
+:root[data-theme="dark"] .hd,
+:root[data-theme="dark"] .sidebar,
+:root[data-theme="dark"] .mobile-nav,
+:root[data-theme="dark"] #cmp,
+:root[data-theme="dark"] #list .cards>.clip,
+:root[data-theme="dark"] dialog.reader,
+:root[data-theme="dark"] dialog.confirm-dialog,
+:root[data-theme="dark"] .authbox{
+  background:var(--surface)!important;
+  color:var(--ink)!important;
+  border-color:var(--line)!important;
+}
+/* Header, search and navigation */
+:root[data-theme="dark"] .hd{background:rgba(28,35,43,.97)!important;border-bottom-color:var(--line)!important}
+:root[data-theme="dark"] .hd>.search,
+:root[data-theme="dark"] .hd>.actions .ibtn{
+  background:var(--surface-2)!important;color:var(--ink)!important;border-color:var(--line)!important
+}
+:root[data-theme="dark"] .hd>.search input{background:transparent!important;color:var(--ink)!important}
+:root[data-theme="dark"] .hd>.search input::placeholder{color:var(--muted)!important}
+:root[data-theme="dark"] .hd>.actions .ibtn:hover,
+:root[data-theme="dark"] .sidebar .seg button:hover,
+:root[data-theme="dark"] .scope-nav button:hover{background:#303B47!important;color:var(--ink)!important}
+:root[data-theme="dark"] .side-brand,
+:root[data-theme="dark"] .sidebar .seg button,
+:root[data-theme="dark"] .scope-nav button{color:var(--text)!important}
+:root[data-theme="dark"] .sidebar .seg button[aria-pressed="true"],
+:root[data-theme="dark"] .scope-nav button[aria-pressed="true"],
+:root[data-theme="dark"] .mobile-nav>button[aria-pressed="true"]{
+  background:var(--accent-soft)!important;color:var(--accent)!important
+}
+:root[data-theme="dark"] .side-tag,
+:root[data-theme="dark"] .mobile-tag,
+:root[data-theme="dark"] .mobile-scope{
+  background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--line)!important
+}
+:root[data-theme="dark"] .side-tag.is-active,
+:root[data-theme="dark"] .mobile-tag.is-active,
+:root[data-theme="dark"] .mobile-scope button[aria-pressed="true"]{
+  background:var(--accent-soft)!important;color:var(--accent)!important;border-color:rgba(255,150,125,.3)!important
+}
+:root[data-theme="dark"] .scope-count{background:#35414D!important;color:#DCE3EA!important}
+/* Composer and visibility controls */
+:root[data-theme="dark"] #cmp{background:var(--surface)!important;border-color:var(--line-strong)!important}
+:root[data-theme="dark"] #cmp>#in,
+:root[data-theme="dark"] #cmp>.tag-input{
+  background:transparent!important;color:var(--ink)!important;border-color:var(--line)!important
+}
+:root[data-theme="dark"] #cmp>#in::placeholder,
+:root[data-theme="dark"] #cmp>.tag-input::placeholder{color:var(--muted)!important;opacity:1!important}
+:root[data-theme="dark"] #cmp .visibility-switch{background:#151B22!important;border-color:var(--line-strong)!important}
+:root[data-theme="dark"] #cmp .visibility-option{color:var(--muted)!important}
+:root[data-theme="dark"] #cmp .visibility-option.is-active{
+  background:#35414D!important;color:#FFD0C3!important;border-color:rgba(255,150,125,.28)!important;box-shadow:none!important
+}
+:root[data-theme="dark"] #cmp>#paste{
+  background:#303B47!important;color:#F0F3F6!important;border-color:var(--line-strong)!important
+}
+:root[data-theme="dark"] #cmp>#paste:hover{background:var(--accent-soft)!important;color:#FFD0C3!important}
+:root[data-theme="dark"] #cmp>#save{background:#D9755E!important;color:#17191D!important;border-color:#D9755E!important}
+:root[data-theme="dark"] #cmp>#save:hover:not(:disabled){background:#F08A72!important;color:#17191D!important}
+/* Cards: readable content, subdued metadata, visible controls */
+:root[data-theme="dark"] #list .cards>.clip{
+  background:var(--surface)!important;color:var(--ink)!important;border-color:var(--line)!important
+}
+:root[data-theme="dark"] #list .cards>.clip.pinned{
+  background:#29282C!important;border-color:rgba(255,150,125,.42)!important
+}
+:root[data-theme="dark"] #list .clip>.txt,
+:root[data-theme="dark"] #list .txt,
+:root[data-theme="dark"] .reader-body{color:var(--text)!important}
+:root[data-theme="dark"] #list .clip-kind,
+:root[data-theme="dark"] .notes-heading,
+:root[data-theme="dark"] .hero h1,
+:root[data-theme="dark"] .reader-head>b,
+:root[data-theme="dark"] .authbox h2,
+:root[data-theme="dark"] .confirm-dialog h2{color:var(--ink)!important}
+:root[data-theme="dark"] #list .clip-time,
+:root[data-theme="dark"] #list .clip-head,
+:root[data-theme="dark"] #list .clip .meta,
+:root[data-theme="dark"] .hero>p,
+:root[data-theme="dark"] .notes-heading span,
+:root[data-theme="dark"] .gh small,
+:root[data-theme="dark"] .foot,
+:root[data-theme="dark"] .subempty{color:var(--muted)!important}
+:root[data-theme="dark"] #list .clip-tag,
+:root[data-theme="dark"] #list .visibility-tag{
+  background:#2B3540!important;color:#C1CBD5!important;border-color:var(--line)!important
+}
+:root[data-theme="dark"] #list .clip .link-mark{
+  background:var(--accent-soft)!important;color:#FFC0AE!important
+}
+:root[data-theme="dark"] #list .clip>.txt.code,
+:root[data-theme="dark"] #list .txt.code,
+:root[data-theme="dark"] .reader-body code{
+  background:#151C23!important;color:#E7EDF4!important;border:1px solid var(--line)!important
+}
+:root[data-theme="dark"] #list .card-foot{border-color:var(--line)!important}
+:root[data-theme="dark"] #list .tools>.mb{color:#AEB9C5!important}
+:root[data-theme="dark"] #list .tools>.mb.copy{
+  background:#2B3540!important;color:#F0F3F6!important;border-color:var(--line-strong)!important
+}
+:root[data-theme="dark"] #list .tools>.mb.copy:hover,
+:root[data-theme="dark"] #list .tools>.mb.pin.on{
+  background:var(--accent-soft)!important;color:#FFC0AE!important
+}
+:root[data-theme="dark"] #list .tools>.mb.del{color:#FF9696!important}
+:root[data-theme="dark"] #list .tools>.mb.del:hover{background:var(--danger-soft)!important;color:#FFB0B0!important}
+/* Group headings, empty states, loading and refresh feedback */
+:root[data-theme="dark"] .gh,
+:root[data-theme="dark"] .grp,
+:root[data-theme="dark"] #list .empty{color:var(--ink)!important}
+:root[data-theme="dark"] .tag-empty,
+:root[data-theme="dark"] .pull-refresh{color:var(--muted)!important}
+:root[data-theme="dark"] .skeleton{background:#202832!important}
+:root[data-theme="dark"] .skeleton i{background:linear-gradient(90deg,#252F39 20%,#303B47 48%,#252F39 76%)!important}
+:root[data-theme="dark"] .pull-spinner{border-color:var(--line-strong)!important;border-top-color:var(--accent)!important}
+/* Reader, confirmation, sign-in and toast */
+:root[data-theme="dark"] dialog.reader,
+:root[data-theme="dark"] dialog.confirm-dialog{background:var(--surface)!important;color:var(--ink)!important}
+:root[data-theme="dark"] .reader-head,
+:root[data-theme="dark"] .reader-tools{background:var(--surface)!important;border-color:var(--line)!important}
+:root[data-theme="dark"] .reader-body{background:var(--surface)!important;color:var(--text)!important}
+:root[data-theme="dark"] .reader-tools button,
+:root[data-theme="dark"] .confirm-actions button,
+:root[data-theme="dark"] .authactions button{
+  background:var(--surface-2)!important;color:var(--ink)!important;border-color:var(--line-strong)!important
+}
+:root[data-theme="dark"] .reader-tools .reader-copy,
+:root[data-theme="dark"] .authactions .primary{
+  background:#D9755E!important;color:#17191D!important;border-color:#D9755E!important
+}
+:root[data-theme="dark"] .authbox p,
+:root[data-theme="dark"] .authbox label,
+:root[data-theme="dark"] .confirm-dialog p{color:var(--text)!important}
+:root[data-theme="dark"] .authbox input{
+  background:#151C23!important;color:var(--ink)!important;border-color:var(--line-strong)!important
+}
+:root[data-theme="dark"] .authbox input::placeholder{color:var(--muted)!important}
+:root[data-theme="dark"] .authveil{background:rgba(0,0,0,.76)!important}
+:root[data-theme="dark"] dialog.reader::backdrop,
+:root[data-theme="dark"] dialog.confirm-dialog::backdrop{background:rgba(0,0,0,.72)!important}
+:root[data-theme="dark"] .toast{
+  background:#252E38!important;color:var(--ink)!important;border-color:var(--line-strong)!important
+}
+/* Focus and disabled states */
+:root[data-theme="dark"] :focus-visible{outline-color:var(--accent)!important}
+:root[data-theme="dark"] button:disabled{color:#7F8B98!important;opacity:.58!important}
+:root[data-theme="dark"] ::selection{background:rgba(255,150,125,.32)!important;color:#FFFFFF!important}
