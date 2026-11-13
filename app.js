@@ -12,8 +12,7 @@ const firebaseConfig = {
   appId: "1:372989345291:web:e5802b8ff3a65ba54b910e"
 };
 const configured = Object.values(firebaseConfig).every(v => v && !v.startsWith("YOUR_"));
-// Public reCAPTCHA Enterprise site key for Firebase App Check. Never put a secret key here.
-const AUTO_TAG_RECAPTCHA_SITE_KEY = "6LcKMx4uAAAAAPZrVslclVUXHIdM_YS8zV3RlSMb";
+// Firebase AI Logic is initialized directly; App Check is not initialized in this client.
 const $ = id => document.getElementById(id);
 const L = "en-BD", DAY = 86400000;
 let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0, autoTagModelPromise = null, autoTagSetupNotified = false;
@@ -52,17 +51,9 @@ function grow(el,max){el.style.height="auto";el.style.height=Math.min(el.scrollH
 function render(){$("list").setAttribute("aria-busy","false");requestAnimationFrame(draw)}
 function requireReady(visibility="public"){if(!configured){toast("Firebase setup is not finished yet.");return false}if(!user){toast("Connecting your guest session…");return false}if(visibility==="private"&&user.isAnonymous){toast("Sign in to save a Private note.");openAuth();return false}return true}
 async function getAutoTagModel(){
-  if(!AUTO_TAG_RECAPTCHA_SITE_KEY)return null;
   if(!autoTagModelPromise){
     autoTagModelPromise=(async()=>{
-      const [appCheckSdk,aiSdk]=await Promise.all([
-        import("https://www.gstatic.com/firebasejs/11.10.0/firebase-app-check.js"),
-        import("https://www.gstatic.com/firebasejs/11.10.0/firebase-ai.js")
-      ]);
-      appCheckSdk.initializeAppCheck(app,{
-        provider:new appCheckSdk.ReCaptchaEnterpriseProvider(AUTO_TAG_RECAPTCHA_SITE_KEY),
-        isTokenAutoRefreshEnabled:true
-      });
+      const aiSdk=await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-ai.js");
       const ai=aiSdk.getAI(app,{backend:new aiSdk.GoogleAIBackend()});
       return aiSdk.getGenerativeModel(ai,{
         model:"gemini-3.8-flash",
@@ -76,7 +67,6 @@ async function autoTagSavedNote(noteId,noteText,ownerUid){
   try{
     const model=await getAutoTagModel();
     if(!model){
-      if(!autoTagSetupNotified){autoTagSetupNotified=true;setTimeout(()=>toast("Auto-tagging setup is pending in Firebase."),1100)}
       return;
     }
     const prompt=[
