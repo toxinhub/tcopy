@@ -62,15 +62,32 @@ Public share links, attachments, and offline writes are not included yet. They c
 
 tcopy generates up to four topic tags after a new note is saved. Existing manually entered tags are preserved, AI tags are merged without duplicates, and saving the note is not blocked if AI tagging fails.
 
-### Automatic note tagging — release blocker
-The current client initializes Firebase AI Logic directly and does not initialize an App Check provider. This is not a production-ready configuration.
+### Cloudflare Workers AI deployment
 
-**Important:** Firebase automatically began enforcing App Check for Firebase AI Logic on November 2, 2026. Requests without a valid App Check token are blocked. Monitoring-only mode is no longer a dependable way to keep this integration working. See the [official Firebase AI Logic App Check guidance](https://firebase.google.com/docs/ai-logic/app-check).
+The AI tagging endpoint lives in `cloudflare/auto-tag-worker.js`. It is separate from GitHub Pages and does not replace Firebase Authentication or Firestore.
 
-Before enabling automatic tagging in production, choose and implement one of these supported paths:
-- Configure the required production App Check provider for the web app (Firebase documents reCAPTCHA Enterprise for web).
-- Approve a separate server-side AI provider and implement it behind a protected endpoint, keeping provider secrets out of the browser and repository.
+Production configuration:
+- Worker name: `tcopy-auto-tag`
+- Public endpoint: `https://tcopy-auto-tag.toxinmoy.workers.dev`
+- Workers AI binding: `AI`
+- Rate-limit binding: `AUTOTAG_LIMITER` (10 requests per authenticated user per 60 seconds; Cloudflare's built-in limits are approximate and regional)
+- Secret binding: `FIREBASE_WEB_API_KEY` (the existing Firebase web API key, stored as a Worker secret rather than copied into Worker source)
 
-Do not deploy a client-side Gemini API key or disable security controls as a workaround. Until a supported path is implemented and tested, AI tagging must be treated as unavailable.
+The Worker accepts only requests from `https://toxinhub.github.io`, validates Firebase ID tokens through Firebase Identity Toolkit, rate-limits by verified Firebase UID, and runs topic tagging through Workers AI. It returns suggested tags only. The browser continues to write tags to the existing Firestore document through the existing authenticated client and Firestore Rules; no Firebase Auth, Firestore schema, ownership, or rules migration is required.
 
-**Privacy:** automatic tagging sends note text to the configured AI provider for analysis, including text from Private notes. Only generated tags are written back to Firestore. Make sure the chosen provider and data handling are acceptable before enabling this feature.
+Private note text is sent to Cloudflare Workers AI for tagging, as it was previously sent to the client-side AI provider. Only generated tags are persisted. The endpoint does not log note contents.
+
+**Deployment status:** the Worker is deployed at the endpoint above, with the AI and rate-limit bindings and Firebase API key secret present. The updated hardened Worker was uploaded on 2026-11-16. Live HTTP and authenticated end-to-end inference still require browser verification before merging the client change.
+
+### Automatic note tagging — release checklist
+
+The previous client-side Firebase AI Logic integration has been replaced in this feature branch by the Cloudflare Workers AI endpoint.
+
+Before production use:
+1. Confirm the deployed Worker remains reachable at `https://tcopy-auto-tag.toxinmoy.workers.dev`.
+2. From a signed-in tcopy browser session, run an authenticated end-to-end test for a public note and a private note, verifying the existing Firestore tags-only update is accepted by the existing Rules.
+3. Confirm unauthorized requests, invalid tokens, foreign Origins, malformed payloads, and rate-limited requests are rejected.
+
+Firebase Authentication, Firestore, note schema, ownership, and Firestore Rules remain the source of truth. The Worker verifies the Firebase ID token with Firebase Identity Toolkit and only generates tag suggestions; the existing browser client performs the final Firestore transaction after confirming that the note still belongs to the same user and its text has not changed.
+
+**Privacy:** note text (including Private notes) is sent to Cloudflare Workers AI for topic tagging only while the `AI topic tags` option is enabled. The option is enabled by default to preserve automatic tagging, can be turned off before saving, and its preference is stored locally on the current device. Only generated tags are written to Firestore. The Worker does not log note contents. Users should avoid submitting highly sensitive content if they do not want it processed by the AI provider.

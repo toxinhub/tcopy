@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:rules": "firebase emulators:exec --only firestore \"node --test tests/firestore.rules.test.mjs\""
+    "test:rules": "firebase emulators:exec --only firestore \"node --test tests/firestore.rules.test.mjs\"",
+    "test:worker": "node --test tests/auto-tag-worker.test.mjs"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "4.0.1",

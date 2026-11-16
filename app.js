@@ -12,10 +12,10 @@ const firebaseConfig = {
   appId: "1:372989345291:web:e5802b8ff3a65ba54b910e"
 };
 const configured = Object.values(firebaseConfig).every(v => v && !v.startsWith("YOUR_"));
-// Firebase AI Logic is initialized directly; App Check is not initialized in this client.
+// AI tagging runs through an authenticated Cloudflare Worker; Firebase Auth and Firestore remain client-side.
 const $ = id => document.getElementById(id);
 const L = "en-BD", DAY = 86400000;
-let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0, autoTagModelPromise = null, autoTagSetupNotified = false;
+let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0;
 const fmtDay = new Intl.DateTimeFormat(L,{weekday:"long"}), fmtShort = new Intl.DateTimeFormat(L,{weekday:"short"}), fmtTime = new Intl.DateTimeFormat(L,{hour:"numeric",minute:"2-digit"}), fmtDM = new Intl.DateTimeFormat(L,{day:"numeric",month:"long"}), fmtDMY = new Intl.DateTimeFormat(L,{day:"numeric",month:"long",year:"numeric"}), fmtMY = new Intl.DateTimeFormat(L,{month:"long",year:"numeric"});
 const safe = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function setSync(state,message){const label=message||({ok:"All caught up",busy:"Syncing…",off:"You’re offline"}[state]||"Connecting…");$("dot").className="dot"+(state==="ok"?"": " "+state);$("st").textContent=label;const sideDot=$("sideDot"),sideStatus=$("sideStatus");if(sideDot)sideDot.className=$("dot").className;if(sideStatus)sideStatus.textContent=label}
@@ -50,41 +50,20 @@ function setReaderSize(delta){readerFontSize=Math.max(14,Math.min(26,readerFontS
 function grow(el,max){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,max||Infinity)+"px"}
 function render(){$("list").setAttribute("aria-busy","false");requestAnimationFrame(draw)}
 function requireReady(visibility="public"){if(!configured){toast("Firebase setup is not finished yet.");return false}if(!user){toast("Connecting your guest session…");return false}if(visibility==="private"&&user.isAnonymous){toast("Sign in to save a Private note.");openAuth();return false}return true}
-async function getAutoTagModel(){
-  if(!autoTagModelPromise){
-    autoTagModelPromise=(async()=>{
-      const aiSdk=await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-ai.js");
-      const ai=aiSdk.getAI(app,{backend:new aiSdk.GoogleAIBackend()});
-      return aiSdk.getGenerativeModel(ai,{
-        model:"gemini-3.8-flash",
-        generationConfig:{temperature:0.2,maxOutputTokens:128,responseMimeType:"application/json"}
-      });
-    })();
-  }
-  return autoTagModelPromise;
-}
+const AUTO_TAG_ENDPOINT = "https://tcopy-auto-tag.toxinmoy.workers.dev";
 async function autoTagSavedNote(noteId,noteText,ownerUid){
   try{
-    const model=await getAutoTagModel();
-    if(!model){
-      return;
-    }
-    const prompt=[
-      "You are a precise note-tagging assistant for a personal notebook.",
-      "Return only a JSON array of 1 to 4 short topic tags. No markdown and no explanation.",
-      "Use the same language as the note for tags where natural.",
-      "Prefer specific, reusable topic labels over generic labels.",
-      "Use lowercase for English tags. Do not add hashtags.",
-      "Do not infer sensitive personal traits or invent context.",
-      "Avoid tags such as note, text, general, miscellaneous, or personal unless clearly essential.",
-      "Each tag must be at most 24 characters.",
-      "Note content:",
-      noteText.slice(0,6000)
-    ].join("\n");
-    const result=await model.generateContent(prompt);
-    const raw=result.response.text().trim().replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,"");
-    const parsed=JSON.parse(raw);
-    const suggested=normalizeTags(Array.isArray(parsed)?parsed:parsed?.tags||[]).slice(0,4);
+    if(!user||user.uid!==ownerUid)return;
+    const idToken=await user.getIdToken();
+    const response=await fetch(AUTO_TAG_ENDPOINT,{
+      method:"POST",
+      headers:{"Authorization":"Bearer "+idToken,"Content-Type":"application/json"},
+      body:JSON.stringify({text:noteText.slice(0,6000)}),
+      cache:"no-store"
+    });
+    if(!response.ok)throw new Error("AI tagging request failed ("+response.status+")");
+    const payload=await response.json();
+    const suggested=normalizeTags(payload.tags||[]).slice(0,4);
     if(!suggested.length)return;
     const noteRef=doc(db,"clips",noteId);
     await runTransaction(db,async transaction=>{
@@ -98,10 +77,10 @@ async function autoTagSavedNote(noteId,noteText,ownerUid){
       transaction.update(noteRef,{tags:merged});
     });
   }catch(error){
-    console.warn("tcopy auto-tagging failed:",error);
+    console.warn("tcopy auto-tagging failed");
   }
 }
-async function addNote(text){text=text.trim();const visibility=$("visibility")?.value||"public",tags=normalizeTags($("tagInput")?.value||"");if(!text||!requireReady(visibility))return;try{setSync("busy","Saving…");const ownerUid=user.uid;const ref=await addDoc(collection(db,"clips"),{ownerUid,text,visibility,tags,pinned:false,createdAt:serverTimestamp(),updatedAt:null});void autoTagSavedNote(ref.id,text,ownerUid);fresh=ref.id;$("in").value="";if($("tagInput"))$("tagInput").value="";saveDraft("");if($("visibility"))$("visibility").value="public";updateComposer();$("scroller").scrollTo({top:0,behavior:"smooth"});toast(visibility==="private"?"Private note saved and synced":"Public note saved");if(navigator.vibrate)navigator.vibrate(10)}catch(e){setSync("off","Could not save");toast(errorMessage(e))}}
+async function addNote(text){text=text.trim();const visibility=$("visibility")?.value||"public",tags=normalizeTags($("tagInput")?.value||"");if(!text||!requireReady(visibility))return;try{setSync("busy","Saving…");const ownerUid=user.uid;const ref=await addDoc(collection(db,"clips"),{ownerUid,text,visibility,tags,pinned:false,createdAt:serverTimestamp(),updatedAt:null});if($("autoTagEnabled")?.checked!==false)void autoTagSavedNote(ref.id,text,ownerUid);fresh=ref.id;$("in").value="";if($("tagInput"))$("tagInput").value="";saveDraft("");if($("visibility"))$("visibility").value="public";updateComposer();$("scroller").scrollTo({top:0,behavior:"smooth"});toast(visibility==="private"?"Private note saved and synced":"Public note saved");if(navigator.vibrate)navigator.vibrate(10)}catch(e){setSync("off","Could not save");toast(errorMessage(e))}}
 async function commitEdit(c){const ta=document.querySelector("[data-edit]"),text=ta?.value.trim(),tags=normalizeTags(document.querySelector("[data-edit-tags]")?.value||"");if(!text){toast("A note can’t be empty.");return}try{await updateDoc(doc(db,"clips",c.id),{text,tags,visibility:c.visibility||"private",updatedAt:serverTimestamp()});editing=null;render();toast("Your changes are saved")}catch(e){toast(errorMessage(e))}}
 function errorMessage(e){const code=e?.code||"";return code.includes("permission-denied")?"You don't have permission to do that.":code.includes("network")?"Connection issue. Try again when you're online.":code.includes("email-already-in-use")?"That email is already registered. Try signing in.":code.includes("invalid-credential")?"Email or password doesn't look right.":(e?.message||"Something went wrong. Please try again.").replace("Firebase: ","").slice(0,150)}
 function openAuth(){ $("authhint").textContent="";$("authveil").classList.add("open");$("email").focus()}
@@ -140,6 +119,7 @@ function setVisibility(value){
   visibilitySwitch.querySelectorAll(".visibility-option").forEach(button=>{const active=button.dataset.visibility===value;button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",String(active))});
 }
 visibilitySwitch?.addEventListener("click",e=>{const button=e.target.closest("[data-visibility]");if(!button||button.disabled)return;setVisibility(button.dataset.visibility)});
+$("autoTagEnabled")?.addEventListener("change",e=>{try{localStorage.setItem("tcopy-auto-tag-enabled",String(e.target.checked))}catch{}});
 $("in").addEventListener("input",()=>{updateComposer();clearTimeout(draftTimer);draftTimer=setTimeout(()=>saveDraft($("in").value),250)});$("in").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();$("cmp").requestSubmit()}});
 $("paste").onclick=async()=>{try{const text=await navigator.clipboard.readText();if(text){$("in").value+=$("in").value?"\n"+text:text;updateComposer();saveDraft($("in").value)}$("in").focus()}catch{$("in").focus();toast("Clipboard access is blocked. You can still use Ctrl + V.")}};
 $("list").addEventListener("click",async e=>{const b=e.target.closest("[data-action],[data-group],[data-tag]");if(b?.dataset.tag){selectedTag=selectedTag===b.dataset.tag?"":b.dataset.tag;render();return}if(b?.dataset.group){collapsed[b.dataset.group]=b.getAttribute("aria-expanded")==="true";render();return}const article=e.target.closest("[data-id]"),c=article&&find(article.dataset.id);if(!c)return;if(!b){if(editing===c.id||e.target.closest("a,textarea,input,select"))return;if(isLong(c.text))openReader(c);return}const action=b.dataset.action;if(action==="open-reader"){openReader(c);return}if(action==="copy"){try{await navigator.clipboard.writeText(c.text);b.innerHTML=uiIcon("check")+'<span>Copied</span>';b.classList.add("is-copied");setTimeout(()=>{if(b.isConnected){b.innerHTML=uiIcon("copy")+'<span>Copy</span>';b.classList.remove("is-copied")}},1300);toast("Copied to clipboard");if(navigator.vibrate)navigator.vibrate(12)}catch{toast("Clipboard access is blocked")}}else if(action==="pin"){try{await updateDoc(doc(db,"clips",c.id),{pinned:!c.pinned,visibility:c.visibility||"private",updatedAt:serverTimestamp()})}catch(x){toast(errorMessage(x))}}else if(action==="edit"){editing=c.id;render()}else if(action==="cancel"){editing=null;render()}else if(action==="confirm")commitEdit(c);else if(action==="delete"){pendingDeleteId=c.id;if(!$("deleteDialog").open)$("deleteDialog").showModal()}});
@@ -157,7 +137,7 @@ document.querySelectorAll("[data-mobile-account]").forEach(button=>button.addEve
 let searchTimer;$("q").oninput=e=>{clearTimeout(searchTimer);const v=e.target.value;searchTimer=setTimeout(()=>{qText=v;render()},100)};
 $("theme").onclick=()=>{const r=document.documentElement,nowDark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=nowDark?"light":"dark";$("theme").setAttribute("aria-label",r.dataset.theme==="dark"?"Switch to light theme":"Switch to dark theme");$("theme").title=r.dataset.theme==="dark"?"Light theme":"Dark theme";try{localStorage.setItem("tcopy-theme",r.dataset.theme)}catch{}};
 async function consumeSharedText(){if(!new URLSearchParams(location.search).has("shared")||!("indexedDB" in window))return;const shared=await new Promise(resolve=>{let req;try{req=indexedDB.open("tcopy-share",1)}catch{return resolve("")}req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains("incoming"))req.result.createObjectStore("incoming",{keyPath:"id",autoIncrement:true})};req.onerror=()=>resolve("");req.onsuccess=()=>{const database=req.result;let value="";try{const tx=database.transaction("incoming","readwrite"),store=tx.objectStore("incoming"),cursor=store.openCursor(null,"prev");cursor.onsuccess=()=>{const item=cursor.result;if(item){value=item.value.text||"";item.delete()}};tx.oncomplete=()=>{database.close();resolve(value)};tx.onerror=()=>{database.close();resolve("")}}catch{database.close();resolve("")}}});if(shared){$("in").value=shared;updateComposer();saveDraft(shared);$("in").focus();toast("Shared content is ready to save")}history.replaceState({},document.title,location.pathname)}
-try{const theme=localStorage.getItem("tcopy-theme");if(theme)document.documentElement.dataset.theme=theme;const draft=localStorage.getItem("tcopy-draft");if(draft)$("in").value=draft}catch{}updateComposer();consumeSharedText();
+try{const theme=localStorage.getItem("tcopy-theme");if(theme)document.documentElement.dataset.theme=theme;const draft=localStorage.getItem("tcopy-draft");if(draft)$("in").value=draft;const autoTagPreference=localStorage.getItem("tcopy-auto-tag-enabled");if(autoTagPreference!==null&&$("autoTagEnabled"))$("autoTagEnabled").checked=autoTagPreference==="true"}catch{}updateComposer();consumeSharedText();
 document.addEventListener("keydown",e=>{const typing=e.target.matches?.("input,textarea");if(e.key==="/"&&!typing){e.preventDefault();$("q").focus()}if(e.key==="Escape"&&$("reader").open){closeReader();return}if(e.key==="Escape"&&e.target===$("q")){$("q").value="";qText="";e.target.blur();render()}});
 window.addEventListener("online",()=>{if(user)setSync("busy","Reconnecting…")});window.addEventListener("offline",()=>setSync("off","You're offline"));
 if("serviceWorker" in navigator && location.protocol!=="file:")window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"}).then(reg=>reg.update()).catch(()=>{}));
