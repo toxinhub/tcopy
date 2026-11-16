@@ -1,0 +1,26 @@
+name: tcopy Firestore Rules Tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "finalization/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  firestore-rules:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run Firestore Rules Emulator tests
+        run: npm run test:rules
