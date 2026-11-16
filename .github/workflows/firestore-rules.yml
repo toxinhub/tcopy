@@ -21,8 +21,10 @@ jobs:
         with:
           node-version: 22
       - name: Check JavaScript syntax
-        run: node --check app.js && node --check cloudflare/auto-tag-worker.js
+        run: node --check app.js && node --check cloudflare/auto-tag-worker.js && node --check tests/auto-tag-worker.test.mjs
       - name: Install test dependencies
         run: npm install --no-audit --no-fund
+      - name: Run Cloudflare Worker unit tests
+        run: npm run test:worker
       - name: Run Firestore Rules Emulator tests
         run: npm run test:rules
