@@ -12,10 +12,10 @@ const firebaseConfig = {
   appId: "1:372989345291:web:e5802b8ff3a65ba54b910e"
 };
 const configured = Object.values(firebaseConfig).every(v => v && !v.startsWith("YOUR_"));
-// Firebase AI Logic is initialized directly; App Check is not initialized in this client.
+// AI tagging runs through an authenticated Cloudflare Worker; Firebase Auth and Firestore remain client-side.
 const $ = id => document.getElementById(id);
 const L = "en-BD", DAY = 86400000;
-let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0, autoTagModelPromise = null, autoTagSetupNotified = false;
+let app, auth, db, user = null, isAdmin = false, stopFeed = null, clips = [], view = "day", qText = "", filterVisibility = "all", selectedTag = "", editing = null, expanded = {}, collapsed = {}, fresh = null, lastDeleted = null, toastTimer = 0, draftTimer = 0;
 const fmtDay = new Intl.DateTimeFormat(L,{weekday:"long"}), fmtShort = new Intl.DateTimeFormat(L,{weekday:"short"}), fmtTime = new Intl.DateTimeFormat(L,{hour:"numeric",minute:"2-digit"}), fmtDM = new Intl.DateTimeFormat(L,{day:"numeric",month:"long"}), fmtDMY = new Intl.DateTimeFormat(L,{day:"numeric",month:"long",year:"numeric"}), fmtMY = new Intl.DateTimeFormat(L,{month:"long",year:"numeric"});
 const safe = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function setSync(state,message){const label=message||({ok:"All caught up",busy:"Syncing…",off:"You’re offline"}[state]||"Connecting…");$("dot").className="dot"+(state==="ok"?"": " "+state);$("st").textContent=label;const sideDot=$("sideDot"),sideStatus=$("sideStatus");if(sideDot)sideDot.className=$("dot").className;if(sideStatus)sideStatus.textContent=label}
@@ -50,41 +50,20 @@ function setReaderSize(delta){readerFontSize=Math.max(14,Math.min(26,readerFontS
 function grow(el,max){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,max||Infinity)+"px"}
 function render(){$("list").setAttribute("aria-busy","false");requestAnimationFrame(draw)}
 function requireReady(visibility="public"){if(!configured){toast("Firebase setup is not finished yet.");return false}if(!user){toast("Connecting your guest session…");return false}if(visibility==="private"&&user.isAnonymous){toast("Sign in to save a Private note.");openAuth();return false}return true}
-async function getAutoTagModel(){
-  if(!autoTagModelPromise){
-    autoTagModelPromise=(async()=>{
-      const aiSdk=await import("https://www.gstatic.com/firebasejs/11.10.0/firebase-ai.js");
-      const ai=aiSdk.getAI(app,{backend:new aiSdk.GoogleAIBackend()});
-      return aiSdk.getGenerativeModel(ai,{
-        model:"gemini-3.8-flash",
-        generationConfig:{temperature:0.2,maxOutputTokens:128,responseMimeType:"application/json"}
-      });
-    })();
-  }
-  return autoTagModelPromise;
-}
+const AUTO_TAG_ENDPOINT = "https://tcopy-auto-tag.toxinmoy.workers.dev";
 async function autoTagSavedNote(noteId,noteText,ownerUid){
   try{
-    const model=await getAutoTagModel();
-    if(!model){
-      return;
-    }
-    const prompt=[
-      "You are a precise note-tagging assistant for a personal notebook.",
-      "Return only a JSON array of 1 to 4 short topic tags. No markdown and no explanation.",
-      "Use the same language as the note for tags where natural.",
-      "Prefer specific, reusable topic labels over generic labels.",
-      "Use lowercase for English tags. Do not add hashtags.",
-      "Do not infer sensitive personal traits or invent context.",
-      "Avoid tags such as note, text, general, miscellaneous, or personal unless clearly essential.",
-      "Each tag must be at most 24 characters.",
-      "Note content:",
-      noteText.slice(0,6000)
-    ].join("\n");
-    const result=await model.generateContent(prompt);
-    const raw=result.response.text().trim().replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,"");
-    const parsed=JSON.parse(raw);
-    const suggested=normalizeTags(Array.isArray(parsed)?parsed:parsed?.tags||[]).slice(0,4);
+    if(!user||user.uid!==ownerUid)return;
+    const idToken=await user.getIdToken();
+    const response=await fetch(AUTO_TAG_ENDPOINT,{
+      method:"POST",
+      headers:{"Authorization":"Bearer "+idToken,"Content-Type":"application/json"},
+      body:JSON.stringify({text:noteText.slice(0,6000)}),
+      cache:"no-store"
+    });
+    if(!response.ok)throw new Error("AI tagging request failed ("+response.status+")");
+    const payload=await response.json();
+    const suggested=normalizeTags(payload.tags||[]).slice(0,4);
     if(!suggested.length)return;
     const noteRef=doc(db,"clips",noteId);
     await runTransaction(db,async transaction=>{
