@@ -1,5 +1,4 @@
 const ALLOWED_ORIGIN = "https://toxinhub.github.io";
-const PROJECT_ID = "tcopy-12865";
 const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 const MAX_NOTE_CHARS = 6000;
 
@@ -118,7 +117,7 @@ export default {
           try { tags = cleanTags(JSON.parse(match[0])); } catch {}
         }
       }
-      return json({ tags, uid });
+      return json({ tags });
     } catch (error) {
       console.error("Workers AI inference failed", error?.message || "unknown");
       return json({ error: "tagging-unavailable" }, 502);
