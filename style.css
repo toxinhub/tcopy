@@ -7351,3 +7351,16 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
   --accent-hover: #A74731;
   --accent-pressed: #913B29;
 }
+
+
+/* AI tagging preference: compact disclosure with an accessible opt-out. */
+#cmp>.auto-tag-setting{grid-area:ai;display:flex;align-items:center;gap:7px;min-width:0;min-height:30px;color:var(--muted);font-size:11px;line-height:1.35;cursor:pointer}
+#cmp>.auto-tag-setting input{width:16px;height:16px;min-width:16px;margin:0;accent-color:var(--accent)}
+#cmp>.auto-tag-setting>span:nth-of-type(1){color:var(--ink);font-weight:650;white-space:nowrap}
+#cmp>.auto-tag-setting .auto-tag-disclosure{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmp{grid-template-areas:"ta ta" "tags tags" "ai ai" "paste save"}
+@media(max-width:720px){
+  .cmp{grid-template-columns:44px minmax(0,1fr) 44px!important;grid-template-areas:"paste ta save" "tags tags tags" "ai ai ai"!important;gap:7px!important}
+  #cmp>.auto-tag-setting{min-height:28px;font-size:10px;gap:6px}
+}
+@media(prefers-reduced-motion:reduce){#cmp>.auto-tag-setting input{transition:none}}
