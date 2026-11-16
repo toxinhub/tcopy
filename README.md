@@ -62,10 +62,15 @@ Public share links, attachments, and offline writes are not included yet. They c
 
 tcopy generates up to four topic tags after a new note is saved. Existing manually entered tags are preserved, AI tags are merged without duplicates, and saving the note is not blocked if AI tagging fails.
 
-### One-time Firebase setup
-1. In Firebase Console for project `tcopy-12865`, open **AI Services → AI Logic** and complete **Get started** with the Gemini Developer API provider.
-2. Firebase AI Logic is initialized directly in the app; no reCAPTCHA Enterprise site key is configured in the client.
-3. In **App Check**, keep Firebase AI Logic in **Monitoring** (not **Enforced**) if you want AI requests to work without registering an App Check provider. Direct client-side AI access without App Check has weaker abuse protection, so monitor usage and quotas.
-4. Never add a Gemini API key or reCAPTCHA secret key to this repository.
+### Automatic note tagging — release blocker
+The current client initializes Firebase AI Logic directly and does not initialize an App Check provider. This is not a production-ready configuration.
 
-**Privacy:** automatic tagging sends note text to Google through Firebase AI Logic for analysis, including text from Private notes. Avoid storing highly sensitive information in notes if you do not want it processed by the AI service. Only generated tags are written back to Firestore.
+**Important:** Firebase automatically began enforcing App Check for Firebase AI Logic on November 2, 2026. Requests without a valid App Check token are blocked. Monitoring-only mode is no longer a dependable way to keep this integration working. See the [official Firebase AI Logic App Check guidance](https://firebase.google.com/docs/ai-logic/app-check).
+
+Before enabling automatic tagging in production, choose and implement one of these supported paths:
+- Configure the required production App Check provider for the web app (Firebase documents reCAPTCHA Enterprise for web).
+- Approve a separate server-side AI provider and implement it behind a protected endpoint, keeping provider secrets out of the browser and repository.
+
+Do not deploy a client-side Gemini API key or disable security controls as a workaround. Until a supported path is implemented and tested, AI tagging must be treated as unavailable.
+
+**Privacy:** automatic tagging sends note text to the configured AI provider for analysis, including text from Private notes. Only generated tags are written back to Firestore. Make sure the chosen provider and data handling are acceptable before enabling this feature.
