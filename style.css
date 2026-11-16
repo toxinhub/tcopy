@@ -7301,7 +7301,7 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
     content: "";
     position: absolute;
     inset: -8px 0;
-    z-index: -1;
+    z-index: 0;
     border-radius: inherit;
     background: transparent;
   }
