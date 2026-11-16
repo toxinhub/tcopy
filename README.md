@@ -62,8 +62,25 @@ Public share links, attachments, and offline writes are not included yet. They c
 
 tcopy generates up to four topic tags after a new note is saved. Existing manually entered tags are preserved, AI tags are merged without duplicates, and saving the note is not blocked if AI tagging fails.
 
+### Cloudflare Workers AI deployment
+
+The AI tagging endpoint lives in `cloudflare/auto-tag-worker.js`. It is separate from GitHub Pages and does not replace Firebase Authentication or Firestore.
+
+Production configuration:
+- Worker name: `tcopy-auto-tag`
+- Public endpoint: `https://tcopy-auto-tag.toxinmoy.workers.dev`
+- Workers AI binding: `AI`
+- Rate-limit binding: `AUTOTAG_LIMITER` (10 requests per authenticated user per 60 seconds; Cloudflare's built-in limits are approximate and regional)
+- Secret binding: `FIREBASE_WEB_API_KEY` (the existing Firebase web API key, stored as a Worker secret rather than copied into Worker source)
+
+The Worker accepts only requests from `https://toxinhub.github.io`, validates Firebase ID tokens through Firebase Identity Toolkit, rate-limits by verified Firebase UID, and runs topic tagging through Workers AI. It returns suggested tags only. The browser continues to write tags to the existing Firestore document through the existing authenticated client and Firestore Rules; no Firebase Auth, Firestore schema, ownership, or rules migration is required.
+
+Private note text is sent to Cloudflare Workers AI for tagging, as it was previously sent to the client-side AI provider. Only generated tags are persisted. The endpoint does not log note contents.
+
+**Deployment status:** source is committed on the feature branch. The Worker must be deployed and its Firebase API key secret configured in the Cloudflare account before auto-tagging works. Do not merge the client change until the endpoint health and authenticated end-to-end test pass.
+
 ### Automatic note tagging — release blocker
-The current client initializes Firebase AI Logic directly and does not initialize an App Check provider. This is not a production-ready configuration.
+The previous client-side Firebase AI Logic path is no longer used. Automatic tagging now uses the separate authenticated Cloudflare Workers AI endpoint described above.
 
 **Important:** Firebase automatically began enforcing App Check for Firebase AI Logic on November 2, 2026. Requests without a valid App Check token are blocked. Monitoring-only mode is no longer a dependable way to keep this integration working. See the [official Firebase AI Logic App Check guidance](https://firebase.google.com/docs/ai-logic/app-check).
 
