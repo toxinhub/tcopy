@@ -84,11 +84,9 @@ Private note text is sent to Cloudflare Workers AI for tagging, as it was previo
 The previous client-side Firebase AI Logic integration has been replaced in this feature branch by the Cloudflare Workers AI endpoint.
 
 Before production use:
-1. Deploy `cloudflare/auto-tag-worker.js` as Worker `tcopy-auto-tag` with the Workers AI binding `AI` and rate-limit binding `AUTOTAG_LIMITER` (10 requests per user per 60 seconds).
-2. Configure the Worker secret `FIREBASE_WEB_API_KEY` using the existing Firebase project's web API key. Never commit the value as a Worker secret or in a source file.
-3. Confirm the Worker endpoint is reachable at `https://tcopy-auto-tag.toxinmoy.workers.dev`.
-4. Run an authenticated end-to-end test for both a public note and a private note, verifying the existing Firestore tags-only update is accepted by the existing Rules.
-5. Confirm unauthorized requests, invalid tokens, foreign Origins, malformed payloads, and rate-limited requests are rejected.
+1. Confirm the deployed Worker remains reachable at `https://tcopy-auto-tag.toxinmoy.workers.dev`.
+2. From a signed-in tcopy browser session, run an authenticated end-to-end test for a public note and a private note, verifying the existing Firestore tags-only update is accepted by the existing Rules.
+3. Confirm unauthorized requests, invalid tokens, foreign Origins, malformed payloads, and rate-limited requests are rejected.
 
 Firebase Authentication, Firestore, note schema, ownership, and Firestore Rules remain the source of truth. The Worker verifies the Firebase ID token with Firebase Identity Toolkit and only generates tag suggestions; the existing browser client performs the final Firestore transaction after confirming that the note still belongs to the same user and its text has not changed.
 
