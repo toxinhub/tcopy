@@ -67,9 +67,9 @@ export default {
 
     let payload;
     try {
-      const length = Number(request.headers.get("content-length") || 0);
-      if (length > 12000) return json({ error: "payload-too-large" }, 413);
-      payload = await request.json();
+      const rawBody = await request.text();
+      if (new TextEncoder().encode(rawBody).byteLength > 12000) return json({ error: "payload-too-large" }, 413);
+      payload = JSON.parse(rawBody);
     } catch {
       return json({ error: "invalid-json" }, 400);
     }
@@ -83,8 +83,13 @@ export default {
       return json({ error: "invalid-authentication" }, 401);
     }
 
-    const limit = await env.AUTOTAG_LIMITER.limit({ key: uid });
-    if (!limit.success) return json({ error: "rate-limited" }, 429);
+    try {
+      const limit = await env.AUTOTAG_LIMITER.limit({ key: uid });
+      if (!limit.success) return json({ error: "rate-limited" }, 429);
+    } catch {
+      // Fail closed: never run paid inference when the rate limiter is unavailable.
+      return json({ error: "rate-limit-unavailable" }, 503);
+    }
 
     const prompt = [
       "You are a precise topic-tagging assistant for a personal notebook.",
@@ -119,7 +124,8 @@ export default {
       }
       return json({ tags });
     } catch (error) {
-      console.error("Workers AI inference failed", error?.message || "unknown");
+      // Keep provider error details out of logs; they may contain submitted content.
+      console.error("Workers AI inference failed");
       return json({ error: "tagging-unavailable" }, 502);
     }
   }
