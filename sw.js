@@ -1,4 +1,4 @@
-const CACHE = "tcopy-shell-v98";
+const CACHE = "tcopy-shell-v99";
 const SHELL = ["./", "./index.html", "./style.css?v=96", "./app.js?v=69", "./manifest.webmanifest", "./icon.svg"];
 const SHARE_DB = "tcopy-share";
 const SCOPE_PATH = new URL("./", self.location.href).pathname;
