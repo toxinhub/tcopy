@@ -7342,3 +7342,12 @@ dialog.reader::backdrop,dialog.confirm-dialog::backdrop{background:rgba(10,14,20
 @media (max-width: 380px) {
   .mobile-nav { right: 10px !important; }
 }
+
+
+/* Finalization Phase 5: meet readable contrast in the light palette. */
+:root:not([data-theme="dark"]) {
+  --muted: #626C76;
+  --accent: #B04B34;
+  --accent-hover: #A74731;
+  --accent-pressed: #913B29;
+}
