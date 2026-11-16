@@ -77,7 +77,7 @@ The Worker accepts only requests from `https://toxinhub.github.io`, validates Fi
 
 Private note text is sent to Cloudflare Workers AI for tagging, as it was previously sent to the client-side AI provider. Only generated tags are persisted. The endpoint does not log note contents.
 
-**Deployment status:** source is committed on the feature branch. The Worker must be deployed and its Firebase API key secret configured in the Cloudflare account before auto-tagging works. Do not merge the client change until the endpoint health and authenticated end-to-end test pass.
+**Deployment status:** the Worker is deployed at the endpoint above, with the AI and rate-limit bindings and Firebase API key secret present. The updated hardened Worker was uploaded on 2026-11-16. Live HTTP and authenticated end-to-end inference still require browser verification before merging the client change.
 
 ### Automatic note tagging — release checklist
 
@@ -90,4 +90,4 @@ Before production use:
 
 Firebase Authentication, Firestore, note schema, ownership, and Firestore Rules remain the source of truth. The Worker verifies the Firebase ID token with Firebase Identity Toolkit and only generates tag suggestions; the existing browser client performs the final Firestore transaction after confirming that the note still belongs to the same user and its text has not changed.
 
-**Privacy:** note text (including Private notes) is sent to Cloudflare Workers AI for topic tagging. Only generated tags are written to Firestore. The Worker does not log note contents. Users should avoid submitting highly sensitive content if they do not want it processed by the AI provider.
+**Privacy:** note text (including Private notes) is sent to Cloudflare Workers AI for topic tagging only while the `AI topic tags` option is enabled. The option is enabled by default to preserve automatic tagging, can be turned off before saving, and its preference is stored locally on the current device. Only generated tags are written to Firestore. The Worker does not log note contents. Users should avoid submitting highly sensitive content if they do not want it processed by the AI provider.
