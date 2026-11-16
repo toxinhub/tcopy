@@ -79,15 +79,17 @@ Private note text is sent to Cloudflare Workers AI for tagging, as it was previo
 
 **Deployment status:** source is committed on the feature branch. The Worker must be deployed and its Firebase API key secret configured in the Cloudflare account before auto-tagging works. Do not merge the client change until the endpoint health and authenticated end-to-end test pass.
 
-### Automatic note tagging — release blocker
-The previous client-side Firebase AI Logic path is no longer used. Automatic tagging now uses the separate authenticated Cloudflare Workers AI endpoint described above.
+### Automatic note tagging — release checklist
 
-**Important:** Firebase automatically began enforcing App Check for Firebase AI Logic on November 2, 2026. Requests without a valid App Check token are blocked. Monitoring-only mode is no longer a dependable way to keep this integration working. See the [official Firebase AI Logic App Check guidance](https://firebase.google.com/docs/ai-logic/app-check).
+The previous client-side Firebase AI Logic integration has been replaced in this feature branch by the Cloudflare Workers AI endpoint.
 
-Before enabling automatic tagging in production, choose and implement one of these supported paths:
-- Configure the required production App Check provider for the web app (Firebase documents reCAPTCHA Enterprise for web).
-- Approve a separate server-side AI provider and implement it behind a protected endpoint, keeping provider secrets out of the browser and repository.
+Before production use:
+1. Deploy `cloudflare/auto-tag-worker.js` as Worker `tcopy-auto-tag` with the Workers AI binding `AI` and rate-limit binding `AUTOTAG_LIMITER` (10 requests per user per 60 seconds).
+2. Configure the Worker secret `FIREBASE_WEB_API_KEY` using the existing Firebase project's web API key. Never commit the value as a Worker secret or in a source file.
+3. Confirm the Worker endpoint is reachable at `https://tcopy-auto-tag.toxinmoy.workers.dev`.
+4. Run an authenticated end-to-end test for both a public note and a private note, verifying the existing Firestore tags-only update is accepted by the existing Rules.
+5. Confirm unauthorized requests, invalid tokens, foreign Origins, malformed payloads, and rate-limited requests are rejected.
 
-Do not deploy a client-side Gemini API key or disable security controls as a workaround. Until a supported path is implemented and tested, AI tagging must be treated as unavailable.
+Firebase Authentication, Firestore, note schema, ownership, and Firestore Rules remain the source of truth. The Worker verifies the Firebase ID token with Firebase Identity Toolkit and only generates tag suggestions; the existing browser client performs the final Firestore transaction after confirming that the note still belongs to the same user and its text has not changed.
 
-**Privacy:** automatic tagging sends note text to the configured AI provider for analysis, including text from Private notes. Only generated tags are written back to Firestore. Make sure the chosen provider and data handling are acceptable before enabling this feature.
+**Privacy:** note text (including Private notes) is sent to Cloudflare Workers AI for topic tagging. Only generated tags are written to Firestore. The Worker does not log note contents. Users should avoid submitting highly sensitive content if they do not want it processed by the AI provider.
